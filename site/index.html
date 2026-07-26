@@ -10,7 +10,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/scene.css">
 <script src="js/main.js" defer></script>
+<script type="module" src="js/scene.js"></script>
 </head>
 <body>
 
@@ -63,7 +65,12 @@
         <div class="pad-x">
           <a class="card hero-item hero-item--last" href="course.html">
             <div class="card__media">
-              <img class="img-treat img-cover" src="img/tl301-cover.svg" width="900" height="600" alt="Rack-mounted server hardware on a test bench" loading="lazy">
+              <div class="v3d-view v3d-view--hero" data-scene="hero" data-code="TL-301">
+                <canvas class="v3d-canvas" aria-hidden="true"></canvas>
+                <img class="v3d-fallback img-treat" src="img/tl301-cover.svg" width="900" height="600" alt="TL-301 specification plate: p99 latency measured against baseline">
+                <span class="v3d-tag v3d-tag--tl mono-label" aria-hidden="true">Live viewport</span>
+                <span class="v3d-tag v3d-tag--br mono-label" aria-hidden="true" data-v3d-code>TL-301</span>
+              </div>
             </div>
             <div class="card__body">
               <p class="mono-data card__meta">TL-301 / SELF-PACED</p>

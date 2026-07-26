@@ -10,7 +10,6 @@
 <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="16" letter-spacing="2">
 <text x="40" y="60" fill="#9A9A9A">P99 LATENCY / MS</text>
 <text x="40" y="90" fill="#5F5F5F">BASELINE 214.6 -&gt; 38.2</text>
-<text x="860" y="60" fill="#5F5F5F" text-anchor="end">FIG. 01</text>
 <text x="40" y="580" fill="#5F5F5F">MEASURED ON 8C/32G REFERENCE HARDWARE</text>
 </g>
 </svg>

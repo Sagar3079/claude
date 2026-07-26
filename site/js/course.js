@@ -554,10 +554,12 @@
     if (node) node.innerHTML = value;
   }
 
+  var LOCAL_IMG = {"tolerance-instructor-ferrentino": "img/ferrentino.svg", "tolerance-instructor-visser": "img/visser.svg", "tolerance-instructor-chandrasekar": "img/chandrasekar.svg", "tolerance-instructor-okereke": "img/okereke.svg", "tolerance-instructor-demirci": "img/demirci.svg", "tolerance-instructor-kovanen": "img/kovanen.svg", "tolerance-tl301-cover": "img/tl301-cover.svg", "tolerance-tl204-cover": "img/tl301-cover.svg", "tolerance-tl112-cover": "img/tl301-cover.svg", "tolerance-tl317-cover": "img/tl301-cover.svg", "tolerance-tl410-cover": "img/tl301-cover.svg", "tolerance-tl405-cover": "img/tl301-cover.svg"};
+
   function setImage(attr, seed, size, alt) {
     var node = el(attr);
     if (!node) return;
-    node.src = "https://picsum.photos/seed/" + seed + "/" + size;
+    node.src = LOCAL_IMG[seed] || "img/tl301-cover.svg";
     node.alt = alt;
   }
 

@@ -796,7 +796,7 @@ a {
 }
 
 .row__main {
-  grid-column: span 6;
+  grid-column: span 5;
 }
 
 .row__main > * {
@@ -810,7 +810,7 @@ a {
 }
 
 .row__meta {
-  grid-column: span 2;
+  grid-column: span 3;
   text-align: right;
   color: var(--text-2);
 }

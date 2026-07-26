@@ -814,3 +814,23 @@ runtimes consistent with the 11h 20m total.
 - [ ] Mobile collapse checked at 720px and 1080px.
 - [ ] No new CSS or JS files; additions went into `main.css` / `main.js` and
       were documented here.
+
+## Addendum: page-scoped files (documented post-build)
+
+The following files were added by the page builders and are part of the shipped
+site. Each is page-scoped and does not fork the design system; main.css and
+main.js remain the single source of truth for shared components.
+
+| File | Loaded by | Purpose |
+|---|---|---|
+| css/catalog.css | courses.html, course.html | Row filter fade states, course-detail split/byline/portrait helpers (`cat-`/`cd-` prefixes) |
+| css/commerce.css | pricing.html, checkout.html | Receipt treatment, plan-grid tweaks (`pr-`/`co-` prefixes) |
+| css/scene.css | index.html, course.html | 3D viewport containers and overlay labels (`v3d-` prefix) |
+| js/catalog.js | courses.html | Two-group ANDed catalog filter (format x topic), no re-rendering |
+| js/course.js | course.html | ?c=CODE course renderer with COURSES data table; falls back to TL-301 |
+| js/checkout.js | checkout.html | Cart receipt rendering via the cart API, mock payment flow |
+| js/scene.js | index.html, course.html | Three.js wireframe part viewports (module script) |
+| js/vendor/three.module.min.js | via js/scene.js | Vendored Three.js v0.185.1, no CDN |
+
+Load order on every page: css/main.css first, page CSS after; js/main.js first
+(defer), page JS after (defer). Cart writes go through main.js / window.TOLERANCE only.

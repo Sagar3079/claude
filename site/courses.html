@@ -53,10 +53,16 @@
       <div data-hero>
         <h1 class="h1 hero-item">Catalog</h1>
         <p class="body mt-24 hero-item">Six courses. Every syllabus public. Sorted by depth, not popularity.</p>
-        <div class="toggles mt-32 hero-item" role="group" aria-label="Format" data-filter-group data-active-filter="all">
+        <div class="toggles mt-32 hero-item" role="group" aria-label="Format" data-filter-group="format" data-active-filter="all">
           <button class="toggle" type="button" aria-pressed="true" data-filter="all">All</button>
           <button class="toggle" type="button" aria-pressed="false" data-filter="self-paced">Self-paced</button>
           <button class="toggle" type="button" aria-pressed="false" data-filter="cohort">Cohort</button>
+        </div>
+        <div class="toggles mt-16 hero-item" role="group" aria-label="Topic" data-filter-group="topic" data-active-filter="all">
+          <button class="toggle" type="button" aria-pressed="true" data-filter="all">All topics</button>
+          <button class="toggle" type="button" aria-pressed="false" data-filter="systems">Systems</button>
+          <button class="toggle" type="button" aria-pressed="false" data-filter="interface">Interface</button>
+          <button class="toggle" type="button" aria-pressed="false" data-filter="tooling">Tooling</button>
         </div>
       </div>
     </section>
@@ -66,7 +72,7 @@
       <div class="rows reveal" data-filter-target>
 
         <div class="rows__cluster">
-          <a class="row" href="course.html?c=TL-301" data-format="self-paced">
+          <a class="row" href="course.html?c=TL-301" data-topic="systems" data-format="self-paced">
             <span class="row__code mono-data"><span>TL-301</span><span>SELF-PACED</span></span>
             <span class="row__main">
               <span class="h3">Systems Under Load</span>
@@ -77,7 +83,7 @@
               <svg class="icon row__arrow" viewBox="0 0 256 256" aria-hidden="true"><line x1="40" y1="128" x2="216" y2="128"></line><polyline points="144 56 216 128 144 200"></polyline></svg>
             </span>
           </a>
-          <a class="row" href="course.html?c=TL-204" data-format="self-paced">
+          <a class="row" href="course.html?c=TL-204" data-topic="interface" data-format="self-paced">
             <span class="row__code mono-data"><span>TL-204</span><span>SELF-PACED</span></span>
             <span class="row__main">
               <span class="h3">Interface Physics</span>
@@ -88,7 +94,7 @@
               <svg class="icon row__arrow" viewBox="0 0 256 256" aria-hidden="true"><line x1="40" y1="128" x2="216" y2="128"></line><polyline points="144 56 216 128 144 200"></polyline></svg>
             </span>
           </a>
-          <a class="row" href="course.html?c=TL-112" data-format="self-paced">
+          <a class="row" href="course.html?c=TL-112" data-topic="tooling" data-format="self-paced">
             <span class="row__code mono-data"><span>TL-112</span><span>SELF-PACED</span></span>
             <span class="row__main">
               <span class="h3">The Type System, Fully</span>
@@ -99,7 +105,7 @@
               <svg class="icon row__arrow" viewBox="0 0 256 256" aria-hidden="true"><line x1="40" y1="128" x2="216" y2="128"></line><polyline points="144 56 216 128 144 200"></polyline></svg>
             </span>
           </a>
-          <a class="row" href="course.html?c=TL-317" data-format="self-paced">
+          <a class="row" href="course.html?c=TL-317" data-topic="interface" data-format="self-paced">
             <span class="row__code mono-data"><span>TL-317</span><span>SELF-PACED</span></span>
             <span class="row__main">
               <span class="h3">Design for Density</span>
@@ -113,7 +119,7 @@
         </div>
 
         <div class="rows__cluster" id="cohorts">
-          <a class="row" href="course.html?c=TL-410" data-format="cohort">
+          <a class="row" href="course.html?c=TL-410" data-topic="systems" data-format="cohort">
             <span class="row__code mono-data"><span>TL-410</span><span>COHORT, 8 WEEKS</span></span>
             <span class="row__main">
               <span class="h3">From Parser to Production</span>
@@ -124,7 +130,7 @@
               <svg class="icon row__arrow" viewBox="0 0 256 256" aria-hidden="true"><line x1="40" y1="128" x2="216" y2="128"></line><polyline points="144 56 216 128 144 200"></polyline></svg>
             </span>
           </a>
-          <a class="row" href="course.html?c=TL-405" data-format="cohort">
+          <a class="row" href="course.html?c=TL-405" data-topic="tooling" data-format="cohort">
             <span class="row__code mono-data"><span>TL-405</span><span>COHORT, 6 WEEKS</span></span>
             <span class="row__main">
               <span class="h3">The Staff Engineer Brief</span>
@@ -145,7 +151,7 @@
       <div class="compartment reveal">
         <h2 class="h3">Cohorts run twice a year.</h2>
         <p class="body-sm t-2 mt-16">A cohort runs six or eight weeks, with two live sessions each week and a hard cap on seats. Every submission gets a written review from the instructor, which is why the seat count stays low.</p>
-        <p class="mt-24"><a class="link mono-data" href="#cohorts" data-filter-jump="cohort">Cohort dates</a></p>
+        <p class="mt-24"><a class="link mono-data" href="#cohorts">Cohort dates</a></p>
         <p class="status mono-label mt-24"><span class="status__dot"></span>Enrollment open: Sep cohort</p>
       </div>
     </section>
@@ -164,12 +170,12 @@
       <div class="footer__col">
         <span class="mono-label footer__title">Catalog</span>
         <ul class="footer__list">
-          <li><a class="footer__link" href="course.html">Systems Under Load</a></li>
-          <li><a class="footer__link" href="course.html">Interface Physics</a></li>
-          <li><a class="footer__link" href="course.html">The Type System, Fully</a></li>
-          <li><a class="footer__link" href="course.html">Design for Density</a></li>
-          <li><a class="footer__link" href="course.html">From Parser to Production</a></li>
-          <li><a class="footer__link" href="course.html">The Staff Engineer Brief</a></li>
+          <li><a class="footer__link" href="course.html?c=TL-301">Systems Under Load</a></li>
+          <li><a class="footer__link" href="course.html?c=TL-204">Interface Physics</a></li>
+          <li><a class="footer__link" href="course.html?c=TL-112">The Type System, Fully</a></li>
+          <li><a class="footer__link" href="course.html?c=TL-317">Design for Density</a></li>
+          <li><a class="footer__link" href="course.html?c=TL-410">From Parser to Production</a></li>
+          <li><a class="footer__link" href="course.html?c=TL-405">The Staff Engineer Brief</a></li>
         </ul>
       </div>
 

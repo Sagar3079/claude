@@ -1,0 +1,97 @@
+/* ==========================================================================
+   TOLERANCE - 3D viewports
+   Loaded after main.css on the two pages that carry a live viewport.
+   Tokens only. Radius 0, no shadows, no gradients, no accent colour.
+   ========================================================================== */
+
+/* The container keeps the footprint of the plate it replaced, so the page
+   does not reflow whether the viewport runs or the fallback shows. */
+.v3d-view {
+  position: relative;
+  display: block;
+  width: 100%;
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.v3d-view--hero {
+  aspect-ratio: 3 / 2;
+}
+
+.v3d-view--course {
+  aspect-ratio: 2 / 1;
+  margin-top: var(--s-32);
+  border: 1px solid var(--line);
+}
+
+/* Canvas and fallback occupy the same box. The canvas is only revealed once
+   a WebGL context has actually been created. */
+.v3d-canvas,
+.v3d-fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.v3d-fallback {
+  object-fit: cover;
+}
+
+.v3d-canvas {
+  opacity: 0;
+  transition: opacity var(--dur-hero) var(--ease-out);
+}
+
+.v3d-view.is-live .v3d-canvas {
+  opacity: 1;
+}
+
+/* Annotation overlays. Mono, quiet, and only present when the viewport is
+   genuinely live. */
+.v3d-tag {
+  position: absolute;
+  color: var(--text-3);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--dur-hero) var(--ease-out);
+}
+
+.v3d-view.is-live .v3d-tag {
+  opacity: 1;
+}
+
+.v3d-tag--tl {
+  top: var(--s-16);
+  left: var(--s-16);
+}
+
+.v3d-tag--br {
+  right: var(--s-16);
+  bottom: var(--s-16);
+  color: var(--text-2);
+}
+
+@media (max-width: 768px) {
+  .v3d-view--course {
+    aspect-ratio: 3 / 2;
+  }
+
+  .v3d-tag--tl {
+    top: var(--s-12);
+    left: var(--s-12);
+  }
+
+  .v3d-tag--br {
+    right: var(--s-12);
+    bottom: var(--s-12);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v3d-canvas,
+  .v3d-tag {
+    transition-duration: var(--dur-fast);
+  }
+}
