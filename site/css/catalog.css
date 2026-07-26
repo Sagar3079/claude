@@ -1,74 +1,136 @@
 /* ==========================================================================
-   TOLERANCE - page styles for courses.html and course.html
-   Loaded AFTER css/main.css. Additions only: the design system is not forked.
-   Prefixes: cat- (catalog page), cd- (course detail page).
+   BINDWELL - page styles for courses.html (cat-) and course.html (cd-)
+   Loaded AFTER css/main.css. Additions only: no component is redefined and
+   no token is re-declared. Everything here is layout that exists on these
+   two pages and nowhere else.
+     1  Catalog: sticky filter bar
+     2  Catalog: grid slots
+     3  Course detail: shell
    ========================================================================== */
 
-/* --------------------------------------------------------------------------
-   A. CATALOG FILTERING
-   Filter state lives on [data-active-filter] / [data-format]; a filtered row
-   carries the `hidden` attribute plus main.css's .is-filtered-out.
-   -------------------------------------------------------------------------- */
+/* ==========================================================================
+   1. Catalog: sticky filter bar
+   Sits under the 72px nav. The hairline is drawn only once the bar is stuck
+   (js/catalog.js toggles .is-stuck from a sentinel above it).
+   ========================================================================== */
 
-/* main.css transitions background-color and transform on .row. The filter
-   fades rows in as well as out, so opacity joins that list here. */
-.rows .row {
-  transition: background-color var(--dur-fast) var(--ease),
-    opacity var(--dur-fast) var(--ease), transform 100ms ease-out;
+.cat-sentinel {
+  height: 1px;
+  margin-bottom: -1px;
 }
 
-/* .row is display:grid, so the UA rule for [hidden] needs restating. */
-.rows .row[hidden] {
-  display: none;
+.cat-filters {
+  position: sticky;
+  top: var(--nav-h);
+  z-index: 30;
+  background: var(--paper);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--dur-fast) ease;
 }
 
-/* A cluster with no visible rows leaves the grid entirely, and must not leave
-   its hairline behind: a line only ever separates two pieces of real content. */
-.rows__cluster[hidden] {
-  display: none;
+.cat-filters.is-stuck {
+  border-bottom-color: var(--hairline);
 }
 
-.rows__cluster[hidden] + .rows__cluster {
-  border-top: 0;
+.cat-filters__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-12);
+  padding-top: var(--s-12);
+  padding-bottom: var(--s-12);
 }
 
-/* --------------------------------------------------------------------------
-   B. COURSE DETAIL
-   -------------------------------------------------------------------------- */
-
-/* Instructor line under the course standfirst: small square photo + name. */
-.cd-byline {
+.cat-filters__row {
   display: flex;
   align-items: center;
   gap: var(--s-16);
-  margin-top: var(--s-32);
 }
 
-.cd-byline__media {
-  width: 48px;
-  height: 48px;
+.cat-filters__row > .chip-row {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.cat-count {
   flex: none;
-  overflow: hidden;
+  white-space: nowrap;
 }
 
-/* A hairline-divided split stacks into one column at 1080px. Once stacked the
-   hairline is horizontal, so the compartments it separates need vertical room
-   they do not need side by side. */
-@media (max-width: 1080px) {
-  .cd-split > *:not(:first-child) { padding-top: var(--s-32); }
-  .cd-split > *:not(:last-child) { padding-bottom: var(--s-32); }
+/* Pull the ghost button's own inset back so its label sits on the page's
+   left margin, in line with the H1 above it. */
+.cat-clear {
+  margin-left: calc(var(--s-12) * -1);
 }
 
-/* Square portrait for the instructor section (4/8 split, photo left). */
-.cd-portrait {
-  aspect-ratio: 1 / 1;
-  overflow: hidden;
+/* Level and format share one scroller so the bar stays two rows tall. */
+.cat-groups {
+  display: flex;
+  align-items: center;
+  gap: var(--s-24);
+  overflow-x: auto;
+  scrollbar-width: none;
+  scroll-padding-inline: var(--s-16);
+  padding-bottom: 2px;
 }
 
-@media (max-width: 1080px) {
-  /* Stacked by main.css at this width: cap the portrait so it does not run
-     the full frame width. */
-  .cd-portrait {
-    max-width: 320px;
+.cat-groups::-webkit-scrollbar {
+  display: none;
+}
+
+/* ==========================================================================
+   2. Catalog: grid slots
+   .card-slot is the filter wrapper from main.css section 12; it only needs
+   to stretch its card to the row height here.
+   ========================================================================== */
+
+.cat-grid .card-slot {
+  display: flex;
+}
+
+.cat-grid .card-slot > .card {
+  width: 100%;
+}
+
+/* ==========================================================================
+   3. Course detail: shell
+   Title block top-left, buy card in the right column spanning both rows,
+   everything else below the title block. Under 1024 it is one column in DOM
+   order, which puts the buy card directly after the title block, exactly
+   where the wireframe wants it.
+   ========================================================================== */
+
+.cd-shell {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-32);
+}
+
+@media (min-width: 1024px) {
+  .cd-shell {
+    grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+    grid-template-areas:
+      "head side"
+      "body side";
+    column-gap: var(--s-48);
+    row-gap: var(--s-48);
+  }
+
+  .cd-head {
+    grid-area: head;
+  }
+
+  .cd-side {
+    grid-area: side;
+  }
+
+  .cd-body {
+    grid-area: body;
+  }
+}
+
+/* Room for the fixed buy bar, which only exists under 1024. */
+@media (max-width: 1023px) {
+  body.cd-page {
+    padding-bottom: var(--s-64);
   }
 }

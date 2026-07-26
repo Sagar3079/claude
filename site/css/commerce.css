@@ -1,321 +1,123 @@
 /* ==========================================================================
-   TOLERANCE - commerce
-   Page-specific styles for pricing.html and checkout.html.
-   Loads AFTER css/main.css. Adds nothing that main.css already provides:
-   every rule here is either a plan-grid tweak (pr-) or part of the checkout
-   receipt treatment (co-). Same locks as the system: radius 0, no shadow,
-   no gradient, one accent, hairlines only where they separate real content.
+   Bindwell - commerce.css
+   Page-scoped rules for pricing.html (`pr-`) and checkout.html (`co-`).
+   Everything else these two pages need already exists in css/main.css:
+   .plan, .check-list, .panel, .line, .summary-row, .field, .notice, .empty.
+   No tokens are declared here; no component from main.css is redefined.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   0. STATE SWITCHING
-   checkout.html swaps between three whole-page states (order / empty /
-   confirmed). The attribute has to win over .section padding.
+   Pricing: the demo note under "Start the plan". Present in the markup so
+   the layout never shifts, revealed by js/pricing.js on click. Fades at the
+   same 150ms as every other state change on the site.
    -------------------------------------------------------------------------- */
+.pr-note {
+  margin-top: var(--s-8);
+  max-width: 34ch;
+  opacity: 0;
+  transition: opacity var(--dur-fast) ease;
+}
 
-[hidden] {
+.pr-note.is-visible {
+  opacity: 1;
+}
+
+/* Pricing: the FAQ answers are held to 65ch by the accordion component, so a
+   full 1280 container leaves the panel half empty. Hold the whole block to a
+   reading measure instead; it stays left-aligned with the H2 above it. */
+.pr-faq {
+  max-width: 840px;
+}
+
+/* --------------------------------------------------------------------------
+   Checkout: the empty and confirmed states are short enough to leave the
+   reduced footer floating mid-screen. Only this page can be that short, so
+   the fix is scoped to it: the body becomes a column and main takes the
+   slack. The skip link and the sticky nav are unaffected (absolute and
+   sticky respectively).
+   -------------------------------------------------------------------------- */
+html:has(.co-main) body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.co-main {
+  flex: 1 0 auto;
+}
+
+/* --------------------------------------------------------------------------
+   Checkout: the cart shell. Three blocks in one grid so that source order
+   can be the mobile order (lines, then what you owe, then how you pay) while
+   the desktop layout still puts the payment form under the line items with
+   the summary alongside both. `.shell--7-5` supplies the columns and the
+   collapse; this only names the areas on top of it.
+   -------------------------------------------------------------------------- */
+@media (min-width: 1024px) {
+  .co-shell {
+    grid-template-areas:
+      "lines summary"
+      "pay   summary";
+    column-gap: var(--s-48);
+    row-gap: var(--s-32);
+  }
+
+  .co-lines {
+    grid-area: lines;
+  }
+
+  .co-summary {
+    grid-area: summary;
+  }
+
+  .co-pay {
+    grid-area: pay;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Checkout: the three exclusive page states (empty / cart / confirmed).
+   `is-out` is the outgoing half of the 150ms crossfade in js/checkout.js.
+   -------------------------------------------------------------------------- */
+.co-swap {
+  transition: opacity var(--dur-fast) ease;
+}
+
+.co-swap.is-out {
+  opacity: 0;
+}
+
+/* The confirmation is one short banner. Left aligned with the H1, held to a
+   readable measure rather than stretched across the full 1280 container. */
+.co-swap[data-state="done"] {
+  max-width: 680px;
+}
+
+/* Without JS there is no localStorage read, so the honest state is "empty".
+   The inline `has-js` flag in <head> means this never flashes. */
+html:not(.has-js) [data-state="empty"][hidden] {
+  display: block !important;
+}
+
+html:not(.has-js) [data-state="cart"],
+html:not(.has-js) [data-state="done"] {
   display: none !important;
 }
 
 /* --------------------------------------------------------------------------
-   1. PRICING - plans grid
-   .plan already carries the compartment, the featured accent border and the
-   list rhythm. All this adds is equal-height cells with the CTA pinned to the
-   bottom edge, and the mid-width collapse the 12-col spans do not cover.
+   Checkout: order-summary course lines. Long titles truncate rather than
+   wrap to three lines and push the total out of the card.
    -------------------------------------------------------------------------- */
-
-.pr-plans .plan {
-  height: 100%;
+.co-summary-row span:first-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.pr-plans .plan__list {
-  flex: 1 1 auto;
-}
-
-.pr-plans .plan__cta {
-  margin-top: auto;
-  padding-top: var(--s-32);
-}
-
-/* Between 720 and 1080 a 3-col plan is too narrow for 32px padding:
-   all-access goes full width, the other two share a row. */
-@media (max-width: 1080px) {
-  .pr-plans .col-6 { grid-column: span 12; }
-  .pr-plans .col-3 { grid-column: span 6; }
-}
-
-/* --------------------------------------------------------------------------
-   2. PRICING - comparison clusters
-   A grouped chunk list, not a matrix. One hairline per cluster, never per row.
-   -------------------------------------------------------------------------- */
-
-.pr-compare {
-  border-top: 1px solid var(--line);
-}
-
-.pr-compare__cluster {
-  display: grid;
-  grid-template-columns: 3fr 9fr;
-  gap: var(--s-24);
-  padding: var(--s-32) 0;
-}
-
-.pr-compare__cluster + .pr-compare__cluster {
-  border-top: 1px solid var(--line);
-}
-
-.pr-compare__title {
-  display: block;
-  color: var(--text-2);
-}
-
-.pr-compare__row {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--s-24);
-  padding: var(--s-8) 0;
-}
-
-.pr-compare__name {
-  color: var(--text-1);
-}
-
-.pr-compare__plans {
-  flex: none;
-  text-align: right;
-  color: var(--text-3);
-}
-
-@media (max-width: 720px) {
-  .pr-compare__cluster {
-    grid-template-columns: 1fr;
-    gap: var(--s-16);
-  }
-
-  .pr-compare__row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--s-4);
-  }
-
-  .pr-compare__plans {
-    text-align: left;
-  }
-}
-
-/* --------------------------------------------------------------------------
-   3. CHECKOUT - the receipt
-   Every line item is mono. Items are separated by a dotted hairline, and the
-   name is tied to its amount by a dotted leader, the way a printed receipt
-   does it. The leader separates two real data points, so it is structural.
-   -------------------------------------------------------------------------- */
-
-.co-panel__title {
-  display: block;
-  margin-bottom: var(--s-16);
-  color: var(--text-2);
-}
-
-.co-receipt__head {
-  display: flex;
-  align-items: baseline;
-  gap: var(--s-12);
-  padding-bottom: var(--s-12);
-  border-bottom: 1px solid var(--line);
-  color: var(--text-2);
-}
-
-.co-receipt__head > :first-child {
-  margin-right: auto;
-}
-
-/* A mirror of the remove control, reserved so the AMOUNT column header sits
-   over the amounts instead of over the controls. */
-.co-head__pad {
-  flex: none;
-  visibility: hidden;
-}
-
-/* main.css spaces stacked fields by 24px; inside the two-up grid the second
-   field is a sibling, so that margin has to come back off. */
-[data-co-form] .field-grid > .field + .field {
-  margin-top: 0;
-}
-
-.co-line {
-  display: flex;
-  align-items: baseline;
-  gap: var(--s-12);
-  padding: var(--s-12) 0;
-}
-
-.co-line + .co-line {
-  border-top: 1px dotted var(--line);
-}
-
-.co-line__code {
-  flex: none;
-  width: 8ch;
-  color: var(--text-3);
-}
-
-.co-line__title {
-  flex: 0 1 auto;
-  color: var(--text-1);
-  text-transform: uppercase;
-}
-
-.co-line__leader {
-  flex: 1 1 auto;
-  min-width: var(--s-16);
-  height: 0;
-  align-self: center;
-  border-bottom: 1px dotted var(--line-strong);
-  transform: translateY(3px);
-}
-
-.co-line__amount {
-  flex: none;
-  min-width: 10ch;
-  text-align: right;
-  color: var(--text-1);
-  font-variant-numeric: tabular-nums;
-}
-
-/* Remove control. Neutral at rest so a long order never puts more than one
-   red element on screen; it only reaches --accent-text while hovered. */
-.co-remove {
-  flex: none;
-  padding: 0;
-  background: none;
-  border: 0;
-  cursor: pointer;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  line-height: 1.2;
-  text-transform: uppercase;
-  color: var(--text-3);
-  transition: color var(--dur-fast) var(--ease);
-}
-
-.co-remove:hover {
-  color: var(--accent-text);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.co-remove[disabled] {
-  color: var(--line-strong);
-  pointer-events: none;
-}
-
-/* Below 1080 the 7/5 split stacks and its hairline turns horizontal, so the
-   summary needs vertical air instead of the column gap it had. */
-@media (max-width: 1080px) {
-  [data-co-order] .split > :first-child {
-    padding-bottom: var(--s-32);
-  }
-
-  [data-co-order] .split > * + * {
-    padding-top: var(--s-32);
-  }
-}
-
-/* Dotted demo notice. Marks the mock boundary without borrowing the accent. */
-.co-note {
-  padding: var(--s-12) var(--s-16);
-  border: 1px dotted var(--line-strong);
-  color: var(--text-2);
-}
-
-/* --------------------------------------------------------------------------
-   4. CHECKOUT - empty and confirmed states
-   Both are designed panels, not fallbacks.
-   -------------------------------------------------------------------------- */
-
-.co-empty,
-.co-done {
-  max-width: 640px;
-  margin-inline: auto;
-}
-
-.co-empty {
-  padding: var(--s-64) var(--s-32);
-  text-align: center;
-}
-
-.co-mark {
-  font-family: var(--font-mono);
-  font-size: 1.875rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  line-height: 1.15;
-  text-transform: uppercase;
-  color: var(--text-1);
-}
-
-.co-empty__note {
-  margin: var(--s-16) auto 0;
-  max-width: 44ch;
-  color: var(--text-2);
-}
-
-.co-empty__cta {
-  margin-top: var(--s-32);
-}
-
-.co-done__no {
-  margin-top: var(--s-8);
-  font-family: var(--font-mono);
-  font-size: 1.25rem;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  line-height: 1.2;
-  font-variant-numeric: tabular-nums;
-  color: var(--text-2);
-}
-
-@media (max-width: 720px) {
-  .co-mark {
-    font-size: 1.5rem;
-  }
-
-  .co-empty {
-    padding: var(--s-32) var(--s-24);
-  }
-
-  /* Receipt line stacks: code and amount on one row, title under it,
-     remove control last. The leader has nothing to lead across. */
-  .co-line {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: var(--s-4) var(--s-12);
-  }
-
-  .co-line__code {
-    width: auto;
-  }
-
-  .co-line__amount {
-    grid-column: 2;
-    grid-row: 1;
-  }
-
-  .co-line__title,
-  .co-remove {
-    grid-column: 1 / -1;
-  }
-
-  .co-remove {
-    justify-self: start;
-    padding-top: var(--s-4);
-  }
-
-  .co-line__leader,
-  .co-head__pad {
-    display: none;
+@media (prefers-reduced-motion: reduce) {
+  .pr-note,
+  .co-swap {
+    transition: none;
   }
 }

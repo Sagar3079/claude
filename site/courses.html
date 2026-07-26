@@ -3,212 +3,189 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TOLERANCE - Catalog</title>
-<meta name="description" content="All six TOLERANCE courses, with runtime, module count, format, and price listed before checkout.">
+<title>Bindwell - Catalog</title>
+<meta name="description" content="Browse twelve Bindwell courses by category, level, and format.">
 <script>document.documentElement.className += " has-js";</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&family=Inter:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/catalog.css">
+<script src="js/data.js" defer></script>
 <script src="js/main.js" defer></script>
 <script src="js/catalog.js" defer></script>
 </head>
 <body>
 
-<div class="frame">
+<a class="skip-link" href="#main">Skip to content</a>
 
-  <header class="nav">
-    <a class="wordmark" href="index.html">TOLERANCE<sup>&reg;</sup></a>
+<header class="nav">
+  <div class="container nav__inner">
+    <a class="wordmark" href="index.html">bindwell<span class="wordmark__dot">.</span></a>
+
     <nav class="nav__links" aria-label="Primary">
       <a class="nav__link" href="courses.html" aria-current="page">Courses</a>
-      <a class="nav__link" href="pricing.html">Pricing</a>
-      <a class="nav__link" href="index.html#method">Method</a>
     </nav>
+
+    <form class="search nav__search" role="search" action="courses.html" method="get" data-search-form>
+      <svg class="icon search__icon" viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="6"></circle><path d="M13.5 13.5 17.5 17.5"></path></svg>
+      <input class="search__input" type="search" name="q" aria-label="Search courses" placeholder="Search courses">
+    </form>
+
     <div class="nav__actions">
-      <a class="nav__cart" href="checkout.html" data-cart-link hidden>Cart [<span data-cart-count>0</span>]</a>
-      <a class="nav__signin" href="#">Sign in</a>
-      <a class="btn btn--primary btn--sm" href="courses.html">Browse courses</a>
+      <a class="nav__link nav__signin" href="pricing.html">Pricing</a>
+      <button class="nav__search-toggle" type="button" aria-label="Search" aria-expanded="false" aria-controls="nav-search-row" data-search-toggle>
+        <svg class="icon" viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="6"></circle><path d="M13.5 13.5 17.5 17.5"></path></svg>
+      </button>
+      <a class="nav__cart" href="checkout.html" aria-label="Cart">
+        <svg class="icon icon--lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.2 10.5h10.2"></path><path d="M6.6 7h14l-1.6 6.5H7.4"></path><circle cx="9.5" cy="19" r="1.4"></circle><circle cx="17.5" cy="19" r="1.4"></circle></svg>
+        <span class="nav__cart-count" data-cart-count hidden>0</span>
+      </a>
+      <a class="btn btn--primary btn--sm nav__signin" href="#">Sign in</a>
+      <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-panel" data-nav-toggle>
+        <svg class="icon icon--open icon--lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+        <svg class="icon icon--close icon--lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6 18 18M18 6 6 18"></path></svg>
+      </button>
     </div>
-    <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-panel" data-nav-toggle>
-      <svg class="icon icon--open" viewBox="0 0 256 256" aria-hidden="true"><line x1="40" y1="64" x2="216" y2="64"></line><line x1="40" y1="128" x2="216" y2="128"></line><line x1="40" y1="192" x2="216" y2="192"></line></svg>
-      <svg class="icon icon--close" viewBox="0 0 256 256" aria-hidden="true"><line x1="200" y1="56" x2="56" y2="200"></line><line x1="200" y1="200" x2="56" y2="56"></line></svg>
-    </button>
-  </header>
+  </div>
+
+  <div class="nav__mobile-search" id="nav-search-row" data-search-row>
+    <div>
+      <div class="container">
+        <form class="search" role="search" action="courses.html" method="get" data-search-form>
+          <svg class="icon search__icon" viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="6"></circle><path d="M13.5 13.5 17.5 17.5"></path></svg>
+          <input class="search__input" type="search" name="q" aria-label="Search courses" placeholder="Search courses">
+        </form>
+      </div>
+    </div>
+  </div>
 
   <div class="nav__panel" id="nav-panel" data-nav-panel>
     <a class="nav__panel-link" href="courses.html">Courses</a>
     <a class="nav__panel-link" href="pricing.html">Pricing</a>
-    <a class="nav__panel-link" href="index.html#method">Method</a>
+    <a class="nav__panel-link" href="checkout.html">Cart</a>
     <div class="nav__panel-actions">
-      <a class="btn btn--primary" href="courses.html">Browse courses</a>
-      <a class="btn btn--secondary" href="#">Sign in</a>
+      <a class="btn btn--primary btn--block" href="#">Sign in</a>
+    </div>
+  </div>
+</header>
+<div class="nav__backdrop" data-nav-backdrop></div>
+
+<main id="main">
+
+  <!-- Page header. The title and lede switch to the search-results state when
+       ?q= is present; js/catalog.js writes both. -->
+  <section class="section section--tight">
+    <div class="container">
+      <h1 class="h1" data-page-title>All courses</h1>
+      <p class="body t-2 mt-8" data-page-lede>Twelve courses. Every syllabus public. Filter, compare, begin.</p>
+      <div class="mt-8 cat-clear" data-search-actions hidden>
+        <a class="btn btn--ghost" href="courses.html">Clear search</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filter row. Sticky under the nav. The three groups combine with AND. -->
+  <div class="cat-sentinel" data-filter-sentinel aria-hidden="true"></div>
+  <div class="cat-filters" data-filters>
+    <div class="container cat-filters__inner">
+      <div class="cat-filters__row">
+        <div class="chip-row" role="group" aria-label="Category">
+          <button class="chip" type="button" aria-pressed="true" data-filter="cat" data-value="all">All</button>
+          <button class="chip" type="button" aria-pressed="false" data-filter="cat" data-value="engineering">Engineering</button>
+          <button class="chip" type="button" aria-pressed="false" data-filter="cat" data-value="design">Design</button>
+          <button class="chip" type="button" aria-pressed="false" data-filter="cat" data-value="data">Data &amp; AI</button>
+          <button class="chip" type="button" aria-pressed="false" data-filter="cat" data-value="career">Product &amp; Career</button>
+        </div>
+        <p class="meta cat-count" data-result-count aria-live="polite">12 courses</p>
+      </div>
+
+      <div class="cat-groups">
+        <div class="chip-group" role="group" aria-label="Level">
+          <button class="chip" type="button" aria-pressed="true" data-filter="level" data-value="any">Any level</button>
+          <button class="chip" type="button" aria-pressed="false" data-filter="level" data-value="Beginner">Beginner</button>
+          <button class="chip" type="button" aria-pressed="false" data-filter="level" data-value="Intermediate">Intermediate</button>
+          <button class="chip" type="button" aria-pressed="false" data-filter="level" data-value="Advanced">Advanced</button>
+        </div>
+        <div class="chip-group" role="group" aria-label="Format">
+          <button class="chip" type="button" aria-pressed="true" data-filter="format" data-value="any">Any format</button>
+          <button class="chip" type="button" aria-pressed="false" data-filter="format" data-value="Self-paced">Self-paced</button>
+          <button class="chip" type="button" aria-pressed="false" data-filter="format" data-value="Cohort">Cohort</button>
+        </div>
+      </div>
     </div>
   </div>
 
-  <main id="main">
+  <!-- Card grid. Rendered once from js/data.js; filtering only toggles
+       visibility, it never re-renders. -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="grid-cards cat-grid" data-catalog-grid></div>
 
-    <!-- PAGE HEADER + FILTER BAR -->
-    <section class="section section--hero">
-      <div data-hero>
-        <h1 class="h1 hero-item">Catalog</h1>
-        <p class="body mt-24 hero-item">Six courses. Every syllabus public. Sorted by depth, not popularity.</p>
-        <div class="toggles mt-32 hero-item" role="group" aria-label="Format" data-filter-group="format" data-active-filter="all">
-          <button class="toggle" type="button" aria-pressed="true" data-filter="all">All</button>
-          <button class="toggle" type="button" aria-pressed="false" data-filter="self-paced">Self-paced</button>
-          <button class="toggle" type="button" aria-pressed="false" data-filter="cohort">Cohort</button>
-        </div>
-        <div class="toggles mt-16 hero-item" role="group" aria-label="Topic" data-filter-group="topic" data-active-filter="all">
-          <button class="toggle" type="button" aria-pressed="true" data-filter="all">All topics</button>
-          <button class="toggle" type="button" aria-pressed="false" data-filter="systems">Systems</button>
-          <button class="toggle" type="button" aria-pressed="false" data-filter="interface">Interface</button>
-          <button class="toggle" type="button" aria-pressed="false" data-filter="tooling">Tooling</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- COURSE LIST -->
-    <section class="section">
-      <div class="rows reveal" data-filter-target>
-
-        <div class="rows__cluster">
-          <a class="row" href="course.html?c=TL-301" data-topic="systems" data-format="self-paced">
-            <span class="row__code mono-data"><span>TL-301</span><span>SELF-PACED</span></span>
-            <span class="row__main">
-              <span class="h3">Systems Under Load</span>
-              <span class="row__desc body-sm">Performance engineering for distributed backends: measure first, then fix the queue, the allocator, and the network, in that order.</span>
-            </span>
-            <span class="row__meta mono-data">11H 20M / 07 MODULES</span>
-            <span class="row__price">$249
-              <svg class="icon row__arrow" viewBox="0 0 256 256" aria-hidden="true"><line x1="40" y1="128" x2="216" y2="128"></line><polyline points="144 56 216 128 144 200"></polyline></svg>
-            </span>
-          </a>
-          <a class="row" href="course.html?c=TL-204" data-topic="interface" data-format="self-paced">
-            <span class="row__code mono-data"><span>TL-204</span><span>SELF-PACED</span></span>
-            <span class="row__main">
-              <span class="h3">Interface Physics</span>
-              <span class="row__desc body-sm">Motion, gesture, and state transitions for design engineers who want interfaces that feel machined, not decorated.</span>
-            </span>
-            <span class="row__meta mono-data">8H 45M / 06 MODULES</span>
-            <span class="row__price">$229
-              <svg class="icon row__arrow" viewBox="0 0 256 256" aria-hidden="true"><line x1="40" y1="128" x2="216" y2="128"></line><polyline points="144 56 216 128 144 200"></polyline></svg>
-            </span>
-          </a>
-          <a class="row" href="course.html?c=TL-112" data-topic="tooling" data-format="self-paced">
-            <span class="row__code mono-data"><span>TL-112</span><span>SELF-PACED</span></span>
-            <span class="row__main">
-              <span class="h3">The Type System, Fully</span>
-              <span class="row__desc body-sm">Advanced TypeScript from variance to the compiler API, taught through a real library you publish at the end.</span>
-            </span>
-            <span class="row__meta mono-data">9H 10M / 08 MODULES</span>
-            <span class="row__price">$189
-              <svg class="icon row__arrow" viewBox="0 0 256 256" aria-hidden="true"><line x1="40" y1="128" x2="216" y2="128"></line><polyline points="144 56 216 128 144 200"></polyline></svg>
-            </span>
-          </a>
-          <a class="row" href="course.html?c=TL-317" data-topic="interface" data-format="self-paced">
-            <span class="row__code mono-data"><span>TL-317</span><span>SELF-PACED</span></span>
-            <span class="row__main">
-              <span class="h3">Design for Density</span>
-              <span class="row__desc body-sm">Data-dense product UI: tables, monitoring views, and editors that stay legible at 200 rows and 4 a.m.</span>
-            </span>
-            <span class="row__meta mono-data">7H 30M / 05 MODULES</span>
-            <span class="row__price">$279
-              <svg class="icon row__arrow" viewBox="0 0 256 256" aria-hidden="true"><line x1="40" y1="128" x2="216" y2="128"></line><polyline points="144 56 216 128 144 200"></polyline></svg>
-            </span>
-          </a>
-        </div>
-
-        <div class="rows__cluster" id="cohorts">
-          <a class="row" href="course.html?c=TL-410" data-topic="systems" data-format="cohort">
-            <span class="row__code mono-data"><span>TL-410</span><span>COHORT, 8 WEEKS</span></span>
-            <span class="row__main">
-              <span class="h3">From Parser to Production</span>
-              <span class="row__desc body-sm">Build a small compiled language end to end, with weekly code review of your implementation.</span>
-            </span>
-            <span class="row__meta mono-data">16 LIVE SESSIONS / 20 SEATS</span>
-            <span class="row__price">$1,450
-              <svg class="icon row__arrow" viewBox="0 0 256 256" aria-hidden="true"><line x1="40" y1="128" x2="216" y2="128"></line><polyline points="144 56 216 128 144 200"></polyline></svg>
-            </span>
-          </a>
-          <a class="row" href="course.html?c=TL-405" data-topic="tooling" data-format="cohort">
-            <span class="row__code mono-data"><span>TL-405</span><span>COHORT, 6 WEEKS</span></span>
-            <span class="row__main">
-              <span class="h3">The Staff Engineer Brief</span>
-              <span class="row__desc body-sm">Technical writing, RFC strategy, and decision records for engineers moving from output to leverage.</span>
-            </span>
-            <span class="row__meta mono-data">12 LIVE SESSIONS / 24 SEATS</span>
-            <span class="row__price">$980
-              <svg class="icon row__arrow" viewBox="0 0 256 256" aria-hidden="true"><line x1="40" y1="128" x2="216" y2="128"></line><polyline points="144 56 216 128 144 200"></polyline></svg>
-            </span>
-          </a>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- COHORT NOTE -->
-    <section class="section">
-      <div class="compartment reveal">
-        <h2 class="h3">Cohorts run twice a year.</h2>
-        <p class="body-sm t-2 mt-16">A cohort runs six or eight weeks, with two live sessions each week and a hard cap on seats. Every submission gets a written review from the instructor, which is why the seat count stays low.</p>
-        <p class="mt-24"><a class="link mono-data" href="#cohorts">Cohort dates</a></p>
-        <p class="status mono-label mt-24"><span class="status__dot"></span>Enrollment open: Sep cohort</p>
-      </div>
-    </section>
-
-  </main>
-
-  <footer class="footer">
-    <div class="footer__grid">
-      <div class="footer__brand">
-        <a class="wordmark" href="index.html">TOLERANCE<sup>&reg;</sup></a>
-        <p class="body-sm footer__tag">Courses machined to spec.</p>
-        <p class="mono-data footer__legal">&copy; 2026 Tolerance Courses</p>
-        <p class="mono-data footer__legal">A fictional demo site.</p>
-      </div>
-
-      <div class="footer__col">
-        <span class="mono-label footer__title">Catalog</span>
-        <ul class="footer__list">
-          <li><a class="footer__link" href="course.html?c=TL-301">Systems Under Load</a></li>
-          <li><a class="footer__link" href="course.html?c=TL-204">Interface Physics</a></li>
-          <li><a class="footer__link" href="course.html?c=TL-112">The Type System, Fully</a></li>
-          <li><a class="footer__link" href="course.html?c=TL-317">Design for Density</a></li>
-          <li><a class="footer__link" href="course.html?c=TL-410">From Parser to Production</a></li>
-          <li><a class="footer__link" href="course.html?c=TL-405">The Staff Engineer Brief</a></li>
-        </ul>
-      </div>
-
-      <div class="footer__col">
-        <span class="mono-label footer__title">Company</span>
-        <ul class="footer__list">
-          <li><a class="footer__link" href="index.html#method">Method</a></li>
-          <li><a class="footer__link" href="index.html#instructors">Instructors</a></li>
-          <li><a class="footer__link" href="#">Contact</a></li>
-        </ul>
-      </div>
-
-      <div class="footer__col">
-        <span class="mono-label footer__title">Legal</span>
-        <ul class="footer__list">
-          <li><a class="footer__link" href="#">Terms</a></li>
-          <li><a class="footer__link" href="#">Privacy</a></li>
-          <li><a class="footer__link" href="#">Refunds</a></li>
-        </ul>
-      </div>
-
-      <div class="footer__col">
-        <span class="mono-label footer__title">Elsewhere</span>
-        <ul class="footer__list">
-          <li><a class="footer__link" href="#">RSS</a></li>
-          <li><a class="footer__link" href="#">YouTube</a></li>
-          <li><a class="footer__link" href="#">GitHub</a></li>
-        </ul>
+      <div class="empty" data-empty hidden>
+        <h3 class="h3" data-empty-title>Nothing matches that combination.</h3>
+        <p class="body-sm t-2">Try removing a filter, or browse everything.</p>
+        <a class="btn btn--secondary" href="courses.html">Show all courses</a>
       </div>
     </div>
-  </footer>
+  </section>
 
-</div>
+  <!-- Cohort note -->
+  <section class="section section--flush-top">
+    <div class="container">
+      <div class="panel split-8-4">
+        <div class="stack-8">
+          <h3 class="h3">Cohorts run twice a year</h3>
+          <p class="body-sm t-2">Live sessions, 20 to 24 seats, and a weekly review of the work you actually wrote. Your seat is held for the run you join.</p>
+        </div>
+        <div class="push-end">
+          <p class="status"><span class="status__dot"></span>Next cohorts start in September</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <a class="wordmark" href="index.html">bindwell<span class="wordmark__dot">.</span></a>
+      <p class="body-sm t-2">Well-made courses, taught by people who still do the work.</p>
+      <p class="meta">&copy; 2026 Bindwell &middot; A fictional demo site.</p>
+    </div>
+
+    <div class="footer__col">
+      <span class="footer__title">Explore</span>
+      <ul class="footer__list">
+        <li><a class="footer__link" href="courses.html">All courses</a></li>
+        <li><a class="footer__link" href="courses.html?cat=engineering">Engineering</a></li>
+        <li><a class="footer__link" href="courses.html?cat=design">Design</a></li>
+        <li><a class="footer__link" href="courses.html?cat=data">Data &amp; AI</a></li>
+        <li><a class="footer__link" href="courses.html?cat=career">Product &amp; Career</a></li>
+        <li><a class="footer__link" href="pricing.html">Pricing</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <span class="footer__title">Company</span>
+      <ul class="footer__list">
+        <li><a class="footer__link" href="#">About</a></li>
+        <li><a class="footer__link" href="#">Instructors</a></li>
+        <li><a class="footer__link" href="#">Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <span class="footer__title">Support</span>
+      <ul class="footer__list">
+        <li><a class="footer__link" href="#">Refunds</a></li>
+        <li><a class="footer__link" href="#">Terms</a></li>
+        <li><a class="footer__link" href="#">Privacy</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
 
 </body>
 </html>
