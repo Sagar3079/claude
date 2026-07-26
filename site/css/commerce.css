@@ -15,11 +15,14 @@
   margin-top: var(--s-8);
   max-width: 34ch;
   opacity: 0;
-  transition: opacity var(--dur-fast) ease;
+  visibility: hidden;
+  transition: opacity var(--dur-fast) ease, visibility 0s var(--dur-fast);
 }
 
 .pr-note.is-visible {
   opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
 }
 
 /* Pricing: the FAQ answers are held to 65ch by the accordion component, so a

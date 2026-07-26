@@ -119,6 +119,13 @@
           setOpen(false);
           toggle.focus();
         }
+        var row = document.querySelector("[data-search-row].is-open");
+        var rowToggle = document.querySelector("[data-search-toggle]");
+        if (e.key === "Escape" && row && rowToggle) {
+          row.classList.remove("is-open");
+          rowToggle.setAttribute("aria-expanded", "false");
+          rowToggle.focus();
+        }
       });
     }
 

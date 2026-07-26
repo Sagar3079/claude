@@ -190,10 +190,16 @@
   function render(visible) {
     if (countEl) countEl.textContent = plural(visible);
 
+    var filtered = state.cat !== "all" || state.level !== "any" || state.format !== "any";
+
     if (state.q) {
       if (pageTitle) pageTitle.textContent = "Results for " + quoted(state.q);
       if (pageLede) pageLede.textContent = plural(visible) + " for " + quoted(state.q) + ".";
       if (searchActions) searchActions.hidden = false;
+    } else if (filtered) {
+      if (pageTitle) pageTitle.textContent = "All courses";
+      if (pageLede) pageLede.textContent = plural(visible) + " match the current filters. Every syllabus public before you pay.";
+      if (searchActions) searchActions.hidden = true;
     } else {
       if (pageTitle) pageTitle.textContent = "All courses";
       if (pageLede) pageLede.textContent = LEDE_DEFAULT;
