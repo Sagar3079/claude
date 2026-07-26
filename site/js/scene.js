@@ -22,7 +22,7 @@ const TILT_MAX = (6 * Math.PI) / 180;   /* parallax ceiling */
 const TILT_EASE = 3.2;                  /* approach per second */
 const STATIC_AZIMUTH = 0.62;            /* reduced-motion 3/4 angle */
 const FOV = 24;                         /* long lens: technical, not wide */
-const ELEVATION = 0.38;                 /* camera rise, ~21 degrees */
+const ELEVATION = 0.46;                 /* camera rise, ~25 degrees */
 
 const COL_LINE = 0x3a3a3a;              /* --line-strong */
 const COL_HI = 0x6a6a6a;                /* highlight edges */
@@ -77,20 +77,21 @@ function paramsFor(code) {
     flangeH: span(0.13, 0.2),
     ringR: flangeR + span(0.1, 0.26),
     ringTube: span(0.045, 0.075),
-    grooveR: flangeR * span(0.6, 0.78),
+    grooveR: flangeR * span(0.58, 0.7),
     boltCount: spanInt(6, 12),
     boltR: span(0.07, 0.105),
-    boltCircleR: flangeR * span(0.72, 0.84),
-    boltH: span(0.24, 0.34),
+    boltCircleR: flangeR * span(0.85, 0.9),
+    boltH: span(0.26, 0.36),
     finCount: spanInt(5, 11),
     finH: span(0.34, 0.78),
     finThick: span(0.07, 0.13),
+    finReach: span(0.7, 0.79),
     hubR: hubR,
     hubH: span(0.68, 1.34),
     collarR: hubR * span(0.6, 0.82),
     collarH: span(0.18, 0.36),
     spindleR: hubR * span(0.24, 0.38),
-    spindleOver: span(0.3, 0.72)
+    spindleOver: span(0.1, 0.3)
   };
 }
 
@@ -119,10 +120,37 @@ function finGeometry(len, hInner, hOuter, thick) {
   return g;
 }
 
+/* Generatrix lines on a cylinder wall. Two rim circles alone read as floating
+   ellipses; the ruling is what makes a turned surface read as a solid. Back
+   half is removed by the hidden-line fill, so only the near wall shows. */
+function rulingGeometry(radius, height, y, count, offsetX, angle) {
+  const arr = new Float32Array(count * 6);
+  const cos = Math.cos(angle || 0);
+  const sin = Math.sin(angle || 0);
+  const ox = offsetX || 0;
+  for (let i = 0; i < count; i++) {
+    const a = (i / count) * Math.PI * 2;
+    const lx = ox + Math.cos(a) * radius;
+    const lz = Math.sin(a) * radius;
+    const x = lx * cos + lz * sin;
+    const z = -lx * sin + lz * cos;
+    arr[i * 6] = x;
+    arr[i * 6 + 1] = y - height / 2;
+    arr[i * 6 + 2] = z;
+    arr[i * 6 + 3] = x;
+    arr[i * 6 + 4] = y + height / 2;
+    arr[i * 6 + 5] = z;
+  }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute("position", new THREE.BufferAttribute(arr, 3));
+  return g;
+}
+
 function buildPieces(p) {
   const S = 56;
   const pieces = [];
-  const push = (geom, hi) => pieces.push({ geom: geom, hi: !!hi });
+  const push = (geom, hi) => pieces.push({ geom: geom, hi: !!hi, solid: true });
+  const rule = (geom, hi) => pieces.push({ geom: geom, hi: !!hi, solid: false });
 
   const plateY = -0.66;
   const plateTop = plateY + p.flangeH / 2;
@@ -134,6 +162,7 @@ function buildPieces(p) {
 
   /* Base flange plate */
   push(place(new THREE.CylinderGeometry(p.flangeR, p.flangeR, p.flangeH, S), 0, plateY, 0));
+  rule(rulingGeometry(p.flangeR, p.flangeH, plateY, 28, 0, 0));
 
   /* Machined circular groove on the plate face */
   push(
@@ -167,11 +196,12 @@ function buildPieces(p) {
         a
       )
     );
+    rule(rulingGeometry(p.boltR, p.boltH, plateY, 4, p.boltCircleR, a));
   }
 
   /* Radial fins between hub wall and plate rim */
   const finInner = p.hubR * 0.94;
-  const finOuter = p.flangeR * 0.9;
+  const finOuter = p.flangeR * p.finReach;
   const finLen = Math.max(0.2, finOuter - finInner);
   for (let i = 0; i < p.finCount; i++) {
     const a = (i / p.finCount) * Math.PI * 2 + Math.PI / p.finCount;
@@ -187,6 +217,7 @@ function buildPieces(p) {
 
   /* Hub barrel, chamfer, collar */
   push(place(new THREE.CylinderGeometry(p.hubR, p.hubR, p.hubH, S), 0, hubY, 0));
+  rule(rulingGeometry(p.hubR, p.hubH, hubY, 16, 0, 0));
   push(
     place(
       new THREE.CylinderGeometry(p.collarR * 1.06, p.hubR, chamferH, S),
@@ -199,18 +230,21 @@ function buildPieces(p) {
     place(new THREE.CylinderGeometry(p.collarR, p.collarR, p.collarH, S), 0, collarY, 0),
     true
   );
+  rule(rulingGeometry(p.collarR, p.collarH, collarY, 12, 0, 0), true);
 
   /* Through spindle */
   const spindleLen = collarTop - plateY + p.flangeH + p.spindleOver * 2;
+  const spindleY = collarTop + p.spindleOver - spindleLen / 2;
   push(
     place(
       new THREE.CylinderGeometry(p.spindleR, p.spindleR, spindleLen, 24),
       0,
-      collarTop + p.spindleOver - spindleLen / 2,
+      spindleY,
       0
     ),
     true
   );
+  rule(rulingGeometry(p.spindleR, spindleLen, spindleY, 8, 0, 0), true);
 
   return pieces;
 }
@@ -237,10 +271,13 @@ function buildPart(p, materials) {
   const highlights = [];
 
   for (let i = 0; i < pieces.length; i++) {
-    const geom = pieces[i].geom;
-    fills.push(geom.toNonIndexed());
-    const edges = new THREE.EdgesGeometry(geom, 20);
-    (pieces[i].hi ? highlights : lines).push(edges);
+    const piece = pieces[i];
+    if (!piece.solid) {
+      (piece.hi ? highlights : lines).push(piece.geom);
+      continue;
+    }
+    fills.push(piece.geom.toNonIndexed());
+    (piece.hi ? highlights : lines).push(new THREE.EdgesGeometry(piece.geom, 20));
   }
 
   const group = new THREE.Group();
@@ -345,6 +382,40 @@ function step(v, dt) {
    every container aspect ratio is composed the same way.
    -------------------------------------------------------------------------- */
 
+/* Exact silhouette extents for a body of revolution about Y, seen from a
+   camera raised by ELEVATION. Every vertex contributes its radius (the part
+   turns, so any vertex can reach the horizontal edge) and its height range
+   under that rotation. Measured once, at build time. */
+function measureSilhouette(part, offsetY) {
+  const el = Math.atan(ELEVATION);
+  const cos = Math.cos(el);
+  const sin = Math.sin(el);
+  let maxR = 0;
+  let projMin = Infinity;
+  let projMax = -Infinity;
+
+  part.traverse(function (node) {
+    const attr = node.geometry && node.geometry.attributes.position;
+    if (!attr) return;
+    const a = attr.array;
+    for (let i = 0; i < a.length; i += 3) {
+      const y = a[i + 1] + offsetY;
+      const r = Math.sqrt(a[i] * a[i] + a[i + 2] * a[i + 2]);
+      if (r > maxR) maxR = r;
+      const base = y * cos;
+      const spread = r * sin;
+      if (base - spread < projMin) projMin = base - spread;
+      if (base + spread > projMax) projMax = base + spread;
+    }
+  });
+
+  return {
+    radius: maxR,
+    halfHeight: (projMax - projMin) / 2,
+    centerY: (projMax + projMin) / 2 / cos
+  };
+}
+
 function frameCamera(v) {
   const w = v.el.clientWidth;
   const h = v.el.clientHeight;
@@ -355,10 +426,11 @@ function frameCamera(v) {
   const needH = v.fitH / halfV;
   const needW = v.fitW / (halfV * aspect);
   const dist = Math.max(needH, needW);
+  const norm = Math.sqrt(1 + ELEVATION * ELEVATION);
 
   v.camera.aspect = aspect;
-  v.camera.position.set(0, dist * ELEVATION, dist);
-  v.camera.lookAt(0, 0, 0);
+  v.camera.position.set(0, v.targetY + (dist * ELEVATION) / norm, dist / norm);
+  v.camera.lookAt(0, v.targetY, 0);
   v.camera.updateProjectionMatrix();
   return true;
 }
@@ -378,7 +450,6 @@ function resize(v) {
    -------------------------------------------------------------------------- */
 
 const boundsBox = new THREE.Box3();
-const boundsSize = new THREE.Vector3();
 const boundsCenter = new THREE.Vector3();
 
 function createView(el) {
@@ -404,16 +475,12 @@ function createView(el) {
   const code = el.getAttribute("data-code") || DEFAULT_CODE;
   const part = buildPart(paramsFor(code), materials);
 
-  /* Recentre on the part's own bounds, then record the extents used for
-     framing. Horizontal extent uses the larger of x/z because the part
-     turns about its axis. */
+  /* The part is symmetric about its own axis, so only height is recentred. */
   boundsBox.setFromObject(part);
-  boundsBox.getSize(boundsSize);
   boundsBox.getCenter(boundsCenter);
-  part.position.set(-boundsCenter.x, -boundsCenter.y, -boundsCenter.z);
+  part.position.set(0, -boundsCenter.y, 0);
 
-  const radius = Math.max(boundsSize.x, boundsSize.z) / 2;
-  const halfHeight = boundsSize.y / 2;
+  const fit = measureSilhouette(part, -boundsCenter.y);
 
   const root = new THREE.Group();
   root.add(part);
@@ -433,20 +500,21 @@ function createView(el) {
     tiltX: 0,
     tiltZ: 0,
     visible: false,
-    /* Margins: the view looks down on the part, so the projected height is
-       taller than the part is. */
-    fitW: radius * 1.16,
-    fitH: (halfHeight * 0.94 + radius * 0.38) * 1.1
+    /* Measured extents plus a small margin, so the part is composed the same
+       way at every seed and every container aspect ratio. */
+    fitW: fit.radius * 1.24,
+    fitH: fit.halfHeight * 1.24,
+    targetY: fit.centerY
   };
 
   part.rotation.y = view.azimuth;
-  view.camera.position.set(0, 3, 8);
 
   if (!frameCamera(view)) {
-    /* Container has no layout yet: fall back to a sane distance and let the
+    /* Container has no layout yet: sit at a sane distance and let the
        ResizeObserver correct it. */
-    view.camera.position.set(0, 3, 8);
-    view.camera.lookAt(0, 0, 0);
+    view.camera.position.set(0, view.targetY + 3, 8);
+    view.camera.lookAt(0, view.targetY, 0);
+    view.camera.updateProjectionMatrix();
   }
 
   return view;
@@ -502,9 +570,9 @@ function init() {
     activate(
       el,
       view,
-      "Wireframe viewport of the reference machined assembly for course " +
+      "Wireframe view of the " +
         code +
-        ": bolted flange, radial fins, hub and spindle."
+        " reference part: bolted flange, radial fins, hub and spindle."
     );
     resize(view);
   }

@@ -37,9 +37,16 @@
 
 .v3d-fallback {
   object-fit: cover;
+  z-index: 0;
+}
+
+/* The UA [hidden] rule loses to the class above, so restate it. */
+.v3d-fallback[hidden] {
+  display: none;
 }
 
 .v3d-canvas {
+  z-index: 1;
   opacity: 0;
   transition: opacity var(--dur-hero) var(--ease-out);
 }
@@ -52,6 +59,7 @@
    genuinely live. */
 .v3d-tag {
   position: absolute;
+  z-index: 2;
   color: var(--text-3);
   pointer-events: none;
   opacity: 0;
