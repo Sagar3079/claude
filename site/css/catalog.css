@@ -51,6 +51,14 @@
   overflow: hidden;
 }
 
+/* A hairline-divided split stacks into one column at 1080px. Once stacked the
+   hairline is horizontal, so the compartments it separates need vertical room
+   they do not need side by side. */
+@media (max-width: 1080px) {
+  .cd-split > *:not(:first-child) { padding-top: var(--s-32); }
+  .cd-split > *:not(:last-child) { padding-bottom: var(--s-32); }
+}
+
 /* Square portrait for the instructor section (4/8 split, photo left). */
 .cd-portrait {
   aspect-ratio: 1 / 1;
