@@ -79,16 +79,13 @@
 
 /* ==========================================================================
    2. Catalog: grid slots
-   .card-slot is the filter wrapper from main.css section 12; it only needs
-   to stretch its card to the row height here.
+   .card-slot is the filter wrapper from main.css section 12. It stays a
+   plain block so its own .is-filtered-out display rule still wins; the card
+   inside just grows to the row height.
    ========================================================================== */
 
-.cat-grid .card-slot {
-  display: flex;
-}
-
 .cat-grid .card-slot > .card {
-  width: 100%;
+  height: 100%;
 }
 
 /* ==========================================================================
