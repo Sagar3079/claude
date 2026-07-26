@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TOLERANCE - Checkout</title>
+<meta name="description" content="Demo checkout for the TOLERANCE course catalog. No card is charged and nothing leaves the page.">
+<script>document.documentElement.className += " has-js";</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/commerce.css">
+<script src="js/main.js" defer></script>
+<script src="js/checkout.js" defer></script>
+</head>
+<body>
+
+<div class="frame">
+
+  <header class="nav">
+    <a class="wordmark" href="index.html">TOLERANCE<sup>&reg;</sup></a>
+    <span class="mono-label nav__status">Secure checkout</span>
+  </header>
+
+  <main id="main">
+
+    <!-- PAGE HEADER -->
+    <section class="section section--hero">
+      <h1 class="h1">Checkout</h1>
+      <p class="body mt-24 t-2">This is a demo. No card is charged, no request leaves this page, and the order below is read from your browser storage.</p>
+    </section>
+
+    <!-- STATE 1: ORDER -->
+    <section class="section section--flush" data-co-order>
+      <div class="split split--7-5">
+
+        <div class="pad-x">
+
+          <h2 class="h2">Order</h2>
+
+          <div class="compartment mt-24">
+            <div class="co-receipt__head">
+              <span class="mono-label">Course</span>
+              <span class="mono-label">Amount</span>
+              <span class="mono-label co-head__pad" aria-hidden="true">Remove</span>
+            </div>
+            <ul class="mono-data" data-co-list></ul>
+            <hr class="rule">
+            <p class="mt-16"><a class="link mono-data" href="courses.html">Add another course</a></p>
+          </div>
+
+          <h2 class="h2 mt-48">Payment</h2>
+
+          <form class="mt-24" data-co-form novalidate>
+
+            <div class="field">
+              <label class="mono-label field__label" for="co-email">Email</label>
+              <input class="field__input" id="co-email" name="email" type="email" autocomplete="email" placeholder="you@company.com" aria-describedby="co-email-help">
+              <p class="field__help" id="co-email-help">Where the course access and the invoice would be sent.</p>
+              <p class="field__error">Enter an email address in the form name@domain.com.</p>
+            </div>
+
+            <div class="field">
+              <label class="mono-label field__label" for="co-card">Card number</label>
+              <input class="field__input" id="co-card" name="card" type="text" inputmode="numeric" autocomplete="off" placeholder="4242 4242 4242 4242" aria-describedby="co-card-help">
+              <p class="field__help" id="co-card-help">Demo field. Any 16 digits pass, and nothing is stored or sent.</p>
+              <p class="field__error">Enter a 16-digit card number.</p>
+            </div>
+
+            <div class="field-grid">
+              <div class="field">
+                <label class="mono-label field__label" for="co-expiry">Expiry</label>
+                <input class="field__input" id="co-expiry" name="expiry" type="text" inputmode="numeric" autocomplete="off" placeholder="09 / 29" aria-describedby="co-expiry-help">
+                <p class="field__help" id="co-expiry-help">Month and year.</p>
+                <p class="field__error">Use the form MM / YY.</p>
+              </div>
+              <div class="field">
+                <label class="mono-label field__label" for="co-cvc">CVC</label>
+                <input class="field__input" id="co-cvc" name="cvc" type="text" inputmode="numeric" autocomplete="off" placeholder="123" aria-describedby="co-cvc-help">
+                <p class="field__help" id="co-cvc-help">Three or four digits.</p>
+                <p class="field__error">Enter 3 or 4 digits.</p>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="mono-label field__label" for="co-name">Name on card</label>
+              <input class="field__input" id="co-name" name="name" type="text" autocomplete="cc-name" placeholder="A. Visser" aria-describedby="co-name-help">
+              <p class="field__help" id="co-name-help">Exactly as it is printed on the card.</p>
+              <p class="field__error">Enter the name printed on the card.</p>
+            </div>
+
+            <div class="field">
+              <label class="mono-label field__label" for="co-country">Country</label>
+              <select class="field__select" id="co-country" name="country">
+                <option>United States</option>
+                <option>United Kingdom</option>
+                <option>Netherlands</option>
+                <option>Germany</option>
+                <option>Finland</option>
+                <option>Turkey</option>
+                <option>Nigeria</option>
+                <option>India</option>
+              </select>
+              <p class="field__help">Used for the invoice address only.</p>
+            </div>
+
+            <p class="mono-data co-note mt-32">Demo, no real payment. Submitting this form charges nothing, contacts no server, and clears your local cart.</p>
+
+            <div class="mt-24">
+              <button class="btn btn--primary btn--block" type="submit" data-co-submit>
+                <span class="btn__label">Pay $0</span>
+                <span class="btn__loading" aria-hidden="true"><span class="btn__glyph"><span>/-\|</span></span>Working</span>
+              </button>
+            </div>
+
+          </form>
+
+        </div>
+
+        <div class="pad-x">
+          <div class="compartment sticky">
+            <span class="mono-label co-panel__title">Order total</span>
+            <div class="summary-row"><span>Items</span><span data-co-count>0</span></div>
+            <div class="summary-row"><span>Subtotal</span><span data-co-subtotal>$0.00</span></div>
+            <div class="summary-row"><span>Tax</span><span>$0.00</span></div>
+            <hr class="rule">
+            <div class="summary-row summary-row--total"><span>Total</span><span data-co-total>$0.00</span></div>
+          </div>
+          <p class="mono-data t-3 mt-16">14-day refund, no form. Demo checkout, no card is charged.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- STATE 2: EMPTY -->
+    <section class="section" data-co-empty hidden>
+      <div class="compartment co-empty">
+        <p class="co-mark">No items</p>
+        <p class="body-sm co-empty__note">Your order is empty. Add a course from the catalog and it will be listed here with its price.</p>
+        <div class="co-empty__cta"><a class="btn btn--secondary" href="courses.html">Browse courses</a></div>
+      </div>
+    </section>
+
+    <!-- STATE 3: CONFIRMED -->
+    <section class="section" data-co-done hidden>
+      <div class="compartment co-done">
+        <p class="co-mark">Order confirmed</p>
+        <p class="co-done__no" data-co-order-no>TLC-2026-0000</p>
+        <p class="body-sm t-2 mt-24">Access details would be sent to <span class="mono-data t-1" data-co-email>your address</span>. Nothing was charged: this is a demo store, and no request left your browser.</p>
+
+        <div class="mt-32">
+          <div class="co-receipt__head">
+            <span class="mono-label">Course</span>
+            <span class="mono-label">Amount</span>
+          </div>
+          <ul class="mono-data" data-co-done-list></ul>
+          <hr class="rule">
+          <div class="summary-row summary-row--total"><span>Paid</span><span data-co-done-total>$0.00</span></div>
+        </div>
+
+        <p class="mono-data co-note mt-32">Your cart has been cleared. This receipt exists only in this page.</p>
+
+        <div class="mt-32"><a class="btn btn--secondary" href="courses.html">Browse courses</a></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer footer--reduced">
+    <p class="mono-data t-3">&copy; 2026 Tolerance Courses. A fictional demo site.</p>
+    <p class="mono-data"><a class="footer__link" href="#">Terms</a> <a class="footer__link" href="#">Privacy</a></p>
+  </footer>
+
+</div>
+
+</body>
+</html>
