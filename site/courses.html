@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TOLERANCE - Catalog</title>
+<meta name="description" content="All six TOLERANCE courses, with runtime, module count, format, and price listed before checkout.">
+<script>document.documentElement.className += " has-js";</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/catalog.css">
+<script src="js/main.js" defer></script>
+<script src="js/catalog.js" defer></script>
+</head>
+<body>
+
+<div class="frame">
+
+  <header class="nav">
+    <a class="wordmark" href="index.html">TOLERANCE<sup>&reg;</sup></a>
+    <nav class="nav__links" aria-label="Primary">
+      <a class="nav__link" href="courses.html" aria-current="page">Courses</a>
+      <a class="nav__link" href="pricing.html">Pricing</a>
+      <a class="nav__link" href="index.html#method">Method</a>
+    </nav>
+    <div class="nav__actions">
+      <a class="nav__cart" href="checkout.html" data-cart-link hidden>Cart [<span data-cart-count>0</span>]</a>
+      <a class="nav__signin" href="#">Sign in</a>
+      <a class="btn btn--primary btn--sm" href="courses.html">Browse courses</a>
+    </div>
+    <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-panel" data-nav-toggle>
+      <svg class="icon icon--open" viewBox="0 0 256 256" aria-hidden="true"><line x1="40" y1="64" x2="216" y2="64"></line><line x1="40" y1="128" x2="216" y2="128"></line><line x1="40" y1="192" x2="216" y2="192"></line></svg>
+      <svg class="icon icon--close" viewBox="0 0 256 256" aria-hidden="true"><line x1="200" y1="56" x2="56" y2="200"></line><line x1="200" y1="200" x2="56" y2="56"></line></svg>
+    </button>
+  </header>
+
+  <div class="nav__panel" id="nav-panel" data-nav-panel>
+    <a class="nav__panel-link" href="courses.html">Courses</a>
+    <a class="nav__panel-link" href="pricing.html">Pricing</a>
+    <a class="nav__panel-link" href="index.html#method">Method</a>
+    <div class="nav__panel-actions">
+      <a class="btn btn--primary" href="courses.html">Browse courses</a>
+      <a class="btn btn--secondary" href="#">Sign in</a>
+    </div>
+  </div>
+
+  <main id="main">
+
+    <!-- PAGE HEADER + FILTER BAR -->
+    <section class="section section--hero">
+      <div data-hero>
+        <h1 class="h1 hero-item">Catalog</h1>
+        <p class="body mt-24 hero-item">Six courses. Every syllabus public. Sorted by depth, not popularity.</p>
+        <div class="toggles mt-32 hero-item" role="group" aria-label="Format" data-filter-group data-active-filter="all">
+          <button class="toggle" type="button" aria-pressed="true" data-filter="all">All</button>
+          <button class="toggle" type="button" aria-pressed="false" data-filter="self-paced">Self-paced</button>
+          <button class="toggle" type="button" aria-pressed="false" data-filter="cohort">Cohort</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- COURSE LIST -->
+    <section class="section">
+      <div class="rows reveal" data-filter-target>
+
+        <div class="rows__cluster">
+          <a class="row" href="course.html?c=TL-301" data-format="self-paced">
+            <span class="row__code mono-data"><span>TL-301</span><span>SELF-PACED</span></span>
+            <span class="row__main">
+              <span class="h3">Systems Under Load</span>
+              <span class="row__desc body-sm">Performance engineering for distributed backends: measure first, then fix the queue, the allocator, and the network, in that order.</span>
+            </span>
+            <span class="row__meta mono-data">11H 20M / 07 MODULES</span>
+            <span class="row__price">$249
+              <svg class="icon row__arrow" viewBox="0 0 256 256" aria-hidden="true"><line x1="40" y1="128" x2="216" y2="128"></line><polyline points="144 56 216 128 144 200"></polyline></svg>
+            </span>
+          </a>
+          <a class="row" href="course.html?c=TL-204" data-format="self-paced">
+            <span class="row__code mono-data"><span>TL-204</span><span>SELF-PACED</span></span>
+            <span class="row__main">
+              <span class="h3">Interface Physics</span>
+              <span class="row__desc body-sm">Motion, gesture, and state transitions for design engineers who want interfaces that feel machined, not decorated.</span>
+            </span>
+            <span class="row__meta mono-data">8H 45M / 06 MODULES</span>
+            <span class="row__price">$229
+              <svg class="icon row__arrow" viewBox="0 0 256 256" aria-hidden="true"><line x1="40" y1="128" x2="216" y2="128"></line><polyline points="144 56 216 128 144 200"></polyline></svg>
+            </span>
+          </a>
+          <a class="row" href="course.html?c=TL-112" data-format="self-paced">
+            <span class="row__code mono-data"><span>TL-112</span><span>SELF-PACED</span></span>
+            <span class="row__main">
+              <span class="h3">The Type System, Fully</span>
+              <span class="row__desc body-sm">Advanced TypeScript from variance to the compiler API, taught through a real library you publish at the end.</span>
+            </span>
+            <span class="row__meta mono-data">9H 10M / 08 MODULES</span>
+            <span class="row__price">$189
+              <svg class="icon row__arrow" viewBox="0 0 256 256" aria-hidden="true"><line x1="40" y1="128" x2="216" y2="128"></line><polyline points="144 56 216 128 144 200"></polyline></svg>
+            </span>
+          </a>
+          <a class="row" href="course.html?c=TL-317" data-format="self-paced">
+            <span class="row__code mono-data"><span>TL-317</span><span>SELF-PACED</span></span>
+            <span class="row__main">
+              <span class="h3">Design for Density</span>
+              <span class="row__desc body-sm">Data-dense product UI: tables, monitoring views, and editors that stay legible at 200 rows and 4 a.m.</span>
+            </span>
+            <span class="row__meta mono-data">7H 30M / 05 MODULES</span>
+            <span class="row__price">$279
+              <svg class="icon row__arrow" viewBox="0 0 256 256" aria-hidden="true"><line x1="40" y1="128" x2="216" y2="128"></line><polyline points="144 56 216 128 144 200"></polyline></svg>
+            </span>
+          </a>
+        </div>
+
+        <div class="rows__cluster" id="cohorts">
+          <a class="row" href="course.html?c=TL-410" data-format="cohort">
+            <span class="row__code mono-data"><span>TL-410</span><span>COHORT, 8 WEEKS</span></span>
+            <span class="row__main">
+              <span class="h3">From Parser to Production</span>
+              <span class="row__desc body-sm">Build a small compiled language end to end, with weekly code review of your implementation.</span>
+            </span>
+            <span class="row__meta mono-data">16 LIVE SESSIONS / 20 SEATS</span>
+            <span class="row__price">$1,450
+              <svg class="icon row__arrow" viewBox="0 0 256 256" aria-hidden="true"><line x1="40" y1="128" x2="216" y2="128"></line><polyline points="144 56 216 128 144 200"></polyline></svg>
+            </span>
+          </a>
+          <a class="row" href="course.html?c=TL-405" data-format="cohort">
+            <span class="row__code mono-data"><span>TL-405</span><span>COHORT, 6 WEEKS</span></span>
+            <span class="row__main">
+              <span class="h3">The Staff Engineer Brief</span>
+              <span class="row__desc body-sm">Technical writing, RFC strategy, and decision records for engineers moving from output to leverage.</span>
+            </span>
+            <span class="row__meta mono-data">12 LIVE SESSIONS / 24 SEATS</span>
+            <span class="row__price">$980
+              <svg class="icon row__arrow" viewBox="0 0 256 256" aria-hidden="true"><line x1="40" y1="128" x2="216" y2="128"></line><polyline points="144 56 216 128 144 200"></polyline></svg>
+            </span>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- COHORT NOTE -->
+    <section class="section">
+      <div class="compartment reveal">
+        <h2 class="h3">Cohorts run twice a year.</h2>
+        <p class="body-sm t-2 mt-16">A cohort runs six or eight weeks, with two live sessions each week and a hard cap on seats. Every submission gets a written review from the instructor, which is why the seat count stays low.</p>
+        <p class="mt-24"><a class="link mono-data" href="#cohorts" data-filter-jump="cohort">Cohort dates</a></p>
+        <p class="status mono-label mt-24"><span class="status__dot"></span>Enrollment open: Sep cohort</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a class="wordmark" href="index.html">TOLERANCE<sup>&reg;</sup></a>
+        <p class="body-sm footer__tag">Courses machined to spec.</p>
+        <p class="mono-data footer__legal">&copy; 2026 Tolerance Courses</p>
+        <p class="mono-data footer__legal">A fictional demo site.</p>
+      </div>
+
+      <div class="footer__col">
+        <span class="mono-label footer__title">Catalog</span>
+        <ul class="footer__list">
+          <li><a class="footer__link" href="course.html">Systems Under Load</a></li>
+          <li><a class="footer__link" href="course.html">Interface Physics</a></li>
+          <li><a class="footer__link" href="course.html">The Type System, Fully</a></li>
+          <li><a class="footer__link" href="course.html">Design for Density</a></li>
+          <li><a class="footer__link" href="course.html">From Parser to Production</a></li>
+          <li><a class="footer__link" href="course.html">The Staff Engineer Brief</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <span class="mono-label footer__title">Company</span>
+        <ul class="footer__list">
+          <li><a class="footer__link" href="index.html#method">Method</a></li>
+          <li><a class="footer__link" href="index.html#instructors">Instructors</a></li>
+          <li><a class="footer__link" href="#">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <span class="mono-label footer__title">Legal</span>
+        <ul class="footer__list">
+          <li><a class="footer__link" href="#">Terms</a></li>
+          <li><a class="footer__link" href="#">Privacy</a></li>
+          <li><a class="footer__link" href="#">Refunds</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <span class="mono-label footer__title">Elsewhere</span>
+        <ul class="footer__list">
+          <li><a class="footer__link" href="#">RSS</a></li>
+          <li><a class="footer__link" href="#">YouTube</a></li>
+          <li><a class="footer__link" href="#">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+</body>
+</html>

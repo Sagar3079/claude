@@ -1,0 +1,66 @@
+/* ==========================================================================
+   TOLERANCE - page styles for courses.html and course.html
+   Loaded AFTER css/main.css. Additions only: the design system is not forked.
+   Prefixes: cat- (catalog page), cd- (course detail page).
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   A. CATALOG FILTERING
+   Filter state lives on [data-active-filter] / [data-format]; a filtered row
+   carries the `hidden` attribute plus main.css's .is-filtered-out.
+   -------------------------------------------------------------------------- */
+
+/* main.css transitions background-color and transform on .row. The filter
+   fades rows in as well as out, so opacity joins that list here. */
+.rows .row {
+  transition: background-color var(--dur-fast) var(--ease),
+    opacity var(--dur-fast) var(--ease), transform 100ms ease-out;
+}
+
+/* .row is display:grid, so the UA rule for [hidden] needs restating. */
+.rows .row[hidden] {
+  display: none;
+}
+
+/* A cluster with no visible rows leaves the grid entirely, and must not leave
+   its hairline behind: a line only ever separates two pieces of real content. */
+.rows__cluster[hidden] {
+  display: none;
+}
+
+.rows__cluster[hidden] + .rows__cluster {
+  border-top: 0;
+}
+
+/* --------------------------------------------------------------------------
+   B. COURSE DETAIL
+   -------------------------------------------------------------------------- */
+
+/* Instructor line under the course standfirst: small square photo + name. */
+.cd-byline {
+  display: flex;
+  align-items: center;
+  gap: var(--s-16);
+  margin-top: var(--s-32);
+}
+
+.cd-byline__media {
+  width: 48px;
+  height: 48px;
+  flex: none;
+  overflow: hidden;
+}
+
+/* Square portrait for the instructor section (4/8 split, photo left). */
+.cd-portrait {
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+}
+
+@media (max-width: 1080px) {
+  /* Stacked by main.css at this width: cap the portrait so it does not run
+     the full frame width. */
+  .cd-portrait {
+    max-width: 320px;
+  }
+}
