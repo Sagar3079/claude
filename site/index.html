@@ -3,407 +3,243 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TOLERANCE - Courses machined to spec</title>
-<meta name="description" content="Senior-level video courses and cohorts in software and interface engineering, with the full syllabus published before you pay.">
+<title>Bindwell - Well-made courses</title>
+<meta name="description" content="Twelve courses across engineering, design, data, and career, with every syllabus public before you pay.">
 <script>document.documentElement.className += " has-js";</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&family=Inter:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="css/main.css">
-<link rel="stylesheet" href="css/scene.css">
+<script src="js/data.js" defer></script>
 <script src="js/main.js" defer></script>
 <script type="module" src="js/scene.js"></script>
 </head>
 <body>
 
-<div class="frame">
+<a class="skip-link" href="#main">Skip to content</a>
 
-  <header class="nav">
-    <a class="wordmark" href="index.html">TOLERANCE<sup>&reg;</sup></a>
+<header class="nav">
+  <div class="container nav__inner">
+    <a class="wordmark" href="index.html">bindwell<span class="wordmark__dot">.</span></a>
+
     <nav class="nav__links" aria-label="Primary">
       <a class="nav__link" href="courses.html">Courses</a>
-      <a class="nav__link" href="pricing.html">Pricing</a>
-      <a class="nav__link" href="index.html#method">Method</a>
     </nav>
+
+    <form class="search nav__search" role="search" action="courses.html" method="get" data-search-form>
+      <svg class="icon search__icon" viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="6"></circle><path d="M13.5 13.5 17.5 17.5"></path></svg>
+      <input class="search__input" type="search" name="q" aria-label="Search courses" placeholder="Search courses">
+    </form>
+
     <div class="nav__actions">
-      <a class="nav__cart" href="checkout.html" data-cart-link hidden>Cart [<span data-cart-count>0</span>]</a>
-      <a class="nav__signin" href="#">Sign in</a>
-      <a class="btn btn--primary btn--sm" href="courses.html">Browse courses</a>
+      <a class="nav__link nav__signin" href="pricing.html">Pricing</a>
+      <button class="nav__search-toggle" type="button" aria-label="Search" aria-expanded="false" aria-controls="nav-search-row" data-search-toggle>
+        <svg class="icon" viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="6"></circle><path d="M13.5 13.5 17.5 17.5"></path></svg>
+      </button>
+      <a class="nav__cart" href="checkout.html" aria-label="Cart">
+        <svg class="icon icon--lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.2 10.5h10.2"></path><path d="M6.6 7h14l-1.6 6.5H7.4"></path><circle cx="9.5" cy="19" r="1.4"></circle><circle cx="17.5" cy="19" r="1.4"></circle></svg>
+        <span class="nav__cart-count" data-cart-count hidden>0</span>
+      </a>
+      <a class="btn btn--primary btn--sm nav__signin" href="#">Sign in</a>
+      <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-panel" data-nav-toggle>
+        <svg class="icon icon--open icon--lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+        <svg class="icon icon--close icon--lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6 18 18M18 6 6 18"></path></svg>
+      </button>
     </div>
-    <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-panel" data-nav-toggle>
-      <svg class="icon icon--open" viewBox="0 0 256 256" aria-hidden="true"><line x1="40" y1="64" x2="216" y2="64"></line><line x1="40" y1="128" x2="216" y2="128"></line><line x1="40" y1="192" x2="216" y2="192"></line></svg>
-      <svg class="icon icon--close" viewBox="0 0 256 256" aria-hidden="true"><line x1="200" y1="56" x2="56" y2="200"></line><line x1="200" y1="200" x2="56" y2="56"></line></svg>
-    </button>
-  </header>
+  </div>
+
+  <div class="nav__mobile-search" id="nav-search-row" data-search-row>
+    <div>
+      <div class="container">
+        <form class="search" role="search" action="courses.html" method="get" data-search-form>
+          <svg class="icon search__icon" viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="6"></circle><path d="M13.5 13.5 17.5 17.5"></path></svg>
+          <input class="search__input" type="search" name="q" aria-label="Search courses" placeholder="Search courses">
+        </form>
+      </div>
+    </div>
+  </div>
 
   <div class="nav__panel" id="nav-panel" data-nav-panel>
     <a class="nav__panel-link" href="courses.html">Courses</a>
     <a class="nav__panel-link" href="pricing.html">Pricing</a>
-    <a class="nav__panel-link" href="index.html#method">Method</a>
+    <a class="nav__panel-link" href="checkout.html">Cart</a>
     <div class="nav__panel-actions">
-      <a class="btn btn--primary" href="courses.html">Browse courses</a>
-      <a class="btn btn--secondary" href="#">Sign in</a>
+      <a class="btn btn--primary btn--block" href="#">Sign in</a>
     </div>
   </div>
+</header>
+<div class="nav__backdrop" data-nav-backdrop></div>
 
-  <main id="main">
+<main id="main">
 
-    <!-- HERO -->
-    <section class="section section--hero section--flush">
-      <div class="split split--7-5" data-hero>
+  <!-- Hero -->
+  <section class="section section--tight">
+    <div class="container split-7-5" data-hero>
+      <div>
+        <h1 class="display hero-item">Learn it properly, from people who do it daily.</h1>
+        <p class="body t-2 mt-16 hero-item hero-item--2">Twelve courses across engineering, design, data, and career. Every syllabus public before you pay.</p>
 
-        <div class="pad-x">
-          <span class="mono-label eyebrow hero-item">Engineering courses, published spec</span>
-          <h1 class="display hero-item">Built to tolerance.</h1>
-          <p class="body mt-24 hero-item">Senior-level courses in systems, interfaces, and tooling. Full syllabus, hours, and prerequisites published before checkout.</p>
-          <div class="btn-row mt-32 hero-item">
-            <a class="btn btn--primary" href="courses.html">Browse courses</a>
-            <a class="btn btn--secondary" href="pricing.html">See pricing</a>
-          </div>
-        </div>
+        <form class="search search--lg mt-32 hero-item hero-item--3" role="search" action="courses.html" method="get" data-search-form>
+          <svg class="icon search__icon" viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="6"></circle><path d="M13.5 13.5 17.5 17.5"></path></svg>
+          <input class="search__input" type="search" name="q" aria-label="Search courses" placeholder="What do you want to learn?">
+          <button class="btn btn--primary btn--sm search__submit" type="submit">Search</button>
+        </form>
 
-        <div class="pad-x">
-          <a class="card hero-item hero-item--last" href="course.html?c=TL-301">
-            <div class="card__media">
-              <div class="v3d-view v3d-view--hero" data-scene="hero" data-code="TL-301">
-                <canvas class="v3d-canvas" aria-hidden="true"></canvas>
-                <img class="v3d-fallback img-treat" src="img/tl301-cover.svg" width="900" height="600" alt="TL-301 specification plate: p99 latency measured against baseline">
-                <span class="v3d-tag v3d-tag--tl mono-label" aria-hidden="true">Live viewport</span>
-                <span class="v3d-tag v3d-tag--br mono-label" aria-hidden="true" data-v3d-code>TL-301</span>
-              </div>
-            </div>
-            <div class="card__body">
-              <p class="mono-data card__meta">TL-301 / SELF-PACED</p>
-              <h2 class="h3">Systems Under Load</h2>
-              <p class="body-sm card__desc">Performance engineering for distributed backends: measure first, then fix the queue, the allocator, and the network, in that order.</p>
-              <div class="card__foot">
-                <span class="mono-data t-2">11H 20M / 07 MODULES</span>
-                <span class="price">$249</span>
-              </div>
-            </div>
-          </a>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- CATALOG INDEX -->
-    <section class="section" id="catalog">
-      <div class="section__head reveal">
-        <span class="mono-label eyebrow">Catalog</span>
-        <h2 class="h2">Six courses. No filler tracks.</h2>
-      </div>
-
-      <div class="rows reveal">
-        <div class="rows__cluster">
-          <a class="row" href="course.html?c=TL-301">
-            <span class="row__code mono-data"><span>TL-301</span><span>SELF-PACED</span></span>
-            <span class="row__main">
-              <span class="h3">Systems Under Load</span>
-              <span class="row__desc body-sm">Performance engineering for distributed backends: measure first, then fix the queue, the allocator, and the network, in that order.</span>
-            </span>
-            <span class="row__meta mono-data">11H 20M / 07 MODULES</span>
-            <span class="row__price">$249
-              <svg class="icon row__arrow" viewBox="0 0 256 256" aria-hidden="true"><line x1="40" y1="128" x2="216" y2="128"></line><polyline points="144 56 216 128 144 200"></polyline></svg>
-            </span>
-          </a>
-          <a class="row" href="course.html?c=TL-204">
-            <span class="row__code mono-data"><span>TL-204</span><span>SELF-PACED</span></span>
-            <span class="row__main">
-              <span class="h3">Interface Physics</span>
-              <span class="row__desc body-sm">Motion, gesture, and state transitions for design engineers who want interfaces that feel machined, not decorated.</span>
-            </span>
-            <span class="row__meta mono-data">8H 45M / 06 MODULES</span>
-            <span class="row__price">$229
-              <svg class="icon row__arrow" viewBox="0 0 256 256" aria-hidden="true"><line x1="40" y1="128" x2="216" y2="128"></line><polyline points="144 56 216 128 144 200"></polyline></svg>
-            </span>
-          </a>
-          <a class="row" href="course.html?c=TL-112">
-            <span class="row__code mono-data"><span>TL-112</span><span>SELF-PACED</span></span>
-            <span class="row__main">
-              <span class="h3">The Type System, Fully</span>
-              <span class="row__desc body-sm">Advanced TypeScript from variance to the compiler API, taught through a real library you publish at the end.</span>
-            </span>
-            <span class="row__meta mono-data">9H 10M / 08 MODULES</span>
-            <span class="row__price">$189
-              <svg class="icon row__arrow" viewBox="0 0 256 256" aria-hidden="true"><line x1="40" y1="128" x2="216" y2="128"></line><polyline points="144 56 216 128 144 200"></polyline></svg>
-            </span>
-          </a>
-          <a class="row" href="course.html?c=TL-317">
-            <span class="row__code mono-data"><span>TL-317</span><span>SELF-PACED</span></span>
-            <span class="row__main">
-              <span class="h3">Design for Density</span>
-              <span class="row__desc body-sm">Data-dense product UI: tables, monitoring views, and editors that stay legible at 200 rows and 4 a.m.</span>
-            </span>
-            <span class="row__meta mono-data">7H 30M / 05 MODULES</span>
-            <span class="row__price">$279
-              <svg class="icon row__arrow" viewBox="0 0 256 256" aria-hidden="true"><line x1="40" y1="128" x2="216" y2="128"></line><polyline points="144 56 216 128 144 200"></polyline></svg>
-            </span>
-          </a>
-        </div>
-
-        <div class="rows__cluster">
-          <a class="row" href="course.html?c=TL-410">
-            <span class="row__code mono-data"><span>TL-410</span><span>COHORT, 8 WEEKS</span></span>
-            <span class="row__main">
-              <span class="h3">From Parser to Production</span>
-              <span class="row__desc body-sm">Build a small compiled language end to end, with weekly code review of your implementation.</span>
-            </span>
-            <span class="row__meta mono-data">16 LIVE SESSIONS / 20 SEATS</span>
-            <span class="row__price">$1,450
-              <svg class="icon row__arrow" viewBox="0 0 256 256" aria-hidden="true"><line x1="40" y1="128" x2="216" y2="128"></line><polyline points="144 56 216 128 144 200"></polyline></svg>
-            </span>
-          </a>
-          <a class="row" href="course.html?c=TL-405">
-            <span class="row__code mono-data"><span>TL-405</span><span>COHORT, 6 WEEKS</span></span>
-            <span class="row__main">
-              <span class="h3">The Staff Engineer Brief</span>
-              <span class="row__desc body-sm">Technical writing, RFC strategy, and decision records for engineers moving from output to leverage.</span>
-            </span>
-            <span class="row__meta mono-data">12 LIVE SESSIONS / 24 SEATS</span>
-            <span class="row__price">$980
-              <svg class="icon row__arrow" viewBox="0 0 256 256" aria-hidden="true"><line x1="40" y1="128" x2="216" y2="128"></line><polyline points="144 56 216 128 144 200"></polyline></svg>
-            </span>
-          </a>
+        <div class="chip-row mt-24 hero-item hero-item--4">
+          <a class="chip" href="courses.html?cat=engineering">Engineering</a>
+          <a class="chip" href="courses.html?cat=design">Design</a>
+          <a class="chip" href="courses.html?cat=data">Data &amp; AI</a>
+          <a class="chip" href="courses.html?cat=career">Product &amp; Career</a>
         </div>
       </div>
 
-      <p class="mt-32"><a class="link mono-data" href="courses.html">View catalog</a></p>
-    </section>
-
-    <!-- METHOD -->
-    <section class="section section--flush" id="method">
-      <div class="split split--5-7">
-        <div class="pad-x">
-          <div class="section__head reveal">
-            <h2 class="h2">How a TOLERANCE course is made</h2>
-          </div>
-          <div class="stack-24 reveal">
-            <p class="body t-2">Every outline is reviewed by two senior engineers from outside the company before a single lesson is recorded. If they cannot follow the argument, the outline goes back.</p>
-            <p class="body t-2">Every claim about performance, ergonomics, or cost is benchmarked on hardware described in the lesson. Numbers on screen are numbers you can reproduce.</p>
-            <p class="body t-2">When the ecosystem moves under a course, the affected modules are re-recorded and republished. You keep access to the new versions at no cost.</p>
-          </div>
+      <div class="hero-item hero-item--5">
+        <div class="v3d-view v3d-view--hero" data-scene="hero" data-code="TL-301">
+          <canvas class="v3d-canvas" aria-hidden="true"></canvas>
+          <img class="v3d-fallback" src="img/motif-engineering.svg" width="320" height="200" alt="">
+          <span class="v3d-caption">Every course is a well-made thing.</span>
         </div>
-        <div>
-          <img class="img-treat img-cover" src="img/method-bench.svg" width="1200" height="900" alt="Diagram of the TOLERANCE course production pipeline" loading="lazy">
-        </div>
-      </div>
-    </section>
-
-    <!-- SYLLABUS PROOF -->
-    <section class="section">
-      <div class="section__head reveal">
-        <h2 class="h2">The spec is public.</h2>
-        <p class="body">Every module, lesson, and runtime is listed before checkout. Below are the first four modules of TL-301.</p>
-      </div>
-
-      <div class="acc reveal" data-accordion>
-        <div class="acc__item is-open">
-          <button class="acc__trigger" type="button" aria-expanded="true" aria-controls="mod-01">
-            <span><span class="acc__code">01</span>Measurement before change</span>
-            <svg class="icon acc__icon" viewBox="0 0 256 256" aria-hidden="true"><line x1="40" y1="128" x2="216" y2="128"></line><line x1="128" y1="40" x2="128" y2="216"></line></svg>
-          </button>
-          <div class="acc__panel" id="mod-01">
-            <div class="acc__clip">
-              <div class="acc__inner">
-                <ul>
-                  <li class="acc__lesson"><span>Choosing a workload that represents production</span><span class="mono-data">18:40</span></li>
-                  <li class="acc__lesson"><span>Sampling profilers and what they miss</span><span class="mono-data">22:10</span></li>
-                  <li class="acc__lesson"><span>Reading a flame graph without guessing</span><span class="mono-data">16:05</span></li>
-                  <li class="acc__lesson"><span>Building a baseline harness with repeatable runs</span><span class="mono-data">25:30</span></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="acc__item">
-          <button class="acc__trigger" type="button" aria-expanded="false" aria-controls="mod-02">
-            <span><span class="acc__code">02</span>Queues, backpressure, and fairness</span>
-            <svg class="icon acc__icon" viewBox="0 0 256 256" aria-hidden="true"><line x1="40" y1="128" x2="216" y2="128"></line><line x1="128" y1="40" x2="128" y2="216"></line></svg>
-          </button>
-          <div class="acc__panel" id="mod-02">
-            <div class="acc__clip">
-              <div class="acc__inner">
-                <ul>
-                  <li class="acc__lesson"><span>Little's law in production terms</span><span class="mono-data">14:20</span></li>
-                  <li class="acc__lesson"><span>Bounded queues and shedding load on purpose</span><span class="mono-data">21:45</span></li>
-                  <li class="acc__lesson"><span>Fairness under mixed traffic</span><span class="mono-data">19:15</span></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="acc__item">
-          <button class="acc__trigger" type="button" aria-expanded="false" aria-controls="mod-03">
-            <span><span class="acc__code">03</span>Allocators and memory pressure</span>
-            <svg class="icon acc__icon" viewBox="0 0 256 256" aria-hidden="true"><line x1="40" y1="128" x2="216" y2="128"></line><line x1="128" y1="40" x2="128" y2="216"></line></svg>
-          </button>
-          <div class="acc__panel" id="mod-03">
-            <div class="acc__clip">
-              <div class="acc__inner">
-                <ul>
-                  <li class="acc__lesson"><span>Where allocation cost actually lands</span><span class="mono-data">17:50</span></li>
-                  <li class="acc__lesson"><span>Arena and pool strategies</span><span class="mono-data">23:05</span></li>
-                  <li class="acc__lesson"><span>Collector pauses you can predict</span><span class="mono-data">20:35</span></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="acc__item">
-          <button class="acc__trigger" type="button" aria-expanded="false" aria-controls="mod-04">
-            <span><span class="acc__code">04</span>The network is the slowest part</span>
-            <svg class="icon acc__icon" viewBox="0 0 256 256" aria-hidden="true"><line x1="40" y1="128" x2="216" y2="128"></line><line x1="128" y1="40" x2="128" y2="216"></line></svg>
-          </button>
-          <div class="acc__panel" id="mod-04">
-            <div class="acc__clip">
-              <div class="acc__inner">
-                <ul>
-                  <li class="acc__lesson"><span>Connection reuse and head-of-line blocking</span><span class="mono-data">18:25</span></li>
-                  <li class="acc__lesson"><span>Batching without adding latency</span><span class="mono-data">22:40</span></li>
-                  <li class="acc__lesson"><span>Timeouts, retries, and the retry storm</span><span class="mono-data">26:15</span></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- INSTRUCTORS -->
-    <section class="section" id="instructors">
-      <div class="section__head reveal">
-        <h2 class="h2">Taught by people who ship.</h2>
-      </div>
-
-      <div class="people reveal">
-        <a class="person person--lg" href="course.html?c=TL-301">
-          <div class="person__media">
-            <img class="img-treat img-cover" src="img/ferrentino.svg" width="900" height="600" alt="Dario Ferrentino" loading="lazy">
-          </div>
-          <h3 class="h3">Dario Ferrentino</h3>
-          <p class="body-sm person__cred">Ex-infra lead, 9 years on payment-scale queues.</p>
-        </a>
-        <a class="person person--lg" href="course.html?c=TL-204">
-          <div class="person__media">
-            <img class="img-treat img-cover" src="img/visser.svg" width="900" height="600" alt="Anneke Visser" loading="lazy">
-          </div>
-          <h3 class="h3">Anneke Visser</h3>
-          <p class="body-sm person__cred">Design engineer; shipped three widely used open-source interaction libraries.</p>
-        </a>
-        <a class="person person--sm" href="course.html?c=TL-112">
-          <div class="person__media">
-            <img class="img-treat img-cover" src="img/chandrasekar.svg" width="600" height="600" alt="Rohan Chandrasekar" loading="lazy">
-          </div>
-          <h3 class="h3">Rohan Chandrasekar</h3>
-          <p class="body-sm person__cred">Compiler-team alum; maintains a typed-SQL library.</p>
-        </a>
-        <a class="person person--sm" href="course.html?c=TL-317">
-          <div class="person__media">
-            <img class="img-treat img-cover" src="img/okereke.svg" width="600" height="600" alt="Louisa Okereke" loading="lazy">
-          </div>
-          <h3 class="h3">Louisa Okereke</h3>
-          <p class="body-sm person__cred">Led design on two monitoring products.</p>
-        </a>
-        <a class="person person--sm" href="course.html?c=TL-410">
-          <div class="person__media">
-            <img class="img-treat img-cover" src="img/demirci.svg" width="600" height="600" alt="Efe Demirci" loading="lazy">
-          </div>
-          <h3 class="h3">Efe Demirci</h3>
-          <p class="body-sm person__cred">Wrote the parsing course notes half this industry learned from.</p>
-        </a>
-        <a class="person person--sm" href="course.html?c=TL-405">
-          <div class="person__media">
-            <img class="img-treat img-cover" src="img/kovanen.svg" width="600" height="600" alt="Marta Kovanen" loading="lazy">
-          </div>
-          <h3 class="h3">Marta Kovanen</h3>
-          <p class="body-sm person__cred">Former staff engineer at a 400-person logistics firm.</p>
-        </a>
-      </div>
-    </section>
-
-    <!-- TESTIMONIALS -->
-    <section class="section">
-      <div class="grid-12">
-        <figure class="quote quote--wide col-7 reveal">
-          <blockquote class="quote__body">&ldquo;I have taken four performance courses. This is the only one where the benchmarks in the videos reproduced on my machine.&rdquo;</blockquote>
-          <figcaption class="mono-label quote__attr"><strong>Ines Duarte-Vogel</strong>Staff Engineer, freight-routing platform</figcaption>
-        </figure>
-        <figure class="quote quote--narrow col-5 reveal">
-          <blockquote class="quote__body">&ldquo;The syllabus PDF sold me before the trailer did.&rdquo;</blockquote>
-          <figcaption class="mono-label quote__attr"><strong>Malik Osei</strong>Design Engineer, fintech tooling</figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <!-- PRICING BAND -->
-    <section class="section">
-      <div class="section__head reveal">
-        <span class="mono-label eyebrow">Pricing</span>
-        <h2 class="h2">One membership or one course at a time.</h2>
-      </div>
-      <div class="btn-row reveal">
-        <span class="mono-data t-2">All-access $384/yr</span>
-        <a class="link mono-data" href="pricing.html">Compare plans</a>
-      </div>
-    </section>
-
-  </main>
-
-  <footer class="footer">
-    <div class="footer__grid">
-      <div class="footer__brand">
-        <a class="wordmark" href="index.html">TOLERANCE<sup>&reg;</sup></a>
-        <p class="body-sm footer__tag">Courses machined to spec.</p>
-        <p class="mono-data footer__legal">&copy; 2026 Tolerance Courses</p>
-        <p class="mono-data footer__legal">A fictional demo site.</p>
-      </div>
-
-      <div class="footer__col">
-        <span class="mono-label footer__title">Catalog</span>
-        <ul class="footer__list">
-          <li><a class="footer__link" href="course.html?c=TL-301">Systems Under Load</a></li>
-          <li><a class="footer__link" href="course.html?c=TL-204">Interface Physics</a></li>
-          <li><a class="footer__link" href="course.html?c=TL-112">The Type System, Fully</a></li>
-          <li><a class="footer__link" href="course.html?c=TL-317">Design for Density</a></li>
-          <li><a class="footer__link" href="course.html?c=TL-410">From Parser to Production</a></li>
-          <li><a class="footer__link" href="course.html?c=TL-405">The Staff Engineer Brief</a></li>
-        </ul>
-      </div>
-
-      <div class="footer__col">
-        <span class="mono-label footer__title">Company</span>
-        <ul class="footer__list">
-          <li><a class="footer__link" href="index.html#method">Method</a></li>
-          <li><a class="footer__link" href="index.html#instructors">Instructors</a></li>
-          <li><a class="footer__link" href="#">Contact</a></li>
-        </ul>
-      </div>
-
-      <div class="footer__col">
-        <span class="mono-label footer__title">Legal</span>
-        <ul class="footer__list">
-          <li><a class="footer__link" href="#">Terms</a></li>
-          <li><a class="footer__link" href="#">Privacy</a></li>
-          <li><a class="footer__link" href="#">Refunds</a></li>
-        </ul>
-      </div>
-
-      <div class="footer__col">
-        <span class="mono-label footer__title">Elsewhere</span>
-        <ul class="footer__list">
-          <li><a class="footer__link" href="#">RSS</a></li>
-          <li><a class="footer__link" href="#">YouTube</a></li>
-          <li><a class="footer__link" href="#">GitHub</a></li>
-        </ul>
       </div>
     </div>
-  </footer>
+  </section>
 
-</div>
+  <!-- Featured row 1 -->
+  <section class="section section--flush-top">
+    <div class="container">
+      <div class="section__head reveal">
+        <div class="section__heading">
+          <h2 class="h2">Most loved this season</h2>
+          <p class="section__lede">Highest-rated courses across the catalog.</p>
+        </div>
+        <a class="section__link" href="courses.html">Browse all courses &rarr;</a>
+      </div>
+      <div class="grid-cards" data-course-grid="BW-118,BW-224,TL-204,TL-410"></div>
+    </div>
+  </section>
+
+  <!-- Featured row 2 -->
+  <section class="section section--flush-top">
+    <div class="container">
+      <div class="section__head reveal">
+        <div class="section__heading">
+          <h2 class="h2">New and notable in Data &amp; AI</h2>
+          <p class="section__lede">Fresh releases, plus the engineering courses learners pair them with.</p>
+        </div>
+        <a class="section__link" href="courses.html?cat=data">Browse Data &amp; AI &rarr;</a>
+      </div>
+      <div class="grid-cards" data-course-grid="BW-305,BW-210,TL-301,TL-112"></div>
+    </div>
+  </section>
+
+  <!-- Value props -->
+  <section class="section">
+    <div class="container grid-3">
+      <div class="prop reveal">
+        <svg class="icon icon--lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h6a2 2 0 0 1 2 2v12a2 2 0 0 0-2-2H3z"></path><path d="M21 5h-6a2 2 0 0 0-2 2v12a2 2 0 0 1 2-2h6z"></path></svg>
+        <h3 class="h3">Syllabus before checkout</h3>
+        <p class="body-sm t-2">Read every lesson title and duration before you pay.</p>
+      </div>
+      <div class="prop">
+        <svg class="icon icon--lg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"></circle><path d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6"></path></svg>
+        <h3 class="h3">Taught by practitioners</h3>
+        <p class="body-sm t-2">Every instructor still does the work they teach.</p>
+      </div>
+      <div class="prop">
+        <svg class="icon icon--lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.5 8.5A8 8 0 1 0 20 12"></path><path d="M20 4v5h-5"></path></svg>
+        <h3 class="h3">Fourteen-day refund</h3>
+        <p class="body-sm t-2">One click, no form, no questions.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonial band -->
+  <section class="section section--tint">
+    <div class="container">
+      <h2 class="h2 reveal">Learners are saying</h2>
+      <div class="split-7-5 mt-24">
+        <figure class="quote reveal">
+          <span class="stars stars--sm" role="img" aria-label="Rated 5 out of 5" style="--star-fill:100%"><svg class="stars__glyphs stars__glyphs--track" viewBox="0 0 100 20" aria-hidden="true"><path transform="translate(0 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path><path transform="translate(20 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path><path transform="translate(40 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path><path transform="translate(60 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path><path transform="translate(80 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path></svg><span class="stars__fill"><svg class="stars__glyphs stars__glyphs--fill" viewBox="0 0 100 20" aria-hidden="true"><path transform="translate(0 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path><path transform="translate(20 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path><path transform="translate(40 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path><path transform="translate(60 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path><path transform="translate(80 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path></svg></span></span>
+          <blockquote class="quote__body">&ldquo;I finished the SQL course on a Tuesday and used it in a meeting on Wednesday. That has never happened with an online course.&rdquo;</blockquote>
+          <figcaption class="quote__attr">
+            <span class="avatar" aria-hidden="true">DW</span>
+            <span>
+              <span class="quote__name">Dana Whitfield</span>
+              <span class="quote__role">Operations analyst</span>
+            </span>
+          </figcaption>
+        </figure>
+
+        <figure class="quote reveal">
+          <span class="stars stars--sm" role="img" aria-label="Rated 5 out of 5" style="--star-fill:100%"><svg class="stars__glyphs stars__glyphs--track" viewBox="0 0 100 20" aria-hidden="true"><path transform="translate(0 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path><path transform="translate(20 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path><path transform="translate(40 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path><path transform="translate(60 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path><path transform="translate(80 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path></svg><span class="stars__fill"><svg class="stars__glyphs stars__glyphs--fill" viewBox="0 0 100 20" aria-hidden="true"><path transform="translate(0 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path><path transform="translate(20 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path><path transform="translate(40 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path><path transform="translate(60 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path><path transform="translate(80 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path></svg></span></span>
+          <blockquote class="quote__body">&ldquo;The public syllabus is the whole pitch. I knew exactly what I was buying, and it was exactly that.&rdquo;</blockquote>
+          <figcaption class="quote__attr">
+            <span class="avatar" aria-hidden="true">RM</span>
+            <span>
+              <span class="quote__name">Ravi Menon-Clarke</span>
+              <span class="quote__role">Frontend engineer</span>
+            </span>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Plan teaser -->
+  <section class="section">
+    <div class="container">
+      <div class="panel split-8-4 reveal">
+        <div class="stack-8">
+          <h3 class="h3">The Personal Plan</h3>
+          <p class="body-sm t-2">Every self-paced course, one subscription. $18 a month, billed yearly.</p>
+        </div>
+        <div class="push-end">
+          <a class="btn btn--primary" href="pricing.html">See pricing</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <a class="wordmark" href="index.html">bindwell<span class="wordmark__dot">.</span></a>
+      <p class="body-sm t-2">Well-made courses, taught by people who still do the work.</p>
+      <p class="meta">&copy; 2026 Bindwell &middot; A fictional demo site.</p>
+    </div>
+
+    <div class="footer__col">
+      <span class="footer__title">Explore</span>
+      <ul class="footer__list">
+        <li><a class="footer__link" href="courses.html">All courses</a></li>
+        <li><a class="footer__link" href="courses.html?cat=engineering">Engineering</a></li>
+        <li><a class="footer__link" href="courses.html?cat=design">Design</a></li>
+        <li><a class="footer__link" href="courses.html?cat=data">Data &amp; AI</a></li>
+        <li><a class="footer__link" href="courses.html?cat=career">Product &amp; Career</a></li>
+        <li><a class="footer__link" href="pricing.html">Pricing</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <span class="footer__title">Company</span>
+      <ul class="footer__list">
+        <li><a class="footer__link" href="#">About</a></li>
+        <li><a class="footer__link" href="#">Instructors</a></li>
+        <li><a class="footer__link" href="#">Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <span class="footer__title">Support</span>
+      <ul class="footer__list">
+        <li><a class="footer__link" href="#">Refunds</a></li>
+        <li><a class="footer__link" href="#">Terms</a></li>
+        <li><a class="footer__link" href="#">Privacy</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
 
 </body>
 </html>

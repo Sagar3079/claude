@@ -24,11 +24,27 @@ const STATIC_AZIMUTH = 0.62;            /* reduced-motion 3/4 angle */
 const FOV = 24;                         /* long lens: technical, not wide */
 const ELEVATION = 0.46;                 /* camera rise, ~25 degrees */
 
-const COL_LINE = 0x3a3a3a;              /* --line-strong */
-const COL_HI = 0x6a6a6a;                /* highlight edges */
-const COL_FILL = 0x121212;              /* --surface: hidden-line removal */
+const COL_LINE = 0x141413;              /* --ink: primary edges on cream */
+const COL_HI = 0xa8a69e;                /* --ink-3: secondary edges */
+const COL_FILL = 0xf0eee6;              /* --paper-tint: hidden-line removal */
+const COL_FILL_CARD = 0xffffff;         /* --card, for viewports on white */
+const OPACITY_LINE = 0.9;
+const OPACITY_HI = 0.55;
 
-const CODES = ["TL-112", "TL-204", "TL-301", "TL-317", "TL-405", "TL-410"];
+const CODES = [
+  "TL-112",
+  "TL-204",
+  "TL-301",
+  "TL-317",
+  "TL-405",
+  "TL-410",
+  "BW-118",
+  "BW-210",
+  "BW-224",
+  "BW-260",
+  "BW-305",
+  "BW-402"
+];
 const DEFAULT_CODE = "TL-301";
 
 const reduceMotion =
@@ -310,15 +326,34 @@ function buildPart(p, materials) {
    Shared materials and shared pointer state
    -------------------------------------------------------------------------- */
 
-const materials = {
-  fill: new THREE.MeshBasicMaterial({
-    color: COL_FILL,
-    polygonOffset: true,
-    polygonOffsetFactor: 1,
-    polygonOffsetUnits: 1
-  }),
-  line: new THREE.LineBasicMaterial({ color: COL_LINE }),
-  highlight: new THREE.LineBasicMaterial({ color: COL_HI })
+/* Two material sets: one whose hidden-line fill matches the tinted panel,
+   one whose fill matches a white card. `data-scene-fill="card"` picks the
+   second. The fill must equal the surface behind it so hidden-line removal
+   stays invisible. */
+function makeMaterials(fillColor) {
+  return {
+    fill: new THREE.MeshBasicMaterial({
+      color: fillColor,
+      polygonOffset: true,
+      polygonOffsetFactor: 1,
+      polygonOffsetUnits: 1
+    }),
+    line: new THREE.LineBasicMaterial({
+      color: COL_LINE,
+      transparent: true,
+      opacity: OPACITY_LINE
+    }),
+    highlight: new THREE.LineBasicMaterial({
+      color: COL_HI,
+      transparent: true,
+      opacity: OPACITY_HI
+    })
+  };
+}
+
+const materialSets = {
+  tint: makeMaterials(COL_FILL),
+  card: makeMaterials(COL_FILL_CARD)
 };
 
 let pointerX = 0;
@@ -473,7 +508,8 @@ function createView(el) {
   renderer.sortObjects = true;
 
   const code = el.getAttribute("data-code") || DEFAULT_CODE;
-  const part = buildPart(paramsFor(code), materials);
+  const fillKey = el.getAttribute("data-scene-fill") === "card" ? "card" : "tint";
+  const part = buildPart(paramsFor(code), materialSets[fillKey]);
 
   /* The part is symmetric about its own axis, so only height is recentred. */
   boundsBox.setFromObject(part);

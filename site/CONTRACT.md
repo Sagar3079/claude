@@ -1,49 +1,123 @@
-# TOLERANCE - integration contract
+# BINDWELL - integration contract
 
 Foundation built by agent 1. Agents 2 and 3 copy from this file verbatim.
-Design authority is `DESIGN-B.md`; this file is its implementation surface.
+Design authority is `DESIGN-C.md`; this file is its implementation surface.
 
-Files already in place:
+Files in place:
 
 ```
 site/
-  index.html      built (landing page)
-  css/main.css    built (complete design system, do not fork)
-  js/main.js      built (nav, accordion, reveals, cart badge)
-  CONTRACT.md     this file
+  index.html          built (marketplace home)
+  css/main.css        built (complete design system, do not fork)
+  js/data.js          built (12-course catalog + render helpers, source of truth)
+  js/main.js          built (cart, nav, search, accordion, reveals, course grids)
+  js/scene.js         built (Three.js wireframe viewports, restyled for cream)
+  js/vendor/          vendored Three.js v0.185.1, no CDN
+  img/motif-*.svg     4 category thumbnail motifs
+  CONTRACT.md         this file
 ```
 
 Pages still to build (link to them by exactly these names):
-`courses.html`, `course.html`, `pricing.html`, `checkout.html`.
+
+| Page | Owner | Wireframe |
+|---|---|---|
+| `courses.html` | agent 2 | DESIGN-C 6.2 |
+| `course.html` | agent 2 | DESIGN-C 6.3 |
+| `pricing.html` | agent 3 | DESIGN-C 6.4 |
+| `checkout.html` | agent 3 | DESIGN-C 6.5 |
+
+**`css/catalog.css`, `css/commerce.css`, `js/catalog.js`, `js/course.js`,
+`js/checkout.js` still exist on disk from the old dark build. They reference
+tokens that no longer exist (`--surface`, `--text-1`, `--line`, `--s-32`,
+`--dur-hero`). Rewrite or delete them; do not leave them linked as they are.
+`css/scene.css` was removed: the viewport styles now live in `main.css`
+section 21.**
+
+---
 
 ## 0. Non-negotiables
 
-1. **Every path is relative.** `href="courses.html"`, `src="js/main.js"`,
-   `href="css/main.css"`. A URL must never begin with `/`. The site deploys
-   under a subpath.
-2. **Do not add CSS files, JS files, frameworks, or external scripts.** If a
-   page needs a new component, add it to `css/main.css` in the matching
-   numbered section and document it here.
-3. **No inline `style=` attributes.** Use the utilities in section 8.
-4. **Banned absolutely:** border-radius, box-shadow, gradients, backdrop-blur,
-   em-dash (`—`), en-dash (`–`), emoji, italics, a third font family, terminal
-   green, purple, star ratings, logo walls, invented counts, fake terminals,
-   crosshair or registration decoration, count-up numbers, parallax.
-   Hyphen (`-`) only. Grep your page for `—` and `–` before you finish.
-5. **Red rationing:** at most 2 elements using `--accent` visible in one
-   viewport. Small red text always uses `--accent-text` (`#FF6B57`), never
-   `--accent`. Focus outlines do not count (transient).
-6. **Eyebrow budget:** `.eyebrow` above a headline is capped at
-   `ceil(sections / 3)` per page. Mono labels *inside* components (table
-   headers, card metadata, form labels, footer column titles) are unlimited.
-7. **One `<h1>` per page**, uppercase (`.display` or `.h1`).
-8. **Buttons:** label max 3 words, one label per intent per page.
-9. All prices, durations, dates and course codes use a mono class
-   (`.mono-data`, `.price`, `.mono-label`) so they get tabular figures.
+1. **Every path is relative.** `href="courses.html"`, `src="js/main.js"`.
+   A URL must never begin with `/`. The site deploys under a subpath.
+2. **No new shared CSS/JS.** Shared components go in `css/main.css` in the
+   matching numbered section and get documented here. A page may add one
+   page-scoped CSS/JS file if it genuinely needs page-only code; it must use
+   the tokens in section 1 of `main.css` and must not redefine a component.
+3. **No inline `style=`** except the one sanctioned case: `style="--star-fill:
+   96%"` on `.stars` (a fractional rating cannot be a static class).
+4. **No CDN except Google Fonts.** No frameworks, no build step.
+5. **No Anthropic or Claude names, logos, or UI imitation. No real company or
+   real person.** Bindwell branding only. The wordmark is lowercase
+   `bindwell.` with a coral period, always.
+6. **Every page's footer contains the string "A fictional demo site."**
+7. **Banned, grep before you finish:** `#000`, cold grays (`#333/#666/#999`),
+   any hex not in section 1's token table, dark sections, em-dash `—`,
+   en-dash `–`, emoji, gradients, backdrop-blur, a third shadow value, an
+   off-scale radius, strike-through was-prices, countdown timers, "only N
+   left", uppercase-tracked eyebrows, mono-font data styling, photos as
+   thumbnails or avatars, a second accent hue, star-fill animation,
+   count-up numbers, parallax, `transition: all`.
+8. **Serif (`Source Serif 4`) is rationed** to: `.display`, `.h1`, `.h2`,
+   `.quote__body` / `.quote-type`, `.wordmark`, and the two decorative uses
+   (`.thumb__initial`, `.avatar`). Serif inside a card body, a button, a
+   price or a meta row is a bug. Everything else is Inter.
+9. **Middle dot `·` only inside meta rows.** Never in headlines or prose.
+10. **One `<h1>` per page.** Button labels are 3 words or fewer, sentence
+    case, one label per intent per page.
+11. **Badge rationing is fixed by the data:** 3 Bestseller, 1 New, across the
+    whole catalog. Never add a badge that `data.js` does not carry, never
+    render two badges on one card.
 
-## 1. Shared `<head>` boilerplate
+---
 
-Copy exactly. Only `<title>` and the description change per page.
+## 1. Design tokens
+
+Declared on `:root` in `css/main.css`. Use the variable, never the literal.
+
+| Token | Value | Use |
+|---|---|---|
+| `--paper` | `#FAF9F5` | Page background |
+| `--paper-tint` | `#F0EEE6` | Tinted sections, thumbnail base, avatars |
+| `--card` | `#FFFFFF` | Cards, nav, inputs, accordion |
+| `--ink` | `#141413` | Primary text, prices, icons |
+| `--ink-2` | `#6E6D66` | Secondary text, meta, instructor names |
+| `--ink-3` | `#A8A69E` | Placeholder + disabled only. Never readable text. |
+| `--hairline` | `#E5E3DA` | All 1px borders |
+| `--hairline-strong` | `#D6D3C6` | Hover/focus borders, empty stars |
+| `--accent` | `#D97757` | Primary buttons, active chips, stars, wordmark dot, focus ring |
+| `--accent-hover` | `#BD5D3A` | Primary hover, coral text at body size |
+| `--accent-tint` | `#FBF0EA` | Active chip fill, New badge, Design thumbnail |
+| `--star` | `#D97757` | Star fill |
+| `--sage` | `#788C7F` | Check icons, live dot |
+| `--sage-deep` | `#5C7265` | Bestseller badge text, success text |
+| `--sage-tint` | `#EEF2EF` | Bestseller badge fill, success banner, Data thumbnail |
+| `--error` | `#B04A33` | Form error text and error borders only |
+| `--focus` | `#D97757` | Focus ring |
+| `--thumb-career` | `#F5F1E8` | Product & Career thumbnail plate only |
+
+Spacing `--s-4 … --s-96` (4, 8, 12, 16, 24, 32, 48, 64, 96). Radius
+`--r-card` 12, `--r-ctl` 8, `--r-chip` 999, `--r-badge` 6. Shadows
+`--shadow-1` (resting) and `--shadow-2` (hover). Motion `--ease-out`,
+`--ease-drawer`, `--dur-press` 100, `--dur-fast` 150, `--dur-card` 180,
+`--dur-panel` 200, `--dur-hero` 220, `--dur-drawer` 240.
+
+Layout: `--container` 1280, `--pad-x` 24 (16 under 640), `--nav-h` 72,
+`--sticky-top` 88.
+
+**Breakpoints: 640 / 768 / 1024 / 1280.** Card grids 4-up ≥1024, 2-up ≥640,
+1-up below. Mobile nav under 768. Sticky sidebar becomes a bottom bar under
+1024. Two-up field grids collapse under 640.
+
+Contrast rules that matter: white-on-coral only on 48px/40px primary buttons
+at 16px semibold. Body-size coral text uses `--accent-hover`, never
+`--accent`. `--ink-2` is never used on anything darker than `--paper-tint`.
+
+---
+
+## 2. Shared `<head>`
+
+Copy exactly. Only `<title>`, the description, and the page-script lines
+change.
 
 ```html
 <!doctype html>
@@ -51,360 +125,510 @@ Copy exactly. Only `<title>` and the description change per page.
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TOLERANCE - Catalog</title>
+<title>Bindwell - Catalog</title>
 <meta name="description" content="One sentence, plain, no marketing verbs.">
 <script>document.documentElement.className += " has-js";</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&family=Inter:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="css/main.css">
+<script src="js/data.js" defer></script>
 <script src="js/main.js" defer></script>
 </head>
 ```
 
-The one-line inline script is required: it sets `has-js` before first paint so
-reveal animations do not flash. Do not remove it, do not add other inline JS.
+`js/data.js` must load **before** `js/main.js`; a page script loads after
+both. The inline `has-js` line is required: it gates reveal states so they
+do not flash. Do not add other inline JS.
 
-Titles to use: `TOLERANCE - Catalog`, `TOLERANCE - Systems Under Load`,
-`TOLERANCE - Pricing`, `TOLERANCE - Checkout`.
+Titles: `Bindwell - Catalog`, `Bindwell - Interface Motion` (course title),
+`Bindwell - Pricing`, `Bindwell - Checkout`.
 
-## 2. Page skeleton
+`course.html` additionally loads the 3D engine:
+
+```html
+<script type="module" src="js/scene.js"></script>
+```
+
+## 3. Page skeleton
 
 ```html
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 
-<div class="frame">
+<!-- NAV (section 4) -->
+<div class="nav__backdrop" data-nav-backdrop></div>
 
-  <!-- NAV (section 3) -->
-  <!-- NAV PANEL (section 3.2) -->
+<main id="main">
+  <section class="section">
+    <div class="container"> ... </div>
+  </section>
+</main>
 
-  <main id="main">
-    <section class="section"> ... </section>
-    <section class="section"> ... </section>
-  </main>
-
-  <!-- FOOTER (section 4) -->
-
-</div>
-
+<!-- FOOTER (section 5) -->
 </body>
 </html>
 ```
 
-`.frame` draws the 1px site frame (max 1408px). Sections stack inside it and
-`.section + .section` draws the hairline between them automatically: never add
-your own divider between sections.
+`.section` supplies 64px vertical padding (48 under 768). `.container`
+supplies the 1280 max-width and side padding. Sections do not draw
+dividers; the tint change on `.section--tint` is the only separation.
+Modifiers: `.section--tight` (48/48), `.section--flush-top` (no top
+padding), `.section--tint` (full-bleed `--paper-tint`; put the tint on the
+`<section>`, the content stays in `.container`).
 
-Section variants: add `.section--flush` when the section contains a `.split`
-whose vertical hairline must reach the frame edges, or a full-bleed image.
+---
 
-## 3. Canonical nav
+## 4. Canonical nav
 
-### 3.1 Full nav (courses.html, course.html, pricing.html)
+### 4.1 Full nav (courses.html, course.html, pricing.html)
 
-Copy verbatim. On the current page, add `aria-current="page"` to that link and
-remove it from the others (index.html has none, since Method is an anchor).
+Copy verbatim. On the current page add `aria-current="page"` to that link.
+The mobile search row and panel ship with it, in this order, always.
 
 ```html
-  <header class="nav">
-    <a class="wordmark" href="index.html">TOLERANCE<sup>&reg;</sup></a>
+<header class="nav">
+  <div class="container nav__inner">
+    <a class="wordmark" href="index.html">bindwell<span class="wordmark__dot">.</span></a>
+
     <nav class="nav__links" aria-label="Primary">
       <a class="nav__link" href="courses.html">Courses</a>
-      <a class="nav__link" href="pricing.html">Pricing</a>
-      <a class="nav__link" href="index.html#method">Method</a>
     </nav>
+
+    <form class="search nav__search" role="search" action="courses.html" method="get" data-search-form>
+      <svg class="icon search__icon" viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="6"></circle><path d="M13.5 13.5 17.5 17.5"></path></svg>
+      <input class="search__input" type="search" name="q" aria-label="Search courses" placeholder="Search courses">
+    </form>
+
     <div class="nav__actions">
-      <a class="nav__cart" href="checkout.html" data-cart-link hidden>Cart [<span data-cart-count>0</span>]</a>
-      <a class="nav__signin" href="#">Sign in</a>
-      <a class="btn btn--primary btn--sm" href="courses.html">Browse courses</a>
+      <a class="nav__link nav__signin" href="pricing.html">Pricing</a>
+      <button class="nav__search-toggle" type="button" aria-label="Search" aria-expanded="false" aria-controls="nav-search-row" data-search-toggle>
+        <svg class="icon" viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="6"></circle><path d="M13.5 13.5 17.5 17.5"></path></svg>
+      </button>
+      <a class="nav__cart" href="checkout.html" aria-label="Cart">
+        <svg class="icon icon--lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.2 10.5h10.2"></path><path d="M6.6 7h14l-1.6 6.5H7.4"></path><circle cx="9.5" cy="19" r="1.4"></circle><circle cx="17.5" cy="19" r="1.4"></circle></svg>
+        <span class="nav__cart-count" data-cart-count hidden>0</span>
+      </a>
+      <a class="btn btn--primary btn--sm nav__signin" href="#">Sign in</a>
+      <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-panel" data-nav-toggle>
+        <svg class="icon icon--open icon--lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+        <svg class="icon icon--close icon--lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6 18 18M18 6 6 18"></path></svg>
+      </button>
     </div>
-    <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-panel" data-nav-toggle>
-      <svg class="icon icon--open" viewBox="0 0 256 256" aria-hidden="true"><line x1="40" y1="64" x2="216" y2="64"></line><line x1="40" y1="128" x2="216" y2="128"></line><line x1="40" y1="192" x2="216" y2="192"></line></svg>
-      <svg class="icon icon--close" viewBox="0 0 256 256" aria-hidden="true"><line x1="200" y1="56" x2="56" y2="200"></line><line x1="200" y1="200" x2="56" y2="56"></line></svg>
-    </button>
-  </header>
-```
+  </div>
 
-### 3.2 Mobile panel (ships with the full nav, always immediately after it)
+  <div class="nav__mobile-search" id="nav-search-row" data-search-row>
+    <div>
+      <div class="container">
+        <form class="search" role="search" action="courses.html" method="get" data-search-form>
+          <svg class="icon search__icon" viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="6"></circle><path d="M13.5 13.5 17.5 17.5"></path></svg>
+          <input class="search__input" type="search" name="q" aria-label="Search courses" placeholder="Search courses">
+        </form>
+      </div>
+    </div>
+  </div>
 
-```html
   <div class="nav__panel" id="nav-panel" data-nav-panel>
     <a class="nav__panel-link" href="courses.html">Courses</a>
     <a class="nav__panel-link" href="pricing.html">Pricing</a>
-    <a class="nav__panel-link" href="index.html#method">Method</a>
+    <a class="nav__panel-link" href="checkout.html">Cart</a>
     <div class="nav__panel-actions">
-      <a class="btn btn--primary" href="courses.html">Browse courses</a>
-      <a class="btn btn--secondary" href="#">Sign in</a>
+      <a class="btn btn--primary btn--block" href="#">Sign in</a>
     </div>
   </div>
+</header>
+<div class="nav__backdrop" data-nav-backdrop></div>
 ```
 
-The panel is hidden above 720px and driven entirely by `main.js`
-(`[data-nav-toggle]` / `[data-nav-panel]`, Escape closes it). Nothing to wire up.
+Everything in it is wired by `main.js`: the hamburger, the mobile search
+expander, Escape, and the backdrop click. Nothing to hook up.
 
-### 3.3 Reduced nav (checkout.html only)
+### 4.2 Reduced nav (checkout.html only)
 
-Still 64px, no links, no panel, no toggle.
+72px, no links, no search, no cart icon.
 
 ```html
-  <header class="nav">
-    <a class="wordmark" href="index.html">TOLERANCE<sup>&reg;</sup></a>
-    <span class="mono-label nav__status">Secure checkout</span>
-  </header>
+<header class="nav">
+  <div class="container nav__inner">
+    <a class="wordmark" href="index.html">bindwell<span class="wordmark__dot">.</span></a>
+    <span class="nav__status">Secure checkout</span>
+  </div>
+</header>
 ```
 
-## 4. Canonical footer
+---
 
-### 4.1 Full footer (courses.html, course.html, pricing.html)
+## 5. Canonical footer
 
-Copy verbatim.
+### 5.1 Full footer (courses.html, course.html, pricing.html)
 
 ```html
-  <footer class="footer">
-    <div class="footer__grid">
-      <div class="footer__brand">
-        <a class="wordmark" href="index.html">TOLERANCE<sup>&reg;</sup></a>
-        <p class="body-sm footer__tag">Courses machined to spec.</p>
-        <p class="mono-data footer__legal">&copy; 2026 Tolerance Courses</p>
-        <p class="mono-data footer__legal">A fictional demo site.</p>
-      </div>
-
-      <div class="footer__col">
-        <span class="mono-label footer__title">Catalog</span>
-        <ul class="footer__list">
-          <li><a class="footer__link" href="course.html">Systems Under Load</a></li>
-          <li><a class="footer__link" href="course.html">Interface Physics</a></li>
-          <li><a class="footer__link" href="course.html">The Type System, Fully</a></li>
-          <li><a class="footer__link" href="course.html">Design for Density</a></li>
-          <li><a class="footer__link" href="course.html">From Parser to Production</a></li>
-          <li><a class="footer__link" href="course.html">The Staff Engineer Brief</a></li>
-        </ul>
-      </div>
-
-      <div class="footer__col">
-        <span class="mono-label footer__title">Company</span>
-        <ul class="footer__list">
-          <li><a class="footer__link" href="index.html#method">Method</a></li>
-          <li><a class="footer__link" href="index.html#instructors">Instructors</a></li>
-          <li><a class="footer__link" href="#">Contact</a></li>
-        </ul>
-      </div>
-
-      <div class="footer__col">
-        <span class="mono-label footer__title">Legal</span>
-        <ul class="footer__list">
-          <li><a class="footer__link" href="#">Terms</a></li>
-          <li><a class="footer__link" href="#">Privacy</a></li>
-          <li><a class="footer__link" href="#">Refunds</a></li>
-        </ul>
-      </div>
-
-      <div class="footer__col">
-        <span class="mono-label footer__title">Elsewhere</span>
-        <ul class="footer__list">
-          <li><a class="footer__link" href="#">RSS</a></li>
-          <li><a class="footer__link" href="#">YouTube</a></li>
-          <li><a class="footer__link" href="#">GitHub</a></li>
-        </ul>
-      </div>
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <a class="wordmark" href="index.html">bindwell<span class="wordmark__dot">.</span></a>
+      <p class="body-sm t-2">Well-made courses, taught by people who still do the work.</p>
+      <p class="meta">&copy; 2026 Bindwell &middot; A fictional demo site.</p>
     </div>
-  </footer>
+
+    <div class="footer__col">
+      <span class="footer__title">Explore</span>
+      <ul class="footer__list">
+        <li><a class="footer__link" href="courses.html">All courses</a></li>
+        <li><a class="footer__link" href="courses.html?cat=engineering">Engineering</a></li>
+        <li><a class="footer__link" href="courses.html?cat=design">Design</a></li>
+        <li><a class="footer__link" href="courses.html?cat=data">Data &amp; AI</a></li>
+        <li><a class="footer__link" href="courses.html?cat=career">Product &amp; Career</a></li>
+        <li><a class="footer__link" href="pricing.html">Pricing</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <span class="footer__title">Company</span>
+      <ul class="footer__list">
+        <li><a class="footer__link" href="#">About</a></li>
+        <li><a class="footer__link" href="#">Instructors</a></li>
+        <li><a class="footer__link" href="#">Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <span class="footer__title">Support</span>
+      <ul class="footer__list">
+        <li><a class="footer__link" href="#">Refunds</a></li>
+        <li><a class="footer__link" href="#">Terms</a></li>
+        <li><a class="footer__link" href="#">Privacy</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
 ```
 
-`href="#"` marks a destination that does not exist in this five-page demo. Do
-not invent pages for them. No newsletter form, no social icons, no version
-string.
+`href="#"` marks a destination that does not exist in this demo. Do not
+invent pages. No newsletter form, no social row, no payment-method icons.
 
-### 4.2 Reduced footer (checkout.html only)
+### 5.2 Reduced footer (checkout.html only)
 
 ```html
-  <footer class="footer footer--reduced">
-    <p class="mono-data t-3">&copy; 2026 Tolerance Courses. A fictional demo site.</p>
-    <p class="mono-data"><a class="footer__link" href="#">Terms</a> <a class="footer__link" href="#">Privacy</a></p>
-  </footer>
+<footer class="footer footer--reduced">
+  <div class="container footer__row">
+    <p class="meta">&copy; 2026 Bindwell &middot; A fictional demo site.</p>
+    <p class="meta"><a class="footer__link" href="#">Terms</a> <a class="footer__link" href="#">Privacy</a></p>
+  </div>
+</footer>
 ```
 
-## 5. localStorage cart schema
+---
 
-- **Key:** `tolerance_cart`
-- **Value:** JSON array of course code strings, no duplicates, order preserved.
-  Example: `["TL-301","TL-112"]`
+## 6. URL conventions
+
+| URL | Meaning |
+|---|---|
+| `course.html?c=CODE` | Course detail. Unknown or missing code falls back to `TL-301`. Every course link on the site uses this form. |
+| `courses.html?q=TERM` | Catalog filtered by free text against title + instructor + category. Empty or absent `q` shows everything. |
+| `courses.html?cat=SLUG` | Catalog pre-filtered to a category. Slugs: `engineering`, `design`, `data`, `career`. Nav, hero chips and the footer already link this way. |
+| `courses.html?format=cohort` | Optional; used by the pricing page's "See cohort courses" link. Agent 2 should honour it if cheap. |
+| `checkout.html` | Cart + mock payment. |
+
+`?q` and `?cat` may combine. Reading them is agent 2's job; the links exist
+already.
+
+---
+
+## 7. Catalog data: `js/data.js`
+
+Twelve courses, fictional throughout. **Never hard-code a title, price,
+rating or instructor into a page.** Read it from here.
+
+### 7.1 Globals
+
+```js
+window.BINDWELL_COURSES     // array of 12 course objects, display order
+window.BINDWELL_CATEGORIES  // [{name:"Engineering", slug:"engineering"}, ...]
+window.BINDWELL_REVIEWS     // pool of 6 fictional reviews
+window.BINDWELL_DATA        // the helper object below
+```
+
+### 7.2 Course object
+
+```js
+{
+  code: "TL-204",                     // cart entry and ?c= value
+  title: "Interface Motion",
+  category: "Design",                 // one of the 4 names
+  slug: "design",                     // thumbnail + ?cat= key
+  instructor: "Anneke Visser",
+  instructorCred: "Design engineer; shipped three widely used ...",
+  instructorBio: "Two to three sentences.",
+  rating: 4.8,                        // number, one decimal
+  reviews: 3204,                      // number, format with formatCount()
+  learners: 27910,
+  hours: 8.5,                         // number, or null for cohort courses
+  length: "8.5h",                     // display string, cohorts: "8 weeks, 16 live sessions"
+  lengthLong: "8.5h video",
+  level: "Intermediate",              // Beginner | Intermediate | Advanced | All levels
+  format: "Self-paced",               // Self-paced | Cohort
+  price: 69,                          // number
+  priceCents: 6900,
+  badge: "Bestseller",                // "Bestseller" | "New" | null
+  updated: "Updated March 2026",
+  desc: "The one-liner (standfirst on the detail page).",
+  bullets: [ /* 5 strings, the "What you'll learn" list */ ],
+  requirements: [ /* 2-3 strings */ ],
+  syllabus: [
+    { title: "The animation decision framework", lessons: 5, minutes: 90 },
+    /* cohort courses instead: { title: "Type checking", weekly: "Weeks 3-4" } */
+  ]
+}
+```
+
+Codes, in display order: `TL-112, TL-301, TL-410, TL-204, TL-317, BW-118,
+BW-210, BW-224, BW-305, TL-405, BW-402, BW-260`.
+
+### 7.3 Helpers on `window.BINDWELL_DATA`
+
+```js
+byCode("tl-204")             // course object or null (case-insensitive, trimmed)
+resolveCode(raw)             // valid CODE string, or "TL-301"
+courseFromQuery()            // course object from ?c=, TL-301 fallback
+inCategory("Design")         // array of courses
+DEFAULT_CODE                 // "TL-301"
+
+formatPrice(69)              // "$69"
+formatMoney(69)              // "$69.00"     (checkout totals)
+formatCount(3204)            // "3,204"
+formatDuration(90)           // "1h 30m"
+initials("Anneke Visser")    // "AV"         (avatars)
+escapeHtml(str)
+slugFor("Data & AI")         // "data"
+
+thumbClass(category)         // "thumb thumb--design"
+thumbSrc(category)           // "img/motif-design.svg"
+thumbMarkup(course, extra)   // full thumbnail element (see section 9)
+starMarkup(4.8, "sm", 3204)  // full star display (see section 10)
+badgeMarkup("Bestseller")    // <span class="badge badge--bestseller">...
+metaLine(course)             // "8.5h · Intermediate"
+courseCard(course)           // the entire course card <a> (see section 11)
+
+totalLessons(course)         // 26
+curriculumSummary(course)    // "5 sections · 26 lessons · 8.5h total"
+pickReviews("TL-204")        // deterministic 3 reviews from the pool
+subtotal(["TL-204","BW-224"])// 114  (number)
+```
+
+All markup helpers return HTML strings and escape their inputs.
+
+---
+
+## 8. Cart
+
+- **Key:** `tolerance_cart` (kept verbatim for compatibility; never shown to
+  users).
+- **Value:** JSON array of course-code strings, no duplicates, order
+  preserved: `["TL-301","BW-224"]`.
 - Nothing else is stored. No prices, no quantities, no user data. Prices are
-  looked up from the course table in section 10 at render time.
-- Malformed or missing values are treated as `[]` (main.js is defensive).
+  looked up from `data.js` at render time.
+- Malformed or missing values are treated as `[]`.
 
-`main.js` renders the badge on `DOMContentLoaded` and on cross-tab `storage`
-events:
-
-- every `[data-cart-count]` element gets `textContent = count`
-- every `[data-cart-link]` element gets `hidden = (count === 0)`
-
-Public API on `window.TOLERANCE` (call it, do not re-implement it):
+Public API on `window.BINDWELL` (call it, do not re-implement it).
+`window.TOLERANCE` is kept as a legacy alias; use `BINDWELL` in new code.
 
 ```js
-TOLERANCE.readCart()            // -> ["TL-301"]
-TOLERANCE.writeCart(["TL-301"]) // replaces, then re-renders the badge
-TOLERANCE.addToCart("TL-301")   // adds if absent, then re-renders
-TOLERANCE.removeFromCart("TL-301")
-TOLERANCE.renderCart()          // force badge re-render
+BINDWELL.readCart()                 // -> ["TL-301"]
+BINDWELL.writeCart(["TL-301"])      // replaces, re-renders the badge, fires the event
+BINDWELL.addToCart("TL-301")        // adds if absent
+BINDWELL.removeFromCart("TL-301")
+BINDWELL.renderCart()               // force badge re-render
+BINDWELL.renderCourseGrids()        // re-fill any [data-course-grid] elements
 ```
 
-Declarative shortcut, already wired in main.js. Any element with these
-attributes updates the cart on click, no JS needed from you:
+Declarative shortcuts, delegated at the document level so controls you
+render later are wired automatically:
 
 ```html
-<button class="btn btn--primary" type="button" data-add-to-cart="TL-301">Buy this course</button>
-<button class="btn btn--accent" type="button" data-remove-from-cart="TL-301">Remove from order</button>
+<button class="btn btn--primary btn--block" type="button" data-add-to-cart="TL-301">Add to cart</button>
+<button class="btn btn--ghost btn--danger" type="button" data-remove-from-cart="TL-301">Remove</button>
 ```
 
-If you need page-specific behaviour, add a small `init...()` function to
-`js/main.js` guarded by a `data-` attribute lookup that returns early when the
-element is absent, exactly like `initHero()`. Do not create a second JS file.
+Badge rendering: every `[data-cart-count]` gets `textContent = count` and
+`hidden = (count === 0)`. The cart icon itself always shows; only the pill
+hides. Keep the `hidden` attribute in your markup.
 
-## 6. Icons
-
-One family, Phosphor "regular" geometry, inlined as SVG (no icon library is
-possible without a build step). Always `viewBox="0 0 256 256"`,
-`class="icon"`, `aria-hidden="true"`. `.icon` supplies 16px size,
-`fill:none`, `stroke:currentColor`, `stroke-width:16`. Do not draw new icons;
-these four are the whole set.
-
-```html
-<!-- ArrowRight -->
-<svg class="icon" viewBox="0 0 256 256" aria-hidden="true"><line x1="40" y1="128" x2="216" y2="128"></line><polyline points="144 56 216 128 144 200"></polyline></svg>
-
-<!-- Plus (accordion; rotates to a cross when open) -->
-<svg class="icon" viewBox="0 0 256 256" aria-hidden="true"><line x1="40" y1="128" x2="216" y2="128"></line><line x1="128" y1="40" x2="128" y2="216"></line></svg>
-
-<!-- List (hamburger) -->
-<svg class="icon icon--open" viewBox="0 0 256 256" aria-hidden="true"><line x1="40" y1="64" x2="216" y2="64"></line><line x1="40" y1="128" x2="216" y2="128"></line><line x1="40" y1="192" x2="216" y2="192"></line></svg>
-
-<!-- X (close) -->
-<svg class="icon icon--close" viewBox="0 0 256 256" aria-hidden="true"><line x1="200" y1="56" x2="56" y2="200"></line><line x1="200" y1="200" x2="56" y2="56"></line></svg>
-```
-
-For the solid play triangle in `.play`, `.play .icon` switches to
-`fill:currentColor; stroke:none`:
-
-```html
-<button class="play" type="button" aria-label="Play sample lesson">
-  <svg class="icon" viewBox="0 0 256 256" aria-hidden="true"><path d="M228,128a15.74,15.74,0,0,1-7.6,13.51L88.32,222.8a15.91,15.91,0,0,1-16.2.3A15.74,15.74,0,0,1,64,209.28V46.72a15.74,15.74,0,0,1,8.12-13.82,15.91,15.91,0,0,1,16.2.3L220.4,114.49A15.74,15.74,0,0,1,228,128Z"></path></svg>
-</button>
-```
-
-## 7. Component snippets
-
-### 7.1 Buttons
-
-```html
-<!-- primary -->
-<a class="btn btn--primary" href="courses.html">Browse courses</a>
-<button class="btn btn--primary" type="submit">Buy this course</button>
-
-<!-- small (nav) -->
-<a class="btn btn--primary btn--sm" href="courses.html">Browse courses</a>
-
-<!-- secondary -->
-<a class="btn btn--secondary" href="pricing.html">See pricing</a>
-
-<!-- disabled: use the attribute on <button>, the class on <a> -->
-<button class="btn btn--primary" type="button" disabled>Buy this course</button>
-<a class="btn btn--secondary is-disabled" href="#" aria-disabled="true">Buy this course</a>
-
-<!-- accent, text only, at most once per flow. Never a filled red button. -->
-<button class="btn btn--accent" type="button">Remove from order</button>
-
-<!-- full width (checkout submit) -->
-<button class="btn btn--primary btn--block" type="submit"> ... </button>
-```
-
-**Loading state.** A button that can load must carry both spans. The two spans
-share one grid cell, so the button is already as wide as its widest state and
-never jumps. Add `.is-loading` to swap (150ms opacity crossfade); the glyph
-cycles `/ - \ |` at 80ms per frame.
-
-```html
-<button class="btn btn--primary btn--block" type="submit">
-  <span class="btn__label">Pay $189</span>
-  <span class="btn__loading" aria-hidden="true"><span class="btn__glyph"><span>/-\|</span></span>Working</span>
-</button>
-```
+React to changes with the event, not by polling:
 
 ```js
-btn.classList.add("is-loading");   // shows spinner, blocks pointer events
-btn.classList.remove("is-loading");
-// mock success: swap the label text, keep the crossfade
-btn.querySelector(".btn__label").textContent = "Paid. Check your email.";
+document.addEventListener("bindwell:cart", function (e) {
+  e.detail.codes; // ["TL-301","BW-224"]
+});
 ```
 
-### 7.2 Course row (catalog, related, pricing cohorts)
+It fires on every write, including cross-tab `storage` sync.
 
-The whole row is the link. Rows live in `.rows__cluster` groups; the hairline
-is drawn between clusters, never under every row.
+---
+
+## 9. Thumbnail system
+
+Four category motifs, line art on a tinted plate, plus a ghosted serif
+initial from the course title. No photos, ever.
+
+| Category | slug | Plate | Motif |
+|---|---|---|---|
+| Engineering | `engineering` | `--paper-tint` | Isometric cube lattice |
+| Design | `design` | `--accent-tint` | Concentric quarter-arcs + one coral dot |
+| Data & AI | `data` | `--sage-tint` | Node graph, one sage node |
+| Product & Career | `career` | `--thumb-career` | Stepped path on ruled lines |
+
+Get it from `BINDWELL_DATA.thumbMarkup(course)`, or write it by hand:
 
 ```html
-<div class="rows">
-  <div class="rows__cluster">
-    <a class="row" href="course.html">
-      <span class="row__code mono-data"><span>TL-301</span><span>SELF-PACED</span></span>
-      <span class="row__main">
-        <span class="h3">Systems Under Load</span>
-        <span class="row__desc body-sm">Performance engineering for distributed backends: measure first, then fix the queue, the allocator, and the network, in that order.</span>
-      </span>
-      <span class="row__meta mono-data">11H 20M / 07 MODULES</span>
-      <span class="row__price">$249
-        <svg class="icon row__arrow" viewBox="0 0 256 256" aria-hidden="true"><line x1="40" y1="128" x2="216" y2="128"></line><polyline points="144 56 216 128 144 200"></polyline></svg>
-      </span>
-    </a>
-    <!-- more .row here -->
-  </div>
-  <div class="rows__cluster"> <!-- cohort rows --> </div>
-</div>
+<span class="thumb thumb--design">
+  <img class="thumb__art" src="img/motif-design.svg" alt="" width="320" height="200" loading="lazy" decoding="async">
+  <span class="thumb__initial" aria-hidden="true">I</span>
+</span>
 ```
 
-Filtering (courses.html): fade with `.is-fading` (150ms opacity), then set
-`.is-filtered-out` to remove it from layout. Never animate the container, never
-add a layout spring.
+Aspect is 16:10 everywhere. Add `thumb--line` for the 96x64 cart crop, and
+`card__thumb` when it sits at the top of a course card (adds the bottom
+hairline). The whole thing is decorative: `alt=""` on the image, the card or
+row title carries the meaning.
 
-### 7.3 Course card
+---
+
+## 10. Star display
+
+Static, never an input, never animated. Always accompanied by the numeric
+value and count in visible text. Use
+`BINDWELL_DATA.starMarkup(rating, "sm"|"md", reviewCount)`.
+
+The fractional fill is honest: a coral row is clipped to `rating/5` over a
+`--hairline-strong` row. `--star-fill` is the only inline style permitted
+anywhere on the site.
 
 ```html
-<a class="card" href="course.html">
-  <div class="card__media">
-    <img class="img-treat img-cover" src="https://picsum.photos/seed/tolerance-tl301-cover/900/600" width="900" height="600" alt="..." loading="lazy">
-  </div>
-  <div class="card__body">
-    <p class="mono-data card__meta">TL-301 / SELF-PACED</p>
-    <h2 class="h3">Systems Under Load</h2>
-    <p class="body-sm card__desc">One-line description.</p>
-    <div class="card__foot">
-      <span class="mono-data t-2">11H 20M / 07 MODULES</span>
-      <span class="price">$249</span>
-    </div>
-  </div>
+<span class="stars stars--sm" role="img" aria-label="Rated 4.8 out of 5 by 3,204 learners" style="--star-fill:96.00%">
+  <svg class="stars__glyphs stars__glyphs--track" viewBox="0 0 100 20" aria-hidden="true">... 5 paths ...</svg>
+  <span class="stars__fill">
+    <svg class="stars__glyphs stars__glyphs--fill" viewBox="0 0 100 20" aria-hidden="true">... 5 paths ...</svg>
+  </span>
+</span>
+```
+
+Sizes: `stars--sm` 14px (cards, reviews), `stars--md` 18px (detail title row,
+review summary).
+
+---
+
+## 11. Component snippets
+
+### 11.1 Course card
+
+Do not hand-write these. One call:
+
+```js
+document.getElementById("grid").innerHTML =
+  BINDWELL_COURSES.map(BINDWELL_DATA.courseCard).join("");
+```
+
+Or declaratively, wired by `main.js` on load:
+
+```html
+<div class="grid-cards" data-course-grid="BW-118,BW-224,TL-204,TL-410"></div>
+```
+
+The produced markup (for reference; the whole card is one link):
+
+```html
+<a class="card" href="course.html?c=TL-204">
+  <span class="thumb thumb--design card__thumb"> ... </span>
+  <span class="card__body">
+    <span class="card__badge"><span class="badge badge--bestseller">Bestseller</span></span>
+    <span class="card__title">Interface Motion</span>
+    <span class="card__instructor meta">Anneke Visser</span>
+    <span class="card__rating">
+      <span class="card__score">4.8</span>
+      <span class="stars stars--sm" ...> ... </span>
+      <span class="meta">(3,204)</span>
+    </span>
+    <span class="card__meta meta">8.5h · Intermediate</span>
+    <span class="card__price price">$69</span>
+  </span>
 </a>
 ```
 
-### 7.4 Accordion (syllabus and FAQ, same component)
+For catalog filtering, wrap each card in `<div class="card-slot">`. Toggle
+`.is-fading` (150ms opacity), then `.is-filtered-out` (removes it from
+layout). Never animate the container, never add a layout spring.
 
-Wrapper needs `data-accordion`. Items are independent. The open item carries
-`.is-open` on `.acc__item` **and** `aria-expanded="true"` on the trigger. Both
-must be set in the markup for anything open on load. The four nested elements
-(`.acc__panel > .acc__clip > .acc__inner`) are required for the
-`grid-template-rows` transition; do not flatten them.
+### 11.2 Buttons
+
+```html
+<a class="btn btn--primary" href="courses.html">Browse courses</a>
+<a class="btn btn--secondary" href="pricing.html">See pricing</a>
+<button class="btn btn--ghost" type="button">Clear search</button>
+<button class="btn btn--ghost btn--danger" type="button" data-remove-from-cart="TL-301">Remove</button>
+<a class="btn btn--primary btn--sm" href="#">Sign in</a>
+<button class="btn btn--primary btn--block" type="submit"> ... </button>
+
+<!-- disabled: attribute on <button>, class on <a> -->
+<button class="btn btn--primary" type="button" disabled>Add to cart</button>
+<a class="btn btn--secondary is-disabled" href="#" aria-disabled="true">Add to cart</a>
+```
+
+Loading. Both spans share one grid cell, so the button never changes width.
+Add `.is-loading` to swap them (150ms crossfade). The spinner is the only
+keyframe animation on the site.
+
+```html
+<button class="btn btn--primary btn--block" type="submit">
+  <span class="btn__label">Pay $124</span>
+  <span class="btn__loading" aria-hidden="true"><span class="btn__spinner"></span>Working</span>
+</button>
+```
+
+```js
+btn.classList.add("is-loading");
+btn.classList.remove("is-loading");
+```
+
+Never: gradients, coral outline buttons, two primaries side by side,
+icon-only primaries.
+
+### 11.3 Chips
+
+```html
+<div class="chip-row" role="group" aria-label="Category">
+  <button class="chip" type="button" aria-pressed="true">All</button>
+  <button class="chip" type="button" aria-pressed="false">Engineering</button>
+</div>
+```
+
+`aria-pressed="true"` (or `.is-active`) paints the coral state. One selected
+per group. Rows scroll horizontally on mobile and never wrap to 3+ lines.
+Category chips that navigate are `<a class="chip" href="courses.html?cat=...">`.
+
+### 11.4 Accordion (curriculum + FAQ, one component)
+
+Wrapper needs `data-accordion`. Items are independent. An item open on load
+carries `.is-open` on `.acc__item` **and** `aria-expanded="true"` on the
+trigger. The `.acc__panel > .acc__clip > .acc__inner` nesting is required
+for the `grid-template-rows` transition; do not flatten it. Ids must be
+unique per page.
 
 ```html
 <div class="acc" data-accordion>
   <div class="acc__item is-open">
-    <button class="acc__trigger" type="button" aria-expanded="true" aria-controls="mod-01">
-      <span><span class="acc__code">01</span>Measurement before change</span>
-      <svg class="icon acc__icon" viewBox="0 0 256 256" aria-hidden="true"><line x1="40" y1="128" x2="216" y2="128"></line><line x1="128" y1="40" x2="128" y2="216"></line></svg>
+    <button class="acc__trigger" type="button" aria-expanded="true" aria-controls="mod-1">
+      <span class="acc__title">The animation decision framework</span>
+      <span class="acc__right">
+        <span class="acc__meta">5 lessons · 1h 30m</span>
+        <svg class="icon acc__chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5"></path></svg>
+      </span>
     </button>
-    <div class="acc__panel" id="mod-01">
+    <div class="acc__panel" id="mod-1">
       <div class="acc__clip">
         <div class="acc__inner">
           <ul>
-            <li class="acc__lesson"><span>Lesson title</span><span class="mono-data">18:40</span></li>
+            <li class="acc__lesson"><span>Lesson title</span><span>08:40</span></li>
           </ul>
         </div>
       </div>
@@ -413,424 +637,397 @@ must be set in the markup for anything open on load. The four nested elements
 </div>
 ```
 
-For FAQ items drop `.acc__code` and put a paragraph inside `.acc__inner`.
-`aria-controls` ids must be unique per page.
+FAQ items drop `.acc__meta` and put `<p class="acc__text">` inside
+`.acc__inner`. `main.js` handles clicks and makes keyboard toggles instant.
 
-### 7.5 Testimonial
+### 11.5 Form field
 
-```html
-<div class="grid-12">
-  <figure class="quote quote--wide col-7 reveal">
-    <blockquote class="quote__body">&ldquo;Real typographic quotes only.&rdquo;</blockquote>
-    <figcaption class="mono-label quote__attr"><strong>Ines Duarte-Vogel</strong>Staff Engineer, freight-routing platform</figcaption>
-  </figure>
-  <figure class="quote quote--narrow col-5 reveal">
-    <blockquote class="quote__body">&ldquo;Short one.&rdquo;</blockquote>
-    <figcaption class="mono-label quote__attr"><strong>Malik Osei</strong>Design Engineer, fintech tooling</figcaption>
-  </figure>
-</div>
-```
-
-`.quote--wide` carries a 2px `--accent` left border and counts against the
-two-red-elements-per-viewport budget. Attribution is always name plus role, in
-that order, never name only.
-
-### 7.6 Form field
-
-Label above input, helper text always present in markup, error text below.
-Error state = add `.is-error` to `.field` (border switches to `--accent`, the
-error line appears). Placeholders are format hints only, never labels.
+Helper text is always present in markup; the error line is hidden until the
+field gets `.is-error`. Placeholders are format hints, never labels.
 
 ```html
 <div class="field">
-  <label class="mono-label field__label" for="card">Card number</label>
+  <label class="field__label" for="card">Card number</label>
   <input class="field__input" id="card" name="card" type="text" inputmode="numeric" placeholder="4242 4242 4242 4242" aria-describedby="card-help">
   <p class="field__help" id="card-help">Mock checkout. No card is charged.</p>
   <p class="field__error">Enter a 16-digit card number.</p>
 </div>
 
-<!-- two-up (expiry + CVC), collapses to one column under 720px -->
 <div class="field-grid">
   <div class="field"> ... </div>
   <div class="field"> ... </div>
 </div>
 
-<!-- native select, styled sharp -->
 <div class="field">
-  <label class="mono-label field__label" for="country">Country</label>
+  <label class="field__label" for="country">Country</label>
   <select class="field__select" id="country" name="country">
     <option>United States</option>
   </select>
 </div>
 ```
 
-### 7.7 Plan card (pricing)
+Error copy is specific ("Enter the 3-digit code on the back of the card."),
+never "Invalid input". Validate on submit, then on blur after the first
+attempt.
+
+### 11.6 Buy card (course detail sidebar)
+
+```html
+<aside class="buy sticky">
+  <div class="buy__media">
+    <!-- thumbMarkup(course) here, or the 3D viewport for TL-301 / TL-410 -->
+  </div>
+  <div class="buy__body">
+    <div class="buy__price"><span class="price-lg">$69</span></div>
+    <button class="btn btn--primary btn--block" type="button" data-add-to-cart="TL-204">Add to cart</button>
+    <p class="buy__note" data-buy-note>Added. It'll wait for you.</p>
+    <a class="btn btn--secondary btn--block" href="pricing.html">Buy with the plan</a>
+    <span class="label">This course includes</span>
+    <ul class="buy__list">
+      <li class="buy__item"><svg class="icon icon--sm" ...></svg>8.5h of video</li>
+    </ul>
+    <p class="buy__foot">Prices are demo data.</p>
+  </div>
+</aside>
+```
+
+States: already in cart, swap the primary to `<a class="btn btn--primary
+btn--block" href="checkout.html">Go to cart</a>` and add `.is-visible` to
+`.buy__note` (150ms fade). No toast. Under 1024 the card renders in flow
+(drop `.sticky`) and a `.buybar` is fixed to the bottom:
+
+```html
+<div class="buybar">
+  <span class="price">$69</span>
+  <button class="btn btn--primary btn--sm" type="button" data-add-to-cart="TL-204">Add to cart</button>
+</div>
+```
+
+### 11.7 Cart line item (checkout)
+
+```html
+<div class="panel panel--flush">
+  <div class="line">
+    <span class="thumb thumb--design thumb--line"> ... </span>
+    <span class="line__main">
+      <a class="line__title" href="course.html?c=TL-204">Interface Motion</a>
+      <span class="meta">Anneke Visser</span>
+      <span class="meta">8.5h · Intermediate</span>
+    </span>
+    <span class="line__side">
+      <span class="price">$69</span>
+      <button class="btn btn--ghost btn--danger btn--sm" type="button" data-remove-from-cart="TL-204">Remove</button>
+    </span>
+  </div>
+</div>
+```
+
+Removal: add `.is-removing` (150ms opacity), then `.is-collapsed` on
+`transitionend`.
+
+### 11.8 Order summary
+
+```html
+<div class="panel sticky">
+  <h3 class="h3">Order summary</h3>
+  <div class="summary-row"><span>Interface Motion</span><span>$69.00</span></div>
+  <hr>
+  <div class="summary-row summary-row--muted"><span>Subtotal</span><span>$69.00</span></div>
+  <div class="summary-row summary-row--muted"><span>Tax</span><span>$0.00</span></div>
+  <hr>
+  <div class="summary-row summary-row--total"><span>Total</span><span>$69.00</span></div>
+</div>
+```
+
+### 11.9 Plan card (pricing)
 
 ```html
 <div class="plan plan--featured">
-  <span class="mono-label plan__name">All-access</span>
-  <p class="plan__price">$384/yr</p>
-  <ul class="plan__list">
-    <li>Every course, including future releases.</li>
+  <h3 class="h3">Personal Plan</h3>
+  <div class="plan__price"><span class="price-lg">$18/mo</span><span class="meta">billed yearly at $180</span></div>
+  <ul class="check-list">
+    <li class="check-list__item"><svg class="icon icon--sm" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l4 4 8-9"></path></svg>All 10 self-paced courses</li>
   </ul>
-  <div class="plan__cta"><a class="btn btn--primary" href="checkout.html">Start all-access</a></div>
+  <div class="plan__cta"><a class="btn btn--primary" href="#">Start the plan</a></div>
 </div>
 ```
 
 `.plan--featured` adds the 2px `--accent` top border. That is the only
 highlight a plan gets: no badge, no pill, no "most popular".
 
-For the asymmetric plans grid use `.grid-12` with `.col-6` / `.col-3` /
-`.col-3`, or `.split` with 1px hairlines if the compartments should touch.
-
-### 7.8 Spec sheet cell (course.html)
+### 11.10 Testimonial, review, instructor, notice, status, empty state
 
 ```html
-<div class="spec-grid">
-  <div class="spec-cell">
-    <span class="mono-label spec-cell__label">Total runtime</span>
-    <p class="spec-cell__value">11h 20m</p>
-    <p class="spec-cell__note">Recorded at final pace, no padding.</p>
+<figure class="quote">
+  <!-- optional stars--sm row -->
+  <blockquote class="quote__body">&ldquo;Real typographic quotes only.&rdquo;</blockquote>
+  <figcaption class="quote__attr">
+    <span class="avatar" aria-hidden="true">DW</span>
+    <span><span class="quote__name">Dana Whitfield</span><span class="quote__role">Operations analyst</span></span>
+  </figcaption>
+</figure>
+
+<article class="review">
+  <span class="stars stars--sm" ...> ... </span>
+  <p class="review__name">Ingrid Solheim</p>
+  <p class="meta">February 2026</p>
+  <p class="body-sm t-2">Two to three lines.</p>
+</article>
+
+<div class="instructor">
+  <span class="avatar avatar--lg" aria-hidden="true">AV</span>
+  <div class="instructor__body">
+    <h3 class="h3">Anneke Visser</h3>
+    <p class="meta">Design engineer; shipped three widely used interaction libraries.</p>
+    <p class="body-sm t-2">Bio paragraph.</p>
+    <p class="meta">4.8 instructor rating · 2 courses · 46,000 learners</p>
   </div>
 </div>
-```
 
-### 7.9 Filter toggles (courses.html)
+<div class="notice">
+  <svg class="icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l4 4 8-9"></path></svg>
+  <div class="notice__body">
+    <h2 class="h2">You're enrolled.</h2>
+    <p class="body-sm">A receipt is on its way to your inbox.</p>
+    <a class="btn btn--primary" href="courses.html">Back to the catalog</a>
+  </div>
+</div>
 
-Active toggle = `aria-pressed="true"` (inverts to `--text-1` background).
+<p class="status"><span class="status__dot"></span>Next cohorts start in September</p>
 
-```html
-<div class="toggles" role="group" aria-label="Format">
-  <button class="toggle" type="button" aria-pressed="true">All</button>
-  <button class="toggle" type="button" aria-pressed="false">Self-paced</button>
-  <button class="toggle" type="button" aria-pressed="false">Cohort</button>
+<div class="empty">
+  <h3 class="h3">Nothing matches that combination.</h3>
+  <p class="body-sm t-2">Try removing a filter, or browse everything.</p>
+  <a class="btn btn--secondary" href="courses.html">Show all courses</a>
 </div>
 ```
 
-### 7.10 Order summary rows (checkout.html)
+`.status__dot` is the site's single live indicator: only when mock data says
+enrollment is open.
+
+### 11.11 Breadcrumb and rating row (course detail)
 
 ```html
-<div class="compartment sticky">
-  <span class="mono-label">Order</span>
-  <div class="summary-row"><span>TL-112 The Type System, Fully</span><span>$189.00</span></div>
-  <hr class="rule">
-  <div class="summary-row"><span>Subtotal</span><span>$189.00</span></div>
-  <div class="summary-row"><span>Tax</span><span>$0.00</span></div>
-  <hr class="rule">
-  <div class="summary-row summary-row--total"><span>Total</span><span>$189.00</span></div>
+<nav class="crumbs" aria-label="Breadcrumb">
+  <a href="index.html">Home</a><span class="crumbs__sep">/</span>
+  <a href="courses.html?cat=design">Design</a><span class="crumbs__sep">/</span>
+  <span>Interface Motion</span>
+</nav>
+
+<div class="rating-row">
+  <span class="rating-row__score">4.8</span>
+  <span class="stars stars--md" ...> ... </span>
+  <span>(3,204 ratings)</span>
+  <span>· 27,910 learners</span>
 </div>
 ```
 
-### 7.11 Live status indicator (courses.html cohort note only)
+---
 
-The single semantic indicator allowed on the site. A 6px square, never a
-circle, never used decoratively, and only when the mock data says open.
+## 12. Icons
+
+One set, 20x20 or 24x24 viewBox, `class="icon"` (`icon--sm` 16,
+`icon--lg` 24), `aria-hidden="true"`. `.icon` supplies `fill:none;
+stroke:currentColor; stroke-width:1.75; round caps`. Do not import an icon
+library and do not draw a fifth style.
 
 ```html
-<p class="status mono-label"><span class="status__dot"></span>Enrollment open: Sep cohort</p>
+<!-- search -->    <svg class="icon" viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="6"></circle><path d="M13.5 13.5 17.5 17.5"></path></svg>
+<!-- chevron -->   <svg class="icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5"></path></svg>
+<!-- check -->     <svg class="icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l4 4 8-9"></path></svg>
+<!-- arrow -->     <svg class="icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h14"></path><path d="M12 5l5 5-5 5"></path></svg>
+<!-- play/video --><svg class="icon" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7"></circle><path d="M8.5 7l4.5 3-4.5 3z"></path></svg>
+<!-- list -->      <svg class="icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M7 6h9M7 10h9M7 14h9M4 6h.01M4 10h.01M4 14h.01"></path></svg>
+<!-- file -->      <svg class="icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M11 2H5.5A1.5 1.5 0 0 0 4 3.5v13A1.5 1.5 0 0 0 5.5 18h9a1.5 1.5 0 0 0 1.5-1.5V7z"></path><path d="M11 2v5h5"></path></svg>
+<!-- refund -->    <svg class="icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M16 7A7 7 0 1 0 16.5 10"></path><path d="M16.5 3v4h-4"></path></svg>
+<!-- infinity/lifetime --> <svg class="icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M7 7a3 3 0 1 0 0 6c2 0 3-3 6-3a3 3 0 1 1 0 6c-3 0-4-3-6-3"></path></svg>
+<!-- book -->      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h6a2 2 0 0 1 2 2v12a2 2 0 0 0-2-2H3z"></path><path d="M21 5h-6a2 2 0 0 0-2 2v12a2 2 0 0 1 2-2h6z"></path></svg>
+<!-- person -->    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"></circle><path d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6"></path></svg>
 ```
 
-## 8. Class reference
+Check icons are sage and appear only in "What you'll learn", plan lists and
+the success notice.
+
+---
+
+## 13. Class reference
 
 ### Typography
 | Class | Purpose |
 |---|---|
-| `.display` | Hero headline, Archivo 800, clamp 56-104px, uppercase. |
-| `.h1` | Page title, Archivo 800, 44px, uppercase. |
-| `.h2` | Section headline, Archivo 700, 30px, sentence case. |
-| `.h3` | Sub-headline / card and row title, Archivo 600, 20px. |
-| `.body` | 16px body copy, capped at 65ch. |
-| `.body-sm` | 14px body copy. |
-| `.mono-data` | JetBrains Mono 13px tabular: prices, durations, codes, dates. |
-| `.mono-label` | JetBrains Mono 12px uppercase +0.08em: data labels and eyebrows. |
-| `.mono-btn` | JetBrains Mono 13px uppercase +0.06em (button type, if needed outside `.btn`). |
-| `.eyebrow` | Makes a `.mono-label` a section eyebrow (block, `--text-2`, 24px below). Budget-limited. |
-| `.link` | Inline text link: `--text-1` with a 1px accent underline revealed on hover. |
-| `.t-1` `.t-2` `.t-3` `.t-accent` | Text colour: primary, secondary, tertiary, accent (`#FF6B57`). |
-| `.visually-hidden` | Screen-reader only text. |
+| `.display` | Hero headline. Source Serif 4 600, clamp 38-52px. Index only. |
+| `.h1` | Page title. Serif 600, 36px. One per page. |
+| `.h2` | Section headline. Serif 600, 26px. |
+| `.h3` | Panel title / card-scale heading. Inter 600, 18px. |
+| `.body` | 16px body, capped 68ch. |
+| `.body-sm` | 14px body. |
+| `.meta` | 13px `--ink-2` tabular. Instructor lines, meta rows, counts. |
+| `.label` | 12px Inter 600 +0.02em. Sentence case, NOT an uppercase eyebrow. |
+| `.price` | 18px Inter 600 tabular. |
+| `.price-lg` | 28px Inter 600 tabular. |
+| `.quote-type` | Serif italic 500 20px (the `.quote__body` style, standalone). |
+| `.link` | Inline body link: ink + hairline underline; coral on hover. |
+| `.bullet-list` | Plain disc list at body-sm (requirements). |
+| `.t-2` `.t-3` | Text colour `--ink-2` / `--ink-3`. |
+| `.visually-hidden` | Screen-reader only. |
+| `.skip-link` | The skip-to-content link. |
 
 ### Layout
 | Class | Purpose |
 |---|---|
-| `.frame` | The drawn site frame: max 1408px, 1px left/right border. One per page, wraps everything. |
-| `.section` | Page section: 96px vertical (64 at 1080, 56 at 720) and `--pad-x` horizontal padding. Consecutive sections get the dividing hairline automatically. |
-| `.section--flush` | Removes horizontal padding so a `.split` hairline or full-bleed image reaches the frame edge. |
-| `.section--hero` | Caps top padding at 64px. Hero only. |
-| `.section--ruled` | Forces the top hairline on a section that is not preceded by one. |
-| `.section__head` | Headline block above section content; 48px below, styles a nested `.body` as secondary. |
-| `.rule` | A standalone 1px hairline. Only between two pieces of real content. |
-| `.grid-12` | 12-column grid, 24px gap, no dividers. Children use `.col-*`. |
-| `.col-3` `.col-4` `.col-5` `.col-6` `.col-7` `.col-8` `.col-12` | Column spans inside `.grid-12`. All collapse to full width under 720px. |
-| `.split` | Hairline-divided grid: 1px gap over `--line`, children painted `--bg`. |
-| `.split--7-5` `.split--5-7` `.split--4-8` `.split--2-1` `.split--3` `.split--2` | Split ratios. All collapse to one column at 1080px (the hairline becomes horizontal). |
-| `.pad` | 32px vertical, `--pad-x` horizontal padding (split children). |
-| `.pad-x` | Horizontal `--pad-x` only (split children in a section that already pads vertically). |
-| `.pad-dense` | 24px padding. |
-| `.compartment` | `--surface` panel with a 1px `--line` border and 32px padding. |
-| `.compartment--dense` | Same at 24px padding. |
-| `.sticky` | `position: sticky; top: 65px`. Auto-disabled below 1080px. |
-| `.stack` `.stack-24` `.stack-32` | Vertical rhythm of 16 / 24 / 32px between children. |
-| `.mt-8` `.mt-16` `.mt-24` `.mt-32` `.mt-48` | Top margin, on-scale only. |
-| `.img-treat` | Sitewide image treatment: `grayscale(1) contrast(1.05)`, transitions to `grayscale(0.4)` inside a hovered `.card` or `.person`. |
-| `.img-cover` | `width/height:100%; object-fit:cover` for a sized media box. |
+| `.container` | 1280 max-width, `--pad-x` sides. |
+| `.section` | 64px vertical (48 under 768). |
+| `.section--tight` | 48/48. |
+| `.section--flush-top` | Removes top padding. |
+| `.section--tint` | Full-bleed `--paper-tint` band. No border. |
+| `.section__head` | Head row: `.section__heading` left, `.section__link` right. |
+| `.section__heading` | H2 + `.section__lede` stack. |
+| `.section__lede` | One-line 14px `--ink-2` under an H2. |
+| `.section__link` | Right-aligned "Browse all courses" text link. |
+| `.grid-cards` | Course grid: 4-up ≥1024, 2-up ≥640, 1-up below. |
+| `.grid-2` `.grid-3` | 2-up ≥640 / 3-up ≥768, 1-up below. |
+| `.split-7-5` `.split-5-7` `.split-8-4` | Asymmetric splits, 1-col under 1024. |
+| `.shell` | Main + sidebar page shell (8/4), 1-col under 1024. |
+| `.shell--7-5` | 7/5 variant (checkout). |
+| `.sticky` | `position: sticky; top: 88px`. Only applies ≥1024. |
+| `.panel` | White surface: hairline + shadow-1 + 24px padding. |
+| `.panel--flush` | Same with no padding (holds `.line` rows). |
+| `.stack-8` … `.stack-48` | Vertical rhythm between children. |
+| `.mt-8` … `.mt-48` | Top margin, on-scale only. |
+| `.row-between` `.row-8` `.row-16` | Flex rows. |
+| `.push-end` | Right-aligns its content at ≥1024, left-aligns below. |
+| `.text-right` | Text alignment. |
 
-### Buttons
+### Components
 | Class | Purpose |
 |---|---|
-| `.btn` | Button base: 44px tall, radius 0, mono 13px uppercase, all transitions. |
-| `.btn--primary` | Filled `#EAEAEA` on `#0A0A0A`; hover `#FFFFFF`; active 1px press; disabled `--line-strong`. |
-| `.btn--secondary` | Outlined `--line-strong`; hover border `#EAEAEA`. |
-| `.btn--accent` | Text-only `--accent-text` with hover underline. Max once per flow. |
-| `.btn--sm` | 36px height (nav). |
-| `.btn--block` | Full width. |
-| `.btn--block-mobile` | Full width under 720px only. |
-| `.btn__label` | The default label span (required if the button can load). |
-| `.btn__loading` | The loading span: glyph plus the word Working. |
-| `.btn__glyph` | 1ch window over `/-\|`, stepped 4-frame cycle at 80ms. |
-| `.is-loading` | On `.btn`: crossfades to the loading state and blocks pointer events. |
-| `.is-disabled` | Disabled styling for `<a>` elements (use the `disabled` attribute on `<button>`). |
-| `.btn-row` | Horizontal 16px-gap row of buttons or a button plus mono text. |
+| `.wordmark` `.wordmark__dot` | The lowercase wordmark and its coral period. |
+| `.nav` `.nav__inner` `.nav__links` `.nav__link` `.nav__search` `.nav__actions` `.nav__signin` `.nav__cart` `.nav__cart-count` `.nav__status` `.nav__toggle` `.nav__search-toggle` `.nav__mobile-search` `.nav__panel` `.nav__panel-link` `.nav__panel-actions` `.nav__backdrop` | Nav. See section 4; copy, do not re-derive. |
+| `.search` `.search--lg` `.search__icon` `.search__input` `.search__submit` | Search field. `--lg` is the 56px hero pill. |
+| `.chip-row` `.chip-group` `.chip` | Chips. `aria-pressed="true"` = active. |
+| `.card` `.card__thumb` `.card__body` `.card__badge` `.card__title` `.card__instructor` `.card__rating` `.card__score` `.card__meta` `.card__price` | Course card. Generate with `courseCard()`. |
+| `.card-slot` `.is-fading` `.is-filtered-out` | Catalog filter wrapper and its states. |
+| `.thumb` `.thumb--engineering|design|data|career` `.thumb--line` `.thumb__art` `.thumb__initial` | Thumbnails. |
+| `.stars` `.stars--sm` `.stars--md` `.stars__glyphs` `.stars__glyphs--track` `.stars__glyphs--fill` `.stars__fill` | Star display. |
+| `.badge` `.badge--bestseller` `.badge--new` `.badge--cohort` | Badges. Max one per card. |
+| `.btn` `.btn--primary` `.btn--secondary` `.btn--ghost` `.btn--danger` `.btn--sm` `.btn--block` `.btn__label` `.btn__loading` `.btn__spinner` `.is-loading` `.is-disabled` `.btn-row` | Buttons. `--danger` is a ghost modifier for Remove. |
+| `.icon` `.icon--sm` `.icon--lg` `.icon--open` `.icon--close` | Inline SVG icons. |
+| `.acc` `.acc__item` `.acc__trigger` `.acc__title` `.acc__right` `.acc__meta` `.acc__chevron` `.acc__panel` `.acc__clip` `.acc__inner` `.acc__lesson` `.acc__text` `.is-open` `.no-anim` | Accordion. `.no-anim` is set by main.js; never author it. |
+| `.quote` `.quote__body` `.quote__attr` `.quote__name` `.quote__role` | Testimonial. |
+| `.avatar` `.avatar--lg` | Initials avatar, 40px / 64px. No photos. |
+| `.buy` `.buy__media` `.buy__body` `.buy__price` `.buy__note` `.buy__list` `.buy__item` `.buy__foot` `.buybar` | Buy card and its mobile bottom bar. |
+| `.field` `.field__label` `.field__input` `.field__select` `.field__help` `.field__error` `.is-error` `.field-grid` | Forms. |
+| `.summary-row` `.summary-row--muted` `.summary-row--total` | Order summary lines. |
+| `.line` `.line__main` `.line__title` `.line__side` `.is-removing` `.is-collapsed` | Cart line items. |
+| `.plan` `.plan--featured` `.plan__price` `.plan__cta` | Plan cards. |
+| `.check-list` `.check-list--2` `.check-list__item` | Sage check lists. |
+| `.crumbs` `.crumbs__sep` | Breadcrumb. |
+| `.rating-row` `.rating-row__score` | Detail-page rating line. |
+| `.instructor` `.instructor__body` | Instructor block. |
+| `.review` `.review__name` | Review card. |
+| `.status` `.status__dot` | The single live indicator. |
+| `.empty` | Empty state block. |
+| `.notice` `.notice__body` | Sage-tint success banner. |
+| `.prop` | Value-prop column (no card). |
+| `.footer` `.footer--reduced` `.footer__grid` `.footer__row` `.footer__brand` `.footer__col` `.footer__title` `.footer__list` `.footer__link` | Footer. |
+| `.v3d-view` `.v3d-view--hero` `.v3d-view--card` `.v3d-canvas` `.v3d-fallback` `.v3d-caption` `.is-live` | 3D viewport. |
+| `.reveal` `.is-in` `.hero-item` `.hero-item--2…--5` `.is-loaded` `.has-js` | Motion. |
 
-### Nav
-| Class | Purpose |
-|---|---|
-| `.nav` | 64px sticky header with structural bottom hairline. |
-| `.wordmark` | `TOLERANCE®` wordmark, Archivo 800 uppercase 16px. |
-| `.nav__links` | Primary link cluster (hidden under 720px). |
-| `.nav__link` | Mono 12px nav link; hover and `aria-current="page"` add the accent underline. |
-| `.nav__actions` | Right-aligned cluster (hidden under 720px). |
-| `.nav__cart` | Cart indicator; keep the `hidden` attribute in markup, main.js reveals it. |
-| `.nav__signin` | Text-only Sign in link. |
-| `.nav__status` | Right-aligned mono status text for the reduced checkout nav. |
-| `.nav__toggle` | Hamburger button, visible under 720px; swaps its own icons via `aria-expanded`. |
-| `.nav__panel` | Full-height mobile panel; slides from the top, 240ms open / 180ms close. |
-| `.nav__panel-link` | H2-scale link inside the panel, hairline-divided. |
-| `.nav__panel-actions` | Button row at the bottom of the panel. |
-| `.is-open` | On `.nav__panel` (open) and on `.acc__item` (expanded). Set by main.js. |
-
-### Course row and card
-| Class | Purpose |
-|---|---|
-| `.rows` | Container for all row clusters; the element a filter operates on. |
-| `.rows__cluster` | A group of rows; the hairline is drawn between clusters, not under rows. |
-| `.row` | Full-width 12-col course row; the whole row is the link. Hover paints `--surface`. |
-| `.row__code` | Cols 1-2: course code and format, `--text-3`, stacked (inline with a slash under 720px). |
-| `.row__main` | Cols 3-8: title plus description. |
-| `.row__desc` | The one-line description, `--text-2`. |
-| `.row__meta` | Cols 9-10: right-aligned mono runtime and module count. |
-| `.row__price` | Cols 11-12: right-aligned mono price plus the arrow icon. |
-| `.row__arrow` | Arrow icon; translates 4px right on row hover. |
-| `.is-fading` | 150ms opacity fade for filtering. |
-| `.is-filtered-out` | Removes a filtered row from layout. |
-| `.card` | Featured course card: `--surface` compartment, whole card is a link. |
-| `.card__media` | 3:2 image box with the bottom hairline. |
-| `.card__body` | 24px padded body. |
-| `.card__meta` | Mono code and format line. |
-| `.card__desc` | One-line description. |
-| `.card__foot` | Hairline-topped bottom row: metadata left, price right. |
-| `.price` | Mono tabular price. |
-| `.price--lg` | 30px 700 price (buy panel, plans). |
-| `.price--struck` | Struck-through price in `--accent-text`. Rationed. |
-
-### Accordion
-| Class | Purpose |
-|---|---|
-| `.acc` | Hairline-divided accordion list; needs `data-accordion` to be wired. |
-| `.acc__item` | One item; `.is-open` when expanded. |
-| `.acc__trigger` | Full-width trigger button; `aria-expanded` drives the icon. |
-| `.acc__code` | Mono module code before the title. |
-| `.acc__icon` | Plus icon; rotates 45deg to a cross when open. |
-| `.acc__panel` | The `grid-template-rows: 0fr -> 1fr` wrapper. |
-| `.acc__clip` | `overflow: hidden` inner wrapper. Required. |
-| `.acc__inner` | Panel content; fades in 150ms after a 60ms delay. |
-| `.acc__lesson` | Lesson line: title left, mono duration right. |
-| `.no-anim` | Temporary class main.js sets so keyboard toggles are instant. Do not author it. |
-
-### Testimonial
-| Class | Purpose |
-|---|---|
-| `.quote` | Testimonial base. |
-| `.quote--wide` | Wide variant: 20px quote, 2px `--accent` left border. |
-| `.quote--narrow` | Narrow variant: 16px quote, top hairline. |
-| `.quote__body` | The quote text (real typographic quotes). |
-| `.quote__attr` | Attribution: `<strong>` name on its own line, then role and company. |
-
-### Form
-| Class | Purpose |
-|---|---|
-| `.field` | One field block. |
-| `.field__label` | Mono label above the input. |
-| `.field__input` | Text input: `--surface`, 1px `--line`, 12/16 padding, mono 14px. |
-| `.field__select` | Native select, same treatment. |
-| `.field__help` | Helper text under the input, `--text-3`. |
-| `.field__error` | Error text in `--accent-text`; hidden until `.is-error`. |
-| `.is-error` | On `.field`: border switches to `--accent` and the error line shows. |
-| `.field-grid` | Two-up field row (expiry plus CVC); one column under 720px. |
-
-### Plans and page parts
-| Class | Purpose |
-|---|---|
-| `.plan` | Plan compartment: `--surface`, 1px border, 32px padding, CTA pinned to the bottom. |
-| `.plan--featured` | Adds the 2px `--accent` top border. The only plan highlight. |
-| `.plan__name` | Mono label plan name. |
-| `.plan__price` | Mono 30px 700 tabular price. |
-| `.plan__list` | 4-6 plain list items, `--text-2`. |
-| `.plan__cta` | Bottom-aligned button holder. |
-| `.toggles` | Hairline-joined filter toggle group. |
-| `.toggle` | One toggle; `aria-pressed="true"` inverts it. |
-| `.spec-grid` | 2-column spec sheet grid (1 column under 720px). |
-| `.spec-cell` | One `--surface` spec cell. |
-| `.spec-cell__label` | Mono label. |
-| `.spec-cell__value` | Large mono tabular value. |
-| `.spec-cell__note` | One-line "why it matters", `--text-2`. |
-| `.media` | 16:9 bordered media box for the sample-lesson placeholder. |
-| `.play` | 64px square play control, all states including disabled. |
-| `.summary-row` | Mono order-summary line: label left, amount right. |
-| `.summary-row--total` | 20px 700 total line. |
-| `.status` | The single live indicator line. |
-| `.status__dot` | 6px `--accent` square. Never decorative, never a circle. |
-| `.people` | Asymmetric instructor grid, hairline-divided. |
-| `.person` | One instructor cell, whole cell is a link. |
-| `.person--lg` `.person--sm` | 6-col (3:2 photo) and 3-col (1:1 photo) cells. |
-| `.person__media` | Photo box. |
-| `.person__cred` | One-line credential, `--text-2`. |
-
-### Footer
-| Class | Purpose |
-|---|---|
-| `.footer` | Footer with top hairline and 64px vertical padding. |
-| `.footer__grid` | 12-col footer grid. |
-| `.footer__brand` | Wordmark column (4 cols). |
-| `.footer__col` | Link column (2 cols). |
-| `.footer__tag` | "Courses machined to spec." line. |
-| `.footer__legal` | Copyright and the fictional-site line, `--text-3`. |
-| `.footer__title` | Mono column title. |
-| `.footer__list` | Link list with 12px rhythm. |
-| `.footer__link` | Mono 13px link; hover lifts `--text-2` to `--text-1`. |
-| `.footer--reduced` | Single-row checkout footer. |
-
-### Motion
-| Class | Purpose |
-|---|---|
-| `.reveal` | Scroll reveal (opacity plus 10px rise, 220ms, once at 30% visible). **Only for a section headline and its first content block. Never on every row or cell.** |
-| `.is-in` | Set by main.js when a `.reveal` enters view. |
-| `.hero-item` | Hero load-in child; staggered 50ms by position, max 5 per hero. |
-| `.hero-item--last` | Explicit 200ms delay for the featured card (5th element, but first child of its own column). |
-| `.is-loaded` | Set by main.js on `[data-hero]` after first frame. |
-| `.has-js` | On `<html>`, set by the inline head script. Reveal states only apply under it. |
-
-### Data attributes main.js reads
+### Data attributes `main.js` reads
 | Attribute | Effect |
 |---|---|
 | `data-nav-toggle` | The hamburger button. |
 | `data-nav-panel` | The mobile panel it opens. |
+| `data-nav-backdrop` | The dimmer behind the panel. |
+| `data-search-toggle` / `data-search-row` | Mobile search expander pair. |
+| `data-search-form` | Search form; strips an empty `q` on submit. |
 | `data-accordion` | Wires every `.acc__trigger` inside. |
-| `data-hero` | Runs the hero load-in on this element's children. |
-| `data-cart-count` | Element whose text is set to the cart item count. |
-| `data-cart-link` | Element whose `hidden` state follows an empty cart. |
-| `data-add-to-cart="TL-301"` | Click adds that course code to the cart. |
-| `data-remove-from-cart="TL-301"` | Click removes that course code from the cart. |
+| `data-course-grid="CODE,CODE"` | Fills the element with those course cards. |
+| `data-hero` | Runs the hero load-in on its `.hero-item` children. |
+| `data-cart-count` | Text set to the cart count; `hidden` at zero. |
+| `data-add-to-cart="TL-301"` | Click adds that code (delegated). |
+| `data-remove-from-cart="TL-301"` | Click removes that code (delegated). |
 
-## 9. Motion rules for new pages
+---
 
-Only these animate. Everything else is static.
+## 14. Motion rules
+
+Every duration ≤ 250ms. The only exception is the 600ms/rotation checkout
+spinner. Only `transform`, `opacity`, `background-color`, `border-color`,
+`color`, `box-shadow` and `grid-template-rows` are transitioned. Never
+`transition: all`.
 
 | Element | Trigger | Animation |
 |---|---|---|
-| Hero children plus featured card | Load, once | opacity and 12px rise, 50ms stagger, 250ms |
-| Section headline plus first block | First scroll into view, once | opacity and 10px rise, 220ms |
-| Buttons | hover / active | colour shift / 1px press |
-| Nav and footer links | hover | colour, underline reveal, 150ms |
-| Course rows and cards | hover | surface, border, arrow +4px, grayscale 1 to 0.4 |
-| Accordion | pointer open/close | grid rows plus icon rotate, 240 / 180ms |
-| Mobile nav panel | open/close | translateY, 240 / 180ms |
-| Catalog filter | toggle | 150ms opacity only |
-| Checkout submit | click | 150ms label crossfade |
+| Course card | hover | translateY(-2px) + shadow-1→2 + border, 180ms `--ease-out` |
+| Course card | active | scale(0.99), 100ms |
+| Buttons / chips | hover / active | colour, 150ms / scale(0.98), 100ms |
+| Nav links, footer links | hover | colour, 150ms |
+| Accordion | pointer open/close | grid-rows + chevron 180°, 200/160ms |
+| Accordion content | after open | opacity 0→1, 120ms, 40ms delay |
+| Mobile nav / mobile search | open / close | translateY + opacity, 240/180ms |
+| Catalog filter | chip toggle | 150ms opacity, then remove from layout |
+| Cart remove | click | 150ms opacity, then collapse |
+| Buy-card state | add to cart | 150ms label crossfade + note fade-in |
+| Checkout submit | click | 150ms label→spinner crossfade |
+| Hero (index only) | load, once | opacity + 10px rise, 50ms stagger, max 5 |
+| Section reveal | first in view, once, 30% | H2 + first block only, opacity + 8px rise, 200ms |
 
-Never animated: keyboard-triggered anything, page transitions, scroll-linked
-effects, numbers, the nav itself, images at rest, backgrounds. Never use
-`transition: all`. `prefers-reduced-motion` is already handled globally in
-section 18 of `main.css`: do not add transforms that bypass it.
+Not animated: keyboard-triggered anything, stars, prices, badges, page
+transitions, scroll-linked effects, numbers, the nav on load, thumbnails on
+hover. `prefers-reduced-motion` is handled globally in main.css section 22:
+do not add transforms that bypass it.
 
-## 10. Course data (authoritative)
+`.reveal` is for a section headline and its first content block only. Never
+on every card or row.
 
-| Code | Title | Instructor | Format | Price | Metadata | One-liner |
-|---|---|---|---|---|---|---|
-| TL-301 | Systems Under Load | Dario Ferrentino | SELF-PACED | $249 | 11H 20M / 07 MODULES | Performance engineering for distributed backends: measure first, then fix the queue, the allocator, and the network, in that order. |
-| TL-204 | Interface Physics | Anneke Visser | SELF-PACED | $229 | 8H 45M / 06 MODULES | Motion, gesture, and state transitions for design engineers who want interfaces that feel machined, not decorated. |
-| TL-112 | The Type System, Fully | Rohan Chandrasekar | SELF-PACED | $189 | 9H 10M / 08 MODULES | Advanced TypeScript from variance to the compiler API, taught through a real library you publish at the end. |
-| TL-317 | Design for Density | Louisa Okereke | SELF-PACED | $279 | 7H 30M / 05 MODULES | Data-dense product UI: tables, monitoring views, and editors that stay legible at 200 rows and 4 a.m. |
-| TL-410 | From Parser to Production | Efe Demirci | COHORT, 8 WEEKS | $1,450 | 16 LIVE SESSIONS / 20 SEATS | Build a small compiled language end to end, with weekly code review of your implementation. |
-| TL-405 | The Staff Engineer Brief | Marta Kovanen | COHORT, 6 WEEKS | $980 | 12 LIVE SESSIONS / 24 SEATS | Technical writing, RFC strategy, and decision records for engineers moving from output to leverage. |
+---
 
-Instructor credentials: Ferrentino, "Ex-infra lead, 9 years on payment-scale
-queues." Visser, "Design engineer; shipped three widely used open-source
-interaction libraries." Chandrasekar, "Compiler-team alum; maintains a
-typed-SQL library." Okereke, "Led design on two monitoring products." Demirci,
-"Wrote the parsing course notes half this industry learned from." Kovanen,
-"Former staff engineer at a 400-person logistics firm."
+## 15. 3D viewport
 
-Pricing: All-access `$384/yr`, Single course `FROM $189`, Team `$290/seat/yr`.
+Two placements only, both already styled:
 
-Image seeds (picsum, always with `.img-treat`):
-`tolerance-tl301-cover`, `tolerance-method-bench`,
-`tolerance-instructor-ferrentino`, `-visser`, `-chandrasekar`, `-okereke`,
-`-demirci`, `-kovanen`. Add new descriptive seeds in the same pattern, for
-example `tolerance-tl204-cover`.
+1. **Index hero** (built). `data-scene="hero"`, part TL-301, tint fill.
+2. **Course detail buy card, TL-301 and TL-410 only.** Replaces the
+   thumbnail slot, white fill:
 
-Course links: every course currently points at `course.html`, which documents
-TL-301. If you add `?code=TL-204` style parameters, keep `course.html` valid
-without them; `main.js` does not read the query string.
+```html
+<div class="v3d-view v3d-view--card" data-scene="course" data-scene-fill="card">
+  <canvas class="v3d-canvas" aria-hidden="true"></canvas>
+  <img class="v3d-fallback" src="img/motif-engineering.svg" width="320" height="200" alt="">
+</div>
+```
 
-### TL-301 syllabus, modules 01-04 (shared with index.html, keep identical)
+`scene.js` reads `?c=` itself and sets `data-code` on any
+`[data-scene="course"]` element; all 12 codes are valid, unknown falls back
+to TL-301. `data-scene-fill="card"` picks the white hidden-line fill (use it
+whenever the viewport sits on `--card`; omit it on `--paper-tint`).
 
-- **01 Measurement before change**: Choosing a workload that represents
-  production (18:40), Sampling profilers and what they miss (22:10), Reading a
-  flame graph without guessing (16:05), Building a baseline harness with
-  repeatable runs (25:30)
-- **02 Queues, backpressure, and fairness**: Little's law in production terms
-  (14:20), Bounded queues and shedding load on purpose (21:45), Fairness under
-  mixed traffic (19:15)
-- **03 Allocators and memory pressure**: Where allocation cost actually lands
-  (17:50), Arena and pool strategies (23:05), Collector pauses you can predict
-  (20:35)
-- **04 The network is the slowest part**: Connection reuse and head-of-line
-  blocking (18:25), Batching without adding latency (22:40), Timeouts, retries,
-  and the retry storm (26:15)
+Every other course uses its category thumbnail in the buy card. Fallback:
+with `?no3d=1` or no WebGL, the `<img>` plate stays visible and nothing else
+changes. Under `prefers-reduced-motion` the scene renders one static
+three-quarter frame and never spins.
 
-Modules 05-07 are yours to write in the same voice for `course.html`. Keep
-runtimes consistent with the 11h 20m total.
+---
 
-## 11. Before you finish
+## 16. Before you finish
 
-- [ ] Grep the page for `—` and `–`. Zero hits.
+- [ ] Zero `—` / `–` in rendered output. Zero `#000`, zero cold grays.
+- [ ] Every colour on the page comes from section 1's table.
+- [ ] Serif only in display / h1 / h2 / quotes / wordmark / thumb initial /
+      avatar.
+- [ ] Radius audit: cards 12, controls 8, chips 999, badges 6. Nothing else.
+- [ ] Exactly two shadow values (plus the buybar's upward mirror of shadow-2).
+- [ ] Stars: coral fill, honest fractional clip, text alternative present.
 - [ ] Every `href` and `src` is relative; none starts with `/`.
-- [ ] Every class you used exists in `css/main.css`.
-- [ ] One `<h1>`; tags balanced; unique ids.
-- [ ] Eyebrow count <= ceil(sections / 3).
-- [ ] At most 2 accent elements per viewport.
-- [ ] Every button has a label of 3 words or fewer; loading and disabled states
-      exist wherever they can occur.
-- [ ] Mobile collapse checked at 720px and 1080px.
-- [ ] No new CSS or JS files; additions went into `main.css` / `main.js` and
-      were documented here.
-
-## Addendum: page-scoped files (documented post-build)
-
-The following files were added by the page builders and are part of the shipped
-site. Each is page-scoped and does not fork the design system; main.css and
-main.js remain the single source of truth for shared components.
-
-| File | Loaded by | Purpose |
-|---|---|---|
-| css/catalog.css | courses.html, course.html | Row filter fade states, course-detail split/byline/portrait helpers (`cat-`/`cd-` prefixes) |
-| css/commerce.css | pricing.html, checkout.html | Receipt treatment, plan-grid tweaks (`pr-`/`co-` prefixes) |
-| css/scene.css | index.html, course.html | 3D viewport containers and overlay labels (`v3d-` prefix) |
-| js/catalog.js | courses.html | Two-group ANDed catalog filter (format x topic), no re-rendering |
-| js/course.js | course.html | ?c=CODE course renderer with COURSES data table; falls back to TL-301 |
-| js/checkout.js | checkout.html | Cart receipt rendering via the cart API, mock payment flow |
-| js/scene.js | index.html, course.html | Three.js wireframe part viewports (module script) |
-| js/vendor/three.module.min.js | via js/scene.js | Vendored Three.js v0.185.1, no CDN |
-
-Load order on every page: css/main.css first, page CSS after; js/main.js first
-(defer), page JS after (defer). Cart writes go through main.js / window.TOLERANCE only.
+- [ ] Every class used exists in `css/main.css`.
+- [ ] One `<h1>`; tags balanced; ids unique.
+- [ ] Buttons ≤3 words; loading and disabled states exist wherever reachable.
+- [ ] Grid collapses 4→2→1; chip rows scroll; buy card becomes the bottom bar
+      under 1024; checkout stacks under 1024.
+- [ ] Cart still keyed `tolerance_cart`; `?c=` works for all 12 codes with the
+      TL-301 fallback; `?q=` and `?cat=` filter the catalog.
+- [ ] Footer contains "A fictional demo site."
+- [ ] No Anthropic, Claude, real company or real person anywhere.
+- [ ] Zero console errors (blocked Google Fonts and the favicon 404 are
+      expected sandbox noise).
