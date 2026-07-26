@@ -1,0 +1,126 @@
+/* ==========================================================================
+   Bindwell - commerce.css
+   Page-scoped rules for pricing.html (`pr-`) and checkout.html (`co-`).
+   Everything else these two pages need already exists in css/main.css:
+   .plan, .check-list, .panel, .line, .summary-row, .field, .notice, .empty.
+   No tokens are declared here; no component from main.css is redefined.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Pricing: the demo note under "Start the plan". Present in the markup so
+   the layout never shifts, revealed by js/pricing.js on click. Fades at the
+   same 150ms as every other state change on the site.
+   -------------------------------------------------------------------------- */
+.pr-note {
+  margin-top: var(--s-8);
+  max-width: 34ch;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--dur-fast) ease, visibility 0s var(--dur-fast);
+}
+
+.pr-note.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+/* Pricing: the FAQ answers are held to 65ch by the accordion component, so a
+   full 1280 container leaves the panel half empty. Hold the whole block to a
+   reading measure instead; it stays left-aligned with the H2 above it. */
+.pr-faq {
+  max-width: 840px;
+}
+
+/* --------------------------------------------------------------------------
+   Checkout: the empty and confirmed states are short enough to leave the
+   reduced footer floating mid-screen. Only this page can be that short, so
+   the fix is scoped to it: the body becomes a column and main takes the
+   slack. The skip link and the sticky nav are unaffected (absolute and
+   sticky respectively).
+   -------------------------------------------------------------------------- */
+html:has(.co-main) body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.co-main {
+  flex: 1 0 auto;
+}
+
+/* --------------------------------------------------------------------------
+   Checkout: the cart shell. Three blocks in one grid so that source order
+   can be the mobile order (lines, then what you owe, then how you pay) while
+   the desktop layout still puts the payment form under the line items with
+   the summary alongside both. `.shell--7-5` supplies the columns and the
+   collapse; this only names the areas on top of it.
+   -------------------------------------------------------------------------- */
+@media (min-width: 1024px) {
+  .co-shell {
+    grid-template-areas:
+      "lines summary"
+      "pay   summary";
+    column-gap: var(--s-48);
+    row-gap: var(--s-32);
+  }
+
+  .co-lines {
+    grid-area: lines;
+  }
+
+  .co-summary {
+    grid-area: summary;
+  }
+
+  .co-pay {
+    grid-area: pay;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Checkout: the three exclusive page states (empty / cart / confirmed).
+   `is-out` is the outgoing half of the 150ms crossfade in js/checkout.js.
+   -------------------------------------------------------------------------- */
+.co-swap {
+  transition: opacity var(--dur-fast) ease;
+}
+
+.co-swap.is-out {
+  opacity: 0;
+}
+
+/* The confirmation is one short banner. Left aligned with the H1, held to a
+   readable measure rather than stretched across the full 1280 container. */
+.co-swap[data-state="done"] {
+  max-width: 680px;
+}
+
+/* Without JS there is no localStorage read, so the honest state is "empty".
+   The inline `has-js` flag in <head> means this never flashes. */
+html:not(.has-js) [data-state="empty"][hidden] {
+  display: block !important;
+}
+
+html:not(.has-js) [data-state="cart"],
+html:not(.has-js) [data-state="done"] {
+  display: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   Checkout: order-summary course lines. Long titles truncate rather than
+   wrap to three lines and push the total out of the card.
+   -------------------------------------------------------------------------- */
+.co-summary-row span:first-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pr-note,
+  .co-swap {
+    transition: none;
+  }
+}

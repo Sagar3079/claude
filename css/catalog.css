@@ -1,0 +1,133 @@
+/* ==========================================================================
+   BINDWELL - page styles for courses.html (cat-) and course.html (cd-)
+   Loaded AFTER css/main.css. Additions only: no component is redefined and
+   no token is re-declared. Everything here is layout that exists on these
+   two pages and nowhere else.
+     1  Catalog: sticky filter bar
+     2  Catalog: grid slots
+     3  Course detail: shell
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Catalog: sticky filter bar
+   Sits under the 72px nav. The hairline is drawn only once the bar is stuck
+   (js/catalog.js toggles .is-stuck from a sentinel above it).
+   ========================================================================== */
+
+.cat-sentinel {
+  height: 1px;
+  margin-bottom: -1px;
+}
+
+.cat-filters {
+  position: sticky;
+  top: var(--nav-h);
+  z-index: 30;
+  background: var(--paper);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--dur-fast) ease;
+}
+
+.cat-filters.is-stuck {
+  border-bottom-color: var(--hairline);
+}
+
+.cat-filters__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-12);
+  padding-top: var(--s-12);
+  padding-bottom: var(--s-12);
+}
+
+.cat-filters__row {
+  display: flex;
+  align-items: center;
+  gap: var(--s-16);
+}
+
+.cat-filters__row > .chip-row {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.cat-count {
+  flex: none;
+  white-space: nowrap;
+}
+
+/* Pull the ghost button's own inset back so its label sits on the page's
+   left margin, in line with the H1 above it. */
+.cat-clear {
+  margin-left: calc(var(--s-12) * -1);
+}
+
+/* Level and format share one scroller so the bar stays two rows tall. */
+.cat-groups {
+  display: flex;
+  align-items: center;
+  gap: var(--s-24);
+  overflow-x: auto;
+  scrollbar-width: none;
+  scroll-padding-inline: var(--s-16);
+  padding-bottom: 2px;
+}
+
+.cat-groups::-webkit-scrollbar {
+  display: none;
+}
+
+/* ==========================================================================
+   2. Catalog: grid slots
+   .card-slot is the filter wrapper from main.css section 12. It stays a
+   plain block so its own .is-filtered-out display rule still wins; the card
+   inside just grows to the row height.
+   ========================================================================== */
+
+.cat-grid .card-slot > .card {
+  height: 100%;
+}
+
+/* ==========================================================================
+   3. Course detail: shell
+   Title block top-left, buy card in the right column spanning both rows,
+   everything else below the title block. Under 1024 it is one column in DOM
+   order, which puts the buy card directly after the title block, exactly
+   where the wireframe wants it.
+   ========================================================================== */
+
+.cd-shell {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-32);
+}
+
+@media (min-width: 1024px) {
+  .cd-shell {
+    grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+    grid-template-areas:
+      "head side"
+      "body side";
+    column-gap: var(--s-48);
+    row-gap: var(--s-48);
+  }
+
+  .cd-head {
+    grid-area: head;
+  }
+
+  .cd-side {
+    grid-area: side;
+  }
+
+  .cd-body {
+    grid-area: body;
+  }
+}
+
+/* Room for the fixed buy bar, which only exists under 1024. */
+@media (max-width: 1023px) {
+  body.cd-page {
+    padding-bottom: var(--s-64);
+  }
+}

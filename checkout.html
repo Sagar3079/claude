@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bindwell - Checkout</title>
+<meta name="description" content="Your cart and a mock payment form. No card is charged on this demo site.">
+<script>document.documentElement.className += " has-js";</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/commerce.css">
+<script src="js/data.js" defer></script>
+<script src="js/main.js" defer></script>
+<script src="js/checkout.js" defer></script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="container nav__inner">
+    <a class="wordmark" href="index.html">bindwell<span class="wordmark__dot">.</span></a>
+    <span class="nav__status">Secure checkout</span>
+  </div>
+</header>
+
+<main class="co-main" id="main">
+  <section class="section">
+    <div class="container">
+
+      <h1 class="h1" data-page-title>Your cart</h1>
+      <p class="body t-2 mt-8" data-page-lede>Nothing is charged here. This is a demo checkout end to end.</p>
+
+      <!-- Empty state -->
+      <div class="co-swap mt-24" data-state="empty" hidden>
+        <div class="empty">
+          <h2 class="h3">Your cart is empty.</h2>
+          <p class="body-sm t-2">Good news: the catalog isn't.</p>
+          <a class="btn btn--primary" href="courses.html">Browse courses</a>
+        </div>
+      </div>
+
+      <!-- Cart + payment -->
+      <div class="shell shell--7-5 co-shell co-swap mt-32" data-state="cart" hidden>
+
+        <div class="panel panel--flush co-lines" data-cart-lines></div>
+
+        <aside class="panel sticky co-summary">
+          <h2 class="h3">Order summary</h2>
+          <div class="mt-16" data-summary-lines></div>
+          <hr>
+          <div class="summary-row summary-row--muted"><span>Subtotal</span><span data-summary-subtotal>$0.00</span></div>
+          <div class="summary-row summary-row--muted"><span>Tax</span><span>$0.00</span></div>
+          <hr>
+          <div class="summary-row summary-row--total"><span>Total</span><span data-summary-total>$0.00</span></div>
+          <p class="meta mt-16">Lifetime access, and a 14-day refund on every line.</p>
+        </aside>
+
+        <form class="panel stack-24 co-pay" data-pay-form novalidate>
+          <h2 class="h3">Payment</h2>
+
+          <div class="field">
+            <label class="field__label" for="email">Email</label>
+            <input class="field__input" id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" aria-describedby="email-help email-error">
+            <p class="field__help" id="email-help">The receipt goes here. Nothing is sent in this demo.</p>
+            <p class="field__error" id="email-error">Enter an email address so the receipt has somewhere to go.</p>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="card">Card number</label>
+            <input class="field__input" id="card" name="card" type="text" inputmode="numeric" autocomplete="cc-number" placeholder="4242 4242 4242 4242" aria-describedby="card-help card-error">
+            <p class="field__help" id="card-help">Mock checkout. No card is charged.</p>
+            <p class="field__error" id="card-error">Enter a 16-digit card number.</p>
+          </div>
+
+          <div class="field-grid">
+            <div class="field">
+              <label class="field__label" for="expiry">Expiry</label>
+              <input class="field__input" id="expiry" name="expiry" type="text" inputmode="numeric" autocomplete="cc-exp" placeholder="09 / 29" aria-describedby="expiry-help expiry-error">
+              <p class="field__help" id="expiry-help">Month and year, as printed.</p>
+              <p class="field__error" id="expiry-error">Enter the expiry date as MM/YY.</p>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="cvc">CVC</label>
+              <input class="field__input" id="cvc" name="cvc" type="text" inputmode="numeric" autocomplete="cc-csc" placeholder="123" aria-describedby="cvc-help cvc-error">
+              <p class="field__help" id="cvc-help">Three digits, never stored.</p>
+              <p class="field__error" id="cvc-error">Enter the 3-digit code on the back of the card.</p>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="cardname">Name on card</label>
+            <input class="field__input" id="cardname" name="cardname" type="text" autocomplete="cc-name" placeholder="As printed on the card" aria-describedby="cardname-help cardname-error">
+            <p class="field__help" id="cardname-help">Exactly as your bank spells it.</p>
+            <p class="field__error" id="cardname-error">Enter the name printed on the card.</p>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="country">Country</label>
+            <select class="field__select" id="country" name="country">
+              <option>United States</option>
+              <option>Canada</option>
+              <option>United Kingdom</option>
+              <option>Netherlands</option>
+              <option>Germany</option>
+              <option>Japan</option>
+              <option>Australia</option>
+            </select>
+            <p class="field__help" id="country-help">Used for the receipt only.</p>
+          </div>
+
+          <button class="btn btn--primary btn--block" type="submit" data-pay-button>
+            <span class="btn__label" data-pay-label>Pay</span>
+            <span class="btn__loading" aria-hidden="true"><span class="btn__spinner"></span>Working</span>
+          </button>
+
+          <p class="meta">A demo checkout. No network request leaves this page and no card is charged.</p>
+        </form>
+
+      </div>
+
+      <!-- Confirmation -->
+      <div class="co-swap mt-24" data-state="done" hidden>
+        <div class="notice">
+          <svg class="icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l4 4 8-9"></path></svg>
+          <div class="notice__body">
+            <h2 class="h2">You're enrolled.</h2>
+            <p class="body-sm">A receipt is on its way to your inbox. Your courses are ready whenever you are.</p>
+            <a class="btn btn--primary" href="courses.html">Back to the catalog</a>
+          </div>
+        </div>
+        <p class="meta mt-16" data-order-number></p>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer class="footer footer--reduced">
+  <div class="container footer__row">
+    <p class="meta">&copy; 2026 Bindwell &middot; A fictional demo site.</p>
+    <p class="meta"><a class="footer__link" href="#">Terms</a> <a class="footer__link" href="#">Privacy</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

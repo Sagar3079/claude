@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bindwell - Course</title>
+<meta name="description" content="A Bindwell course page: syllabus, instructor, reviews, and price, all before checkout.">
+<script>document.documentElement.className += " has-js";</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/catalog.css">
+<script src="js/data.js" defer></script>
+<script src="js/main.js" defer></script>
+<script src="js/course.js" defer></script>
+<script type="module" src="js/scene.js"></script>
+</head>
+<body class="cd-page">
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="container nav__inner">
+    <a class="wordmark" href="index.html">bindwell<span class="wordmark__dot">.</span></a>
+
+    <nav class="nav__links" aria-label="Primary">
+      <a class="nav__link" href="courses.html" aria-current="true">Courses</a>
+    </nav>
+
+    <form class="search nav__search" role="search" action="courses.html" method="get" data-search-form>
+      <svg class="icon search__icon" viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="6"></circle><path d="M13.5 13.5 17.5 17.5"></path></svg>
+      <input class="search__input" type="search" name="q" aria-label="Search courses" placeholder="Search courses">
+    </form>
+
+    <div class="nav__actions">
+      <a class="nav__link nav__signin" href="pricing.html">Pricing</a>
+      <button class="nav__search-toggle" type="button" aria-label="Search" aria-expanded="false" aria-controls="nav-search-row" data-search-toggle>
+        <svg class="icon" viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="6"></circle><path d="M13.5 13.5 17.5 17.5"></path></svg>
+      </button>
+      <a class="nav__cart" href="checkout.html" aria-label="Cart">
+        <svg class="icon icon--lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.2 10.5h10.2"></path><path d="M6.6 7h14l-1.6 6.5H7.4"></path><circle cx="9.5" cy="19" r="1.4"></circle><circle cx="17.5" cy="19" r="1.4"></circle></svg>
+        <span class="nav__cart-count" data-cart-count hidden>0</span>
+      </a>
+      <a class="btn btn--primary btn--sm nav__signin" href="#">Sign in</a>
+      <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-panel" data-nav-toggle>
+        <svg class="icon icon--open icon--lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+        <svg class="icon icon--close icon--lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6 18 18M18 6 6 18"></path></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="nav__mobile-search" id="nav-search-row" data-search-row>
+    <div>
+      <div class="container">
+        <form class="search" role="search" action="courses.html" method="get" data-search-form>
+          <svg class="icon search__icon" viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="6"></circle><path d="M13.5 13.5 17.5 17.5"></path></svg>
+          <input class="search__input" type="search" name="q" aria-label="Search courses" placeholder="Search courses">
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav__panel" id="nav-panel" data-nav-panel>
+    <a class="nav__panel-link" href="courses.html">Courses</a>
+    <a class="nav__panel-link" href="pricing.html">Pricing</a>
+    <a class="nav__panel-link" href="checkout.html">Cart</a>
+    <div class="nav__panel-actions">
+      <a class="btn btn--primary btn--block" href="#">Sign in</a>
+    </div>
+  </div>
+</header>
+<div class="nav__backdrop" data-nav-backdrop></div>
+
+<main id="main">
+  <!-- Every region below is filled by js/course.js from js/data.js, keyed on
+       ?c=CODE (unknown or missing code falls back to TL-301). -->
+  <section class="section section--tight">
+    <div class="container">
+      <nav class="crumbs" aria-label="Breadcrumb" data-crumbs></nav>
+
+      <div class="cd-shell mt-24">
+        <div class="cd-head stack-16" data-title-block></div>
+        <div class="cd-side" data-buy></div>
+        <div class="cd-body stack-48" data-sections></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div data-buybar></div>
+
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <a class="wordmark" href="index.html">bindwell<span class="wordmark__dot">.</span></a>
+      <p class="body-sm t-2">Well-made courses, taught by people who still do the work.</p>
+      <p class="meta">&copy; 2026 Bindwell &middot; A fictional demo site.</p>
+    </div>
+
+    <div class="footer__col">
+      <span class="footer__title">Explore</span>
+      <ul class="footer__list">
+        <li><a class="footer__link" href="courses.html">All courses</a></li>
+        <li><a class="footer__link" href="courses.html?cat=engineering">Engineering</a></li>
+        <li><a class="footer__link" href="courses.html?cat=design">Design</a></li>
+        <li><a class="footer__link" href="courses.html?cat=data">Data &amp; AI</a></li>
+        <li><a class="footer__link" href="courses.html?cat=career">Product &amp; Career</a></li>
+        <li><a class="footer__link" href="pricing.html">Pricing</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <span class="footer__title">Company</span>
+      <ul class="footer__list">
+        <li><a class="footer__link" href="#">About</a></li>
+        <li><a class="footer__link" href="#">Instructors</a></li>
+        <li><a class="footer__link" href="#">Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <span class="footer__title">Support</span>
+      <ul class="footer__list">
+        <li><a class="footer__link" href="#">Refunds</a></li>
+        <li><a class="footer__link" href="#">Terms</a></li>
+        <li><a class="footer__link" href="#">Privacy</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

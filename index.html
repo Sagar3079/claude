@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bindwell - Well-made courses</title>
+<meta name="description" content="Twelve courses across engineering, design, data, and career, with every syllabus public before you pay.">
+<script>document.documentElement.className += " has-js";</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="css/main.css">
+<script src="js/data.js" defer></script>
+<script src="js/main.js" defer></script>
+<script type="module" src="js/scene.js"></script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="container nav__inner">
+    <a class="wordmark" href="index.html">bindwell<span class="wordmark__dot">.</span></a>
+
+    <nav class="nav__links" aria-label="Primary">
+      <a class="nav__link" href="courses.html">Courses</a>
+    </nav>
+
+    <form class="search nav__search" role="search" action="courses.html" method="get" data-search-form>
+      <svg class="icon search__icon" viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="6"></circle><path d="M13.5 13.5 17.5 17.5"></path></svg>
+      <input class="search__input" type="search" name="q" aria-label="Search courses" placeholder="Search courses">
+    </form>
+
+    <div class="nav__actions">
+      <a class="nav__link nav__signin" href="pricing.html">Pricing</a>
+      <button class="nav__search-toggle" type="button" aria-label="Search" aria-expanded="false" aria-controls="nav-search-row" data-search-toggle>
+        <svg class="icon" viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="6"></circle><path d="M13.5 13.5 17.5 17.5"></path></svg>
+      </button>
+      <a class="nav__cart" href="checkout.html" aria-label="Cart">
+        <svg class="icon icon--lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.2 10.5h10.2"></path><path d="M6.6 7h14l-1.6 6.5H7.4"></path><circle cx="9.5" cy="19" r="1.4"></circle><circle cx="17.5" cy="19" r="1.4"></circle></svg>
+        <span class="nav__cart-count" data-cart-count hidden>0</span>
+      </a>
+      <a class="btn btn--primary btn--sm nav__signin" href="#">Sign in</a>
+      <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-panel" data-nav-toggle>
+        <svg class="icon icon--open icon--lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+        <svg class="icon icon--close icon--lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6 18 18M18 6 6 18"></path></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="nav__mobile-search" id="nav-search-row" data-search-row>
+    <div>
+      <div class="container">
+        <form class="search" role="search" action="courses.html" method="get" data-search-form>
+          <svg class="icon search__icon" viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="6"></circle><path d="M13.5 13.5 17.5 17.5"></path></svg>
+          <input class="search__input" type="search" name="q" aria-label="Search courses" placeholder="Search courses">
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav__panel" id="nav-panel" data-nav-panel>
+    <a class="nav__panel-link" href="courses.html">Courses</a>
+    <a class="nav__panel-link" href="pricing.html">Pricing</a>
+    <a class="nav__panel-link" href="checkout.html">Cart</a>
+    <div class="nav__panel-actions">
+      <a class="btn btn--primary btn--block" href="#">Sign in</a>
+    </div>
+  </div>
+</header>
+<div class="nav__backdrop" data-nav-backdrop></div>
+
+<main id="main">
+
+  <!-- Hero -->
+  <section class="section section--tight">
+    <div class="container split-7-5" data-hero>
+      <div>
+        <h1 class="display hero-item">Learn it properly, from people who do it daily.</h1>
+        <p class="body t-2 mt-16 hero-item hero-item--2">Twelve courses across engineering, design, data, and career. Every syllabus public before you pay.</p>
+
+        <form class="search search--lg mt-32 hero-item hero-item--3" role="search" action="courses.html" method="get" data-search-form>
+          <svg class="icon search__icon" viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="6"></circle><path d="M13.5 13.5 17.5 17.5"></path></svg>
+          <input class="search__input" type="search" name="q" aria-label="Search courses" placeholder="What do you want to learn?">
+          <button class="btn btn--primary btn--sm search__submit" type="submit">Search</button>
+        </form>
+
+        <div class="chip-row mt-24 hero-item hero-item--4">
+          <a class="chip" href="courses.html?cat=engineering">Engineering</a>
+          <a class="chip" href="courses.html?cat=design">Design</a>
+          <a class="chip" href="courses.html?cat=data">Data &amp; AI</a>
+          <a class="chip" href="courses.html?cat=career">Product &amp; Career</a>
+        </div>
+      </div>
+
+      <div class="hero-item hero-item--5">
+        <div class="v3d-view v3d-view--hero" data-scene="hero" data-code="TL-301">
+          <canvas class="v3d-canvas" aria-hidden="true"></canvas>
+          <img class="v3d-fallback" src="img/motif-engineering.svg" width="320" height="200" alt="">
+          <span class="v3d-caption">Every course is a well-made thing.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured row 1 -->
+  <section class="section section--flush-top">
+    <div class="container">
+      <div class="section__head reveal">
+        <div class="section__heading">
+          <h2 class="h2">Most loved this season</h2>
+          <p class="section__lede">Highest-rated courses across the catalog.</p>
+        </div>
+        <a class="section__link" href="courses.html">Browse all courses &rarr;</a>
+      </div>
+      <div class="grid-cards" data-course-grid="BW-118,BW-224,TL-204,TL-410"></div>
+    </div>
+  </section>
+
+  <!-- Featured row 2 -->
+  <section class="section section--flush-top">
+    <div class="container">
+      <div class="section__head reveal">
+        <div class="section__heading">
+          <h2 class="h2">New and notable in Data &amp; AI</h2>
+          <p class="section__lede">Fresh releases, plus the engineering courses learners pair them with.</p>
+        </div>
+        <a class="section__link" href="courses.html?cat=data">Browse Data &amp; AI &rarr;</a>
+      </div>
+      <div class="grid-cards" data-course-grid="BW-305,BW-210,TL-301,TL-112"></div>
+    </div>
+  </section>
+
+  <!-- Value props -->
+  <section class="section">
+    <div class="container grid-3">
+      <div class="prop reveal">
+        <svg class="icon icon--lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h6a2 2 0 0 1 2 2v12a2 2 0 0 0-2-2H3z"></path><path d="M21 5h-6a2 2 0 0 0-2 2v12a2 2 0 0 1 2-2h6z"></path></svg>
+        <h3 class="h3">Syllabus before checkout</h3>
+        <p class="body-sm t-2">Read every lesson title and duration before you pay.</p>
+      </div>
+      <div class="prop">
+        <svg class="icon icon--lg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"></circle><path d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6"></path></svg>
+        <h3 class="h3">Taught by practitioners</h3>
+        <p class="body-sm t-2">Every instructor still does the work they teach.</p>
+      </div>
+      <div class="prop">
+        <svg class="icon icon--lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.5 8.5A8 8 0 1 0 20 12"></path><path d="M20 4v5h-5"></path></svg>
+        <h3 class="h3">Fourteen-day refund</h3>
+        <p class="body-sm t-2">One click, no form, no questions.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonial band -->
+  <section class="section section--tint">
+    <div class="container">
+      <h2 class="h2 reveal">Learners are saying</h2>
+      <div class="split-7-5 mt-24">
+        <figure class="quote reveal">
+          <span class="stars stars--sm" role="img" aria-label="Rated 5 out of 5" style="--star-fill:100%"><svg class="stars__glyphs stars__glyphs--track" viewBox="0 0 100 20" aria-hidden="true"><path transform="translate(0 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path><path transform="translate(20 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path><path transform="translate(40 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path><path transform="translate(60 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path><path transform="translate(80 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path></svg><span class="stars__fill"><svg class="stars__glyphs stars__glyphs--fill" viewBox="0 0 100 20" aria-hidden="true"><path transform="translate(0 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path><path transform="translate(20 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path><path transform="translate(40 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path><path transform="translate(60 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path><path transform="translate(80 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path></svg></span></span>
+          <blockquote class="quote__body">&ldquo;I finished the SQL course on a Tuesday and used it in a meeting on Wednesday. That has never happened with an online course.&rdquo;</blockquote>
+          <figcaption class="quote__attr">
+            <span class="avatar" aria-hidden="true">DW</span>
+            <span>
+              <span class="quote__name">Dana Whitfield</span>
+              <span class="quote__role">Operations analyst</span>
+            </span>
+          </figcaption>
+        </figure>
+
+        <figure class="quote reveal">
+          <span class="stars stars--sm" role="img" aria-label="Rated 5 out of 5" style="--star-fill:100%"><svg class="stars__glyphs stars__glyphs--track" viewBox="0 0 100 20" aria-hidden="true"><path transform="translate(0 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path><path transform="translate(20 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path><path transform="translate(40 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path><path transform="translate(60 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path><path transform="translate(80 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path></svg><span class="stars__fill"><svg class="stars__glyphs stars__glyphs--fill" viewBox="0 0 100 20" aria-hidden="true"><path transform="translate(0 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path><path transform="translate(20 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path><path transform="translate(40 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path><path transform="translate(60 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path><path transform="translate(80 0)" d="M10 1.7l2.5 5.1 5.6.8-4.05 3.95.96 5.6L10 14.5l-5.01 2.65.96-5.6L1.9 7.6l5.6-.8z"></path></svg></span></span>
+          <blockquote class="quote__body">&ldquo;The public syllabus is the whole pitch. I knew exactly what I was buying, and it was exactly that.&rdquo;</blockquote>
+          <figcaption class="quote__attr">
+            <span class="avatar" aria-hidden="true">RM</span>
+            <span>
+              <span class="quote__name">Ravi Menon-Clarke</span>
+              <span class="quote__role">Frontend engineer</span>
+            </span>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Plan teaser -->
+  <section class="section">
+    <div class="container">
+      <div class="panel split-8-4 reveal">
+        <div class="stack-8">
+          <h3 class="h3">The Personal Plan</h3>
+          <p class="body-sm t-2">Every self-paced course, one subscription. $18 a month, billed yearly.</p>
+        </div>
+        <div class="push-end">
+          <a class="btn btn--primary" href="pricing.html">See pricing</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <a class="wordmark" href="index.html">bindwell<span class="wordmark__dot">.</span></a>
+      <p class="body-sm t-2">Well-made courses, taught by people who still do the work.</p>
+      <p class="meta">&copy; 2026 Bindwell &middot; A fictional demo site.</p>
+    </div>
+
+    <div class="footer__col">
+      <span class="footer__title">Explore</span>
+      <ul class="footer__list">
+        <li><a class="footer__link" href="courses.html">All courses</a></li>
+        <li><a class="footer__link" href="courses.html?cat=engineering">Engineering</a></li>
+        <li><a class="footer__link" href="courses.html?cat=design">Design</a></li>
+        <li><a class="footer__link" href="courses.html?cat=data">Data &amp; AI</a></li>
+        <li><a class="footer__link" href="courses.html?cat=career">Product &amp; Career</a></li>
+        <li><a class="footer__link" href="pricing.html">Pricing</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <span class="footer__title">Company</span>
+      <ul class="footer__list">
+        <li><a class="footer__link" href="#">About</a></li>
+        <li><a class="footer__link" href="#">Instructors</a></li>
+        <li><a class="footer__link" href="#">Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <span class="footer__title">Support</span>
+      <ul class="footer__list">
+        <li><a class="footer__link" href="#">Refunds</a></li>
+        <li><a class="footer__link" href="#">Terms</a></li>
+        <li><a class="footer__link" href="#">Privacy</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

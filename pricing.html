@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bindwell - Pricing</title>
+<meta name="description" content="Subscribe to every self-paced course, or buy the single course you came for.">
+<script>document.documentElement.className += " has-js";</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/commerce.css">
+<script src="js/data.js" defer></script>
+<script src="js/main.js" defer></script>
+<script src="js/pricing.js" defer></script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="container nav__inner">
+    <a class="wordmark" href="index.html">bindwell<span class="wordmark__dot">.</span></a>
+
+    <nav class="nav__links" aria-label="Primary">
+      <a class="nav__link" href="courses.html">Courses</a>
+    </nav>
+
+    <form class="search nav__search" role="search" action="courses.html" method="get" data-search-form>
+      <svg class="icon search__icon" viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="6"></circle><path d="M13.5 13.5 17.5 17.5"></path></svg>
+      <input class="search__input" type="search" name="q" aria-label="Search courses" placeholder="Search courses">
+    </form>
+
+    <div class="nav__actions">
+      <a class="nav__link nav__signin" href="pricing.html" aria-current="page">Pricing</a>
+      <button class="nav__search-toggle" type="button" aria-label="Search" aria-expanded="false" aria-controls="nav-search-row" data-search-toggle>
+        <svg class="icon" viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="6"></circle><path d="M13.5 13.5 17.5 17.5"></path></svg>
+      </button>
+      <a class="nav__cart" href="checkout.html" aria-label="Cart">
+        <svg class="icon icon--lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.2 10.5h10.2"></path><path d="M6.6 7h14l-1.6 6.5H7.4"></path><circle cx="9.5" cy="19" r="1.4"></circle><circle cx="17.5" cy="19" r="1.4"></circle></svg>
+        <span class="nav__cart-count" data-cart-count hidden>0</span>
+      </a>
+      <a class="btn btn--primary btn--sm nav__signin" href="#">Sign in</a>
+      <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-panel" data-nav-toggle>
+        <svg class="icon icon--open icon--lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+        <svg class="icon icon--close icon--lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6 18 18M18 6 6 18"></path></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="nav__mobile-search" id="nav-search-row" data-search-row>
+    <div>
+      <div class="container">
+        <form class="search" role="search" action="courses.html" method="get" data-search-form>
+          <svg class="icon search__icon" viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="6"></circle><path d="M13.5 13.5 17.5 17.5"></path></svg>
+          <input class="search__input" type="search" name="q" aria-label="Search courses" placeholder="Search courses">
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav__panel" id="nav-panel" data-nav-panel>
+    <a class="nav__panel-link" href="courses.html">Courses</a>
+    <a class="nav__panel-link" href="pricing.html">Pricing</a>
+    <a class="nav__panel-link" href="checkout.html">Cart</a>
+    <div class="nav__panel-actions">
+      <a class="btn btn--primary btn--block" href="#">Sign in</a>
+    </div>
+  </div>
+</header>
+<div class="nav__backdrop" data-nav-backdrop></div>
+
+<main id="main">
+
+  <!-- Header -->
+  <section class="section section--tight">
+    <div class="container">
+      <h1 class="h1">Pricing</h1>
+      <p class="body t-2 mt-8">Two honest ways in: subscribe to everything, or buy only what you need.</p>
+    </div>
+  </section>
+
+  <!-- Plan comparison -->
+  <section class="section section--flush-top">
+    <div class="container split-7-5">
+
+      <div class="plan plan--featured">
+        <h2 class="h3">Personal Plan</h2>
+        <div class="plan__price">
+          <span class="price-lg">$18/mo</span>
+          <span class="meta">billed yearly at $180</span>
+        </div>
+        <ul class="check-list">
+          <li class="check-list__item"><svg class="icon icon--sm" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l4 4 8-9"></path></svg><span data-plan-count>All 10 self-paced courses</span></li>
+          <li class="check-list__item"><svg class="icon icon--sm" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l4 4 8-9"></path></svg>New courses included as they release</li>
+          <li class="check-list__item"><svg class="icon icon--sm" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l4 4 8-9"></path></svg>20% off cohort seats</li>
+          <li class="check-list__item"><svg class="icon icon--sm" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l4 4 8-9"></path></svg>Cancel anytime, keep nothing, owe nothing</li>
+          <li class="check-list__item"><svg class="icon icon--sm" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l4 4 8-9"></path></svg>14-day refund, one click</li>
+        </ul>
+        <div class="plan__cta">
+          <button class="btn btn--primary" type="button" data-plan-start>Start the plan</button>
+          <p class="meta pr-note" data-plan-note>The plan is a demo; courses are the real flow.</p>
+        </div>
+      </div>
+
+      <div class="plan">
+        <h2 class="h3">Buy per course</h2>
+        <div class="plan__price">
+          <span class="price-lg" data-min-price>From $45</span>
+          <span class="meta">one payment, yours for good</span>
+        </div>
+        <ul class="check-list">
+          <li class="check-list__item"><svg class="icon icon--sm" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l4 4 8-9"></path></svg>Lifetime access to what you buy</li>
+          <li class="check-list__item"><svg class="icon icon--sm" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l4 4 8-9"></path></svg>All future updates to that course</li>
+          <li class="check-list__item"><svg class="icon icon--sm" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l4 4 8-9"></path></svg>Same 14-day refund</li>
+          <li class="check-list__item"><svg class="icon icon--sm" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l4 4 8-9"></path></svg>No account required in this demo</li>
+        </ul>
+        <div class="plan__cta">
+          <a class="btn btn--secondary" href="courses.html">Browse courses</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Cohorts note -->
+  <section class="section section--flush-top">
+    <div class="container">
+      <div class="panel split-8-4">
+        <div class="stack-8">
+          <h2 class="h3">Cohorts are priced per seat</h2>
+          <p class="body-sm t-2">Live review time is finite, so cohorts sit outside the plan. A seat runs <span data-cohort-range>$299 to $399</span> for the whole run, and Personal Plan members take 20% off when they book.</p>
+        </div>
+        <div class="push-end">
+          <a class="link body-sm" href="courses.html?format=cohort">See cohort courses</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section section--tint">
+    <div class="container">
+      <h2 class="h2 reveal">Questions</h2>
+
+      <div class="acc pr-faq mt-24 reveal" data-accordion>
+        <div class="acc__item">
+          <button class="acc__trigger" type="button" aria-expanded="false" aria-controls="faq-1">
+            <span class="acc__title">How do refunds work?</span>
+            <span class="acc__right">
+              <svg class="icon acc__chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5"></path></svg>
+            </span>
+          </button>
+          <div class="acc__panel" id="faq-1">
+            <div class="acc__clip">
+              <div class="acc__inner">
+                <p class="acc__text">Fourteen days from purchase, one click, no form and no questions. It covers single courses and the first month of the plan. Cohort seats are refundable until the first live session runs.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc__item">
+          <button class="acc__trigger" type="button" aria-expanded="false" aria-controls="faq-2">
+            <span class="acc__title">What does the Personal Plan include?</span>
+            <span class="acc__right">
+              <svg class="icon acc__chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5"></path></svg>
+            </span>
+          </button>
+          <div class="acc__panel" id="faq-2">
+            <div class="acc__clip">
+              <div class="acc__inner">
+                <p class="acc__text">Every self-paced course in the catalog, plus anything published while you are subscribed. Cohorts are not included; plan members book a seat at 20% off. If you cancel, access runs to the end of the term you paid for.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc__item">
+          <button class="acc__trigger" type="button" aria-expanded="false" aria-controls="faq-3">
+            <span class="acc__title">Can I defer a cohort seat?</span>
+            <span class="acc__right">
+              <svg class="icon acc__chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5"></path></svg>
+            </span>
+          </button>
+          <div class="acc__panel" id="faq-3">
+            <div class="acc__clip">
+              <div class="acc__inner">
+                <p class="acc__text">Once per seat, up to a week before the run starts. Tell the instructor and we move you to the next cohort at the price you paid. Cohorts run twice a year, so a deferral is roughly a six-month wait.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc__item">
+          <button class="acc__trigger" type="button" aria-expanded="false" aria-controls="faq-4">
+            <span class="acc__title">Do you send invoices?</span>
+            <span class="acc__right">
+              <svg class="icon acc__chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5"></path></svg>
+            </span>
+          </button>
+          <div class="acc__panel" id="faq-4">
+            <div class="acc__clip">
+              <div class="acc__inner">
+                <p class="acc__text">A receipt lands in your inbox straight after checkout, and you can add a company name and a tax number to it later without asking anyone. In this demo nothing is charged and nothing is emailed.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc__item">
+          <button class="acc__trigger" type="button" aria-expanded="false" aria-controls="faq-5">
+            <span class="acc__title">Can I buy for a team?</span>
+            <span class="acc__right">
+              <svg class="icon acc__chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5"></path></svg>
+            </span>
+          </button>
+          <div class="acc__panel" id="faq-5">
+            <div class="acc__clip">
+              <div class="acc__inner">
+                <p class="acc__text">Buy seats one at a time and expense them, or write to us for five or more and we set up a shared plan on one invoice. There is no minimum, no annual commitment and no sales call.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc__item">
+          <button class="acc__trigger" type="button" aria-expanded="false" aria-controls="faq-6">
+            <span class="acc__title">What happens when a course is updated?</span>
+            <span class="acc__right">
+              <svg class="icon acc__chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5"></path></svg>
+            </span>
+          </button>
+          <div class="acc__panel" id="faq-6">
+            <div class="acc__clip">
+              <div class="acc__inner">
+                <p class="acc__text">Updates are free forever on a course you own. Instructors re-record lessons when the tools move, and each course page shows the month it last changed, so you can see what you are getting before you pay.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="meta mt-24">Prices are demo data. Nothing on this site is charged.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <a class="wordmark" href="index.html">bindwell<span class="wordmark__dot">.</span></a>
+      <p class="body-sm t-2">Well-made courses, taught by people who still do the work.</p>
+      <p class="meta">&copy; 2026 Bindwell &middot; A fictional demo site.</p>
+    </div>
+
+    <div class="footer__col">
+      <span class="footer__title">Explore</span>
+      <ul class="footer__list">
+        <li><a class="footer__link" href="courses.html">All courses</a></li>
+        <li><a class="footer__link" href="courses.html?cat=engineering">Engineering</a></li>
+        <li><a class="footer__link" href="courses.html?cat=design">Design</a></li>
+        <li><a class="footer__link" href="courses.html?cat=data">Data &amp; AI</a></li>
+        <li><a class="footer__link" href="courses.html?cat=career">Product &amp; Career</a></li>
+        <li><a class="footer__link" href="pricing.html">Pricing</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <span class="footer__title">Company</span>
+      <ul class="footer__list">
+        <li><a class="footer__link" href="#">About</a></li>
+        <li><a class="footer__link" href="#">Instructors</a></li>
+        <li><a class="footer__link" href="#">Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <span class="footer__title">Support</span>
+      <ul class="footer__list">
+        <li><a class="footer__link" href="#">Refunds</a></li>
+        <li><a class="footer__link" href="#">Terms</a></li>
+        <li><a class="footer__link" href="#">Privacy</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
