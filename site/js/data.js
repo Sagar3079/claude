@@ -61,11 +61,73 @@
         "Comfort reading other people's source code."
       ],
       syllabus: [
-        { title: "A working mental model of the type system", lessons: 6, minutes: 100 },
-        { title: "Generics that carry intent", lessons: 7, minutes: 130 },
-        { title: "Conditional and mapped types", lessons: 8, minutes: 150 },
-        { title: "The compiler API and codegen", lessons: 6, minutes: 110 },
-        { title: "Ship it: building the library", lessons: 5, minutes: 80 }
+        {
+          title: "A working mental model of the type system",
+          lessonCount: 6,
+          minutes: 100,
+          lessons: [
+            "Types are sets, and why that changes everything",
+            "Structural typing, and where it surprises you",
+            "Assignability and variance, without the jargon",
+            "Narrowing: what the compiler actually knows",
+            "Reading a forty-line type error from the inside out",
+            "unknown, any, and never, and when each is right"
+          ]
+        },
+        {
+          title: "Generics that carry intent",
+          lessonCount: 7,
+          minutes: 130,
+          lessons: [
+            "Type parameters are arguments, not decoration",
+            "Inference sites: where TypeScript looks first",
+            "Constraints that state the contract out loud",
+            "Default type arguments and their quiet failures",
+            "Overloads versus one honest signature",
+            "Generic builders that stay readable",
+            "Designing an API a stranger can call correctly"
+          ]
+        },
+        {
+          title: "Conditional and mapped types",
+          lessonCount: 8,
+          minutes: 150,
+          lessons: [
+            "Conditional types and the extends keyword",
+            "infer, and pulling a type back out",
+            "Distributive conditionals, and turning them off",
+            "Mapped types and key remapping with as",
+            "Template literal types for string-shaped APIs",
+            "Recursive types and the depth limit",
+            "Modeling impossible states out of existence",
+            "A type-level test suite that runs in CI"
+          ]
+        },
+        {
+          title: "The compiler API and codegen",
+          lessonCount: 6,
+          minutes: 110,
+          lessons: [
+            "The program, the checker, and the source file",
+            "Walking an AST without losing your place",
+            "Writing a lint rule that reads types",
+            "Generating types from a JSON schema",
+            "Transformers, and emitting output you trust",
+            "Keeping generated code reviewable by humans"
+          ]
+        },
+        {
+          title: "Ship it: building the library",
+          lessonCount: 5,
+          minutes: 80,
+          lessons: [
+            "Package layout, exports map, and dual builds",
+            "Declaration files that stay stable",
+            "Testing types alongside runtime behavior",
+            "Versioning a type change without breaking users",
+            "Publishing to npm and reading the fallout"
+          ]
+        }
       ]
     },
     {
@@ -104,11 +166,58 @@
         "No queueing theory required. It is taught here."
       ],
       syllabus: [
-        { title: "Measurement before change", lessons: 4, minutes: 150 },
-        { title: "Queues, backpressure, fairness", lessons: 3, minutes: 130 },
-        { title: "Allocators and memory pressure", lessons: 3, minutes: 130 },
-        { title: "The network is the slowest part", lessons: 3, minutes: 120 },
-        { title: "Case study: a checkout service at 40x load", lessons: 4, minutes: 160 }
+        {
+          title: "Measurement before change",
+          lessonCount: 4,
+          minutes: 150,
+          lessons: [
+            "Choosing a workload that represents production",
+            "Sampling profilers and what they miss",
+            "Reading a flame graph without guessing",
+            "Building a baseline harness with repeatable runs"
+          ]
+        },
+        {
+          title: "Queues, backpressure, fairness",
+          lessonCount: 3,
+          minutes: 130,
+          lessons: [
+            "Little's Law, applied to a service you run",
+            "Bounded queues and the shape of backpressure",
+            "Fair scheduling when one caller misbehaves"
+          ]
+        },
+        {
+          title: "Allocators and memory pressure",
+          lessonCount: 3,
+          minutes: 130,
+          lessons: [
+            "Finding where the allocations actually come from",
+            "Pause times, generations, and tuning that helps",
+            "Object pools: when they pay and when they lie"
+          ]
+        },
+        {
+          title: "The network is the slowest part",
+          lessonCount: 3,
+          minutes: 120,
+          lessons: [
+            "Connection pools, keepalive, and head-of-line blocking",
+            "Timeouts, retries, and jitter that avoids storms",
+            "Serialization cost nobody thought to measure"
+          ]
+        },
+        {
+          title: "Case study: a checkout service at 40x load",
+          lessonCount: 4,
+          minutes: 160,
+          lessons: [
+            "The incident timeline and the first wrong guess",
+            "Finding the real bottleneck in the payment path",
+            "The three changes that moved the number",
+            "What we would do differently next quarter"
+          ]
+        }
       ]
     },
     {
@@ -147,12 +256,64 @@
         "Willingness to have your code read aloud."
       ],
       syllabus: [
-        { title: "Lexing and parsing", weekly: "Week 1" },
-        { title: "AST and pretty-printing", weekly: "Week 2" },
-        { title: "Type checking", weekly: "Weeks 3-4" },
-        { title: "Compilation and the VM", weekly: "Weeks 5-6" },
-        { title: "Garbage collection", weekly: "Week 7" },
-        { title: "Ship and demo day", weekly: "Week 8" }
+        {
+          title: "Lexing and parsing",
+          weekly: "Week 1",
+          lessonCount: 2,
+          lessons: [
+            "Session 1: A hand-written lexer and its tests",
+            "Session 2: Recursive descent and precedence climbing"
+          ]
+        },
+        {
+          title: "AST and pretty-printing",
+          weekly: "Week 2",
+          lessonCount: 2,
+          lessons: [
+            "Session 3: Designing nodes you will not regret",
+            "Session 4: A pretty-printer that round-trips"
+          ]
+        },
+        {
+          title: "Type checking",
+          weekly: "Weeks 3-4",
+          lessonCount: 4,
+          lessons: [
+            "Session 5: Scopes, bindings, and a symbol table",
+            "Session 6: Checking expressions, reporting errors well",
+            "Session 7: Functions, returns, and control flow",
+            "Session 8: Live review of your checker"
+          ]
+        },
+        {
+          title: "Compilation and the VM",
+          weekly: "Weeks 5-6",
+          lessonCount: 4,
+          lessons: [
+            "Session 9: Designing a bytecode instruction set",
+            "Session 10: Lowering the AST to instructions",
+            "Session 11: A stack VM and its dispatch loop",
+            "Session 12: Call frames, locals, and closures"
+          ]
+        },
+        {
+          title: "Garbage collection",
+          weekly: "Week 7",
+          lessonCount: 2,
+          lessons: [
+            "Session 13: Mark and sweep, written from scratch",
+            "Session 14: Roots, safepoints, and the bugs they hide"
+          ]
+        },
+        {
+          title: "Ship and demo day",
+          weekly: "Week 8",
+          lessonCount: 2,
+          lessons: [
+            "Session 15: Benchmarks, README, and a language spec",
+            "Session 16: Demo day and design defence"
+          ]
+        }
       ]
     },
     {
@@ -191,11 +352,67 @@
         "No animation library required. Plain CSS throughout."
       ],
       syllabus: [
-        { title: "The animation decision framework", lessons: 5, minutes: 90 },
-        { title: "Easing, duration, perception", lessons: 6, minutes: 120 },
-        { title: "Enter, exit, and interruption", lessons: 6, minutes: 120 },
-        { title: "Gestures and physics", lessons: 5, minutes: 105 },
-        { title: "A motion system for a real product", lessons: 4, minutes: 75 }
+        {
+          title: "The animation decision framework",
+          lessonCount: 5,
+          minutes: 90,
+          lessons: [
+            "Three questions to ask before any animation",
+            "Motion that explains versus motion that decorates",
+            "The cases where a plain fade is the right answer",
+            "Auditing a screen for motion you should delete",
+            "Writing a motion brief your team can argue with"
+          ]
+        },
+        {
+          title: "Easing, duration, perception",
+          lessonCount: 6,
+          minutes: 120,
+          lessons: [
+            "Why 200ms reads as instant and 500ms reads as slow",
+            "Reading a bezier curve like a sentence",
+            "Choosing easing by direction of travel",
+            "Scaling duration with distance and size",
+            "Spring feel without a physics library",
+            "Building the duration and easing scale you reuse"
+          ]
+        },
+        {
+          title: "Enter, exit, and interruption",
+          lessonCount: 6,
+          minutes: 120,
+          lessons: [
+            "Enter and exit are not the same animation reversed",
+            "Making transitions interruptible in plain CSS",
+            "Animating height without measuring it",
+            "The FLIP technique, one step at a time",
+            "View transitions and their honest limits",
+            "Testing a transition by mashing the button"
+          ]
+        },
+        {
+          title: "Gestures and physics",
+          lessonCount: 5,
+          minutes: 105,
+          lessons: [
+            "Pointer events and picking up a drag cleanly",
+            "Momentum, friction, and where a swipe lands",
+            "Rubber-banding at the edges",
+            "A bottom sheet that follows the finger",
+            "Handing off from gesture to animation"
+          ]
+        },
+        {
+          title: "A motion system for a real product",
+          lessonCount: 4,
+          minutes: 75,
+          lessons: [
+            "Tokens: durations, easings, and named patterns",
+            "Documenting motion so engineers can build it",
+            "Reduced motion without losing the character",
+            "Reviewing a shipped product's motion together"
+          ]
+        }
       ]
     },
     {
@@ -232,11 +449,63 @@
         "Access to one dense screen you are allowed to criticise."
       ],
       syllabus: [
-        { title: "Why dense is different", lessons: 4, minutes: 80 },
-        { title: "The table, mastered", lessons: 6, minutes: 130 },
-        { title: "Dashboards and monitoring", lessons: 5, minutes: 110 },
-        { title: "Editors and inspectors", lessons: 4, minutes: 85 },
-        { title: "Density audit workshop", lessons: 3, minutes: 45 }
+        {
+          title: "Why dense is different",
+          lessonCount: 4,
+          minutes: 80,
+          lessons: [
+            "Who reads this screen, and at what hour",
+            "Density as a decision with a cost you name",
+            "How people scan a 200-row table",
+            "Borrowing from spreadsheets, cockpits, and trading desks"
+          ]
+        },
+        {
+          title: "The table, mastered",
+          lessonCount: 6,
+          minutes: 130,
+          lessons: [
+            "Row height, padding, and the 4 a.m. legibility test",
+            "Aligning numbers, dates, and mixed units",
+            "Column priority when the viewport shrinks",
+            "Sorting and filtering that show their own state",
+            "Sticky headers, frozen columns, and their bugs",
+            "Empty, loading, and truncated cell states"
+          ]
+        },
+        {
+          title: "Dashboards and monitoring",
+          lessonCount: 5,
+          minutes: 110,
+          lessons: [
+            "One screen, one question",
+            "Color as signal: normal, warning, alert, stale",
+            "Sparklines, thresholds, and honest axes",
+            "Designing for the incident, not the demo",
+            "Refresh rates, and telling people what is stale"
+          ]
+        },
+        {
+          title: "Editors and inspectors",
+          lessonCount: 4,
+          minutes: 85,
+          lessons: [
+            "Inspector panels that survive deep nesting",
+            "Inline editing without losing your place in the row",
+            "Keyboard paths for people who live in this screen",
+            "Undo, dirty state, and saving honestly"
+          ]
+        },
+        {
+          title: "Density audit workshop",
+          lessonCount: 3,
+          minutes: 45,
+          lessons: [
+            "The twelve-point density checklist",
+            "Auditing a real screen, top to bottom",
+            "Writing findings in a form that gets them fixed"
+          ]
+        }
       ]
     },
     {
@@ -274,11 +543,66 @@
         "A browser and any design tool you already like."
       ],
       syllabus: [
-        { title: "How letters work", lessons: 5, minutes: 70 },
-        { title: "Choosing and pairing", lessons: 5, minutes: 70 },
-        { title: "Scale, rhythm, hierarchy", lessons: 6, minutes: 85 },
-        { title: "Typography in the browser", lessons: 6, minutes: 95 },
-        { title: "The spec", lessons: 3, minutes: 40 }
+        {
+          title: "How letters work",
+          lessonCount: 5,
+          minutes: 70,
+          lessons: [
+            "Strokes, counters, and why letters look the way they do",
+            "Serifs and sans serifs, and what the difference is for",
+            "x-height, cap height, and apparent size",
+            "Weight, width, and the optical size axis",
+            "Reading a type specimen properly"
+          ]
+        },
+        {
+          title: "Choosing and pairing",
+          lessonCount: 5,
+          minutes: 70,
+          lessons: [
+            "Start from the job, not the mood board",
+            "A pairing method: contrast without clash",
+            "Superfamilies, and when one family is enough",
+            "Licensing, hosting, and the weight of a font file",
+            "Testing a pairing against real content"
+          ]
+        },
+        {
+          title: "Scale, rhythm, hierarchy",
+          lessonCount: 6,
+          minutes: 85,
+          lessons: [
+            "Building a type scale from a ratio",
+            "Repairing a scale that real content broke",
+            "Line height, measure, and comfortable reading",
+            "Hierarchy with three sizes instead of seven",
+            "Vertical rhythm without the dogma",
+            "Spacing as part of the type system"
+          ]
+        },
+        {
+          title: "Typography in the browser",
+          lessonCount: 6,
+          minutes: 95,
+          lessons: [
+            "font-size, rem, and clamp without surprises",
+            "Loading fonts: swap, fallback, and layout shift",
+            "The OpenType features you will actually use",
+            "Numerals: tabular, lining, and old style",
+            "Quotes, apostrophes, and punctuation set properly",
+            "Variable fonts and optical sizing on the web"
+          ]
+        },
+        {
+          title: "The spec",
+          lessonCount: 3,
+          minutes: 40,
+          lessons: [
+            "What a developer needs from a type spec",
+            "Writing tokens instead of handing over screenshots",
+            "Reviewing the built page against the spec"
+          ]
+        }
       ]
     },
     {
@@ -317,12 +641,79 @@
         "Curiosity about being wrong in measurable ways."
       ],
       syllabus: [
-        { title: "What ML is and isn't", lessons: 4, minutes: 85 },
-        { title: "Data, honestly", lessons: 6, minutes: 140 },
-        { title: "Classic models that still win", lessons: 7, minutes: 170 },
-        { title: "Neural networks, gently", lessons: 6, minutes: 140 },
-        { title: "Evaluation and communication", lessons: 5, minutes: 120 },
-        { title: "Capstone", lessons: 3, minutes: 65 }
+        {
+          title: "What ML is and isn't",
+          lessonCount: 4,
+          minutes: 85,
+          lessons: [
+            "Three questions that decide whether ML helps",
+            "Prediction, explanation, and automation are different jobs",
+            "The problems where a rule or a spreadsheet wins",
+            "Framing a problem as inputs, an output, and a cost"
+          ]
+        },
+        {
+          title: "Data, honestly",
+          lessonCount: 6,
+          minutes: 140,
+          lessons: [
+            "Where your data came from, and who is missing from it",
+            "Labels, leakage, and the result that looks too good",
+            "Train, validation, and test without cheating",
+            "Missing values and the stories they tell",
+            "Features you can explain out loud in a meeting",
+            "Assembling a small dataset you actually trust"
+          ]
+        },
+        {
+          title: "Classic models that still win",
+          lessonCount: 7,
+          minutes: 170,
+          lessons: [
+            "Linear regression, read as a sentence",
+            "Logistic regression and what a coefficient means",
+            "Decision trees, and how they memorise",
+            "Random forests and gradient boosting, plainly",
+            "Nearest neighbours and the baseline you must beat",
+            "Clustering when you have no labels at all",
+            "Choosing a model by the constraint that binds"
+          ]
+        },
+        {
+          title: "Neural networks, gently",
+          lessonCount: 6,
+          minutes: 140,
+          lessons: [
+            "A neuron is a weighted sum and a bend",
+            "Layers, loss, and gradient descent in pictures",
+            "Reading a training curve and believing it",
+            "Overfitting, regularisation, and stopping early",
+            "When to fine-tune something already trained",
+            "What a neural network really costs to run"
+          ]
+        },
+        {
+          title: "Evaluation and communication",
+          lessonCount: 5,
+          minutes: 120,
+          lessons: [
+            "Accuracy is usually the wrong number",
+            "Precision, recall, and choosing a threshold on purpose",
+            "A confusion matrix your stakeholders can read",
+            "Error analysis: sitting with fifty wrong predictions",
+            "Presenting a model to a room without math"
+          ]
+        },
+        {
+          title: "Capstone",
+          lessonCount: 3,
+          minutes: 65,
+          lessons: [
+            "Scoping a project small enough to finish",
+            "Building it end to end in one sitting",
+            "Writing the one-page model report"
+          ]
+        }
       ]
     },
     {
@@ -359,11 +750,63 @@
         "A browser. The practice database runs in the lessons."
       ],
       syllabus: [
-        { title: "From cells to tables", lessons: 4, minutes: 55 },
-        { title: "Joins are lookups", lessons: 5, minutes: 80 },
-        { title: "Grouping and pivoting", lessons: 5, minutes: 75 },
-        { title: "Window functions", lessons: 4, minutes: 65 },
-        { title: "Cleaning and performance", lessons: 4, minutes: 55 }
+        {
+          title: "From cells to tables",
+          lessonCount: 4,
+          minutes: 55,
+          lessons: [
+            "A sheet is a table with looser rules",
+            "SELECT, FROM, and WHERE as a filtered view",
+            "Sorting and limiting instead of scrolling",
+            "Data types, nulls, and the empty cell problem"
+          ]
+        },
+        {
+          title: "Joins are lookups",
+          lessonCount: 5,
+          minutes: 80,
+          lessons: [
+            "VLOOKUP, translated line by line into a JOIN",
+            "Inner and left joins, and which rows disappear",
+            "Joining on the wrong key, and how you notice",
+            "Many-to-many joins and accidental duplication",
+            "Self-joins for comparing rows to other rows"
+          ]
+        },
+        {
+          title: "Grouping and pivoting",
+          lessonCount: 5,
+          minutes: 75,
+          lessons: [
+            "GROUP BY is a pivot table",
+            "COUNT, SUM, and AVG, and counting the wrong thing",
+            "HAVING versus WHERE, settled for good",
+            "Turning rows into columns with CASE",
+            "Checking a query total against the spreadsheet"
+          ]
+        },
+        {
+          title: "Window functions",
+          lessonCount: 4,
+          minutes: 65,
+          lessons: [
+            "OVER and PARTITION BY, in spreadsheet terms",
+            "Running totals and moving averages",
+            "Ranking, dense ranking, and handling ties",
+            "LAG and LEAD for month-over-month comparisons"
+          ]
+        },
+        {
+          title: "Cleaning and performance",
+          lessonCount: 4,
+          minutes: 55,
+          lessons: [
+            "Trimming, casting, and fixing dates in the query",
+            "Deduplicating without deleting real rows",
+            "Reading a query plan to find the slow part",
+            "Indexes, and the two that would help you today"
+          ]
+        }
       ]
     },
     {
@@ -402,12 +845,79 @@
         "No machine learning background needed."
       ],
       syllabus: [
-        { title: "The API mental model", lessons: 5, minutes: 80 },
-        { title: "Prompting as engineering", lessons: 6, minutes: 110 },
-        { title: "Tools and structured output", lessons: 6, minutes: 110 },
-        { title: "Retrieval done honestly", lessons: 5, minutes: 90 },
-        { title: "Evals and observability", lessons: 5, minutes: 90 },
-        { title: "Shipping a feature", lessons: 4, minutes: 60 }
+        {
+          title: "The API mental model",
+          lessonCount: 5,
+          minutes: 80,
+          lessons: [
+            "Requests, tokens, and what you are paying for",
+            "System, user, and assistant turns in practice",
+            "Sampling settings and getting repeatable runs",
+            "Streaming a response without breaking your UI",
+            "Your first call, wrapped in a function you can test"
+          ]
+        },
+        {
+          title: "Prompting as engineering",
+          lessonCount: 6,
+          minutes: 110,
+          lessons: [
+            "Prompts are code: version them, review them",
+            "Instructions and examples, and where each earns its place",
+            "Asking for output you can parse safely",
+            "Long inputs, and deciding what to leave out",
+            "Prompt injection and text you did not write",
+            "A prompt test file that runs on every commit"
+          ]
+        },
+        {
+          title: "Tools and structured output",
+          lessonCount: 6,
+          minutes: 110,
+          lessons: [
+            "Describing a tool so the model calls it correctly",
+            "Schemas, validation, and rejecting a bad call",
+            "The agent loop, written by hand once",
+            "Side effects, confirmation, and blast radius",
+            "Parallel calls and keeping state straight",
+            "Debugging a tool call that keeps going wrong"
+          ]
+        },
+        {
+          title: "Retrieval done honestly",
+          lessonCount: 5,
+          minutes: 90,
+          lessons: [
+            "Chunking documents without shredding the meaning",
+            "Embeddings, similarity, and what they miss",
+            "Keyword search and vector search, together",
+            "Measuring retrieval before you blame the model",
+            "Citations that point at the real source"
+          ]
+        },
+        {
+          title: "Evals and observability",
+          lessonCount: 5,
+          minutes: 90,
+          lessons: [
+            "Writing the eval set before the feature",
+            "Graders: exact match, rubric, and model as judge",
+            "Logging prompts, outputs, and cost per request",
+            "Catching a regression when you change one line",
+            "Reading production traces on a bad afternoon"
+          ]
+        },
+        {
+          title: "Shipping a feature",
+          lessonCount: 4,
+          minutes: 60,
+          lessons: [
+            "Latency budgets and where the time actually goes",
+            "Caching, batching, and cutting the bill in half",
+            "Fallbacks for timeouts, refusals, and outages",
+            "The launch checklist and the rollback plan"
+          ]
+        }
       ]
     },
     {
@@ -446,11 +956,53 @@
         "Four hours a week, including one live session."
       ],
       syllabus: [
-        { title: "The leverage mindset", weekly: "Week 1" },
-        { title: "The RFC, drafted and reviewed live", weekly: "Weeks 2-3" },
-        { title: "Decision records", weekly: "Week 4" },
-        { title: "Feedback and influence", weekly: "Week 5" },
-        { title: "The executive brief", weekly: "Week 6" }
+        {
+          title: "The leverage mindset",
+          weekly: "Week 1",
+          lessonCount: 2,
+          lessons: [
+            "Session 1: Where writing actually changes a decision",
+            "Session 2: Choosing the document the situation needs"
+          ]
+        },
+        {
+          title: "The RFC, drafted and reviewed live",
+          weekly: "Weeks 2-3",
+          lessonCount: 4,
+          lessons: [
+            "Session 3: The problem statement, before any solution",
+            "Session 4: Options and trade-offs in an honest table",
+            "Session 5: Live review of your first draft",
+            "Session 6: Rewriting after the room disagreed"
+          ]
+        },
+        {
+          title: "Decision records",
+          weekly: "Week 4",
+          lessonCount: 2,
+          lessons: [
+            "Session 7: A record someone will thank you for in a year",
+            "Session 8: Writing down a decision you argued against"
+          ]
+        },
+        {
+          title: "Feedback and influence",
+          weekly: "Week 5",
+          lessonCount: 2,
+          lessons: [
+            "Session 9: Feedback that lands up, down, and sideways",
+            "Session 10: Disagreeing in writing without a fight"
+          ]
+        },
+        {
+          title: "The executive brief",
+          weekly: "Week 6",
+          lessonCount: 2,
+          lessons: [
+            "Session 11: One page, one decision, one ask",
+            "Session 12: Presenting trade-offs and taking questions"
+          ]
+        }
       ]
     },
     {
@@ -488,11 +1040,65 @@
         "Access to five people who use something you make."
       ],
       syllabus: [
-        { title: "Discovery vs delivery", lessons: 4, minutes: 65 },
-        { title: "Interviewing", lessons: 6, minutes: 120 },
-        { title: "Mapping opportunities", lessons: 5, minutes: 90 },
-        { title: "Prototypes and tests", lessons: 5, minutes: 90 },
-        { title: "The discovery brief", lessons: 4, minutes: 55 }
+        {
+          title: "Discovery vs delivery",
+          lessonCount: 4,
+          minutes: 65,
+          lessons: [
+            "What discovery is for, and what it is not",
+            "Fitting discovery into a delivery team's week",
+            "Listing assumptions and ranking them by risk",
+            "Setting up a discovery week you can repeat"
+          ]
+        },
+        {
+          title: "Interviewing",
+          lessonCount: 6,
+          minutes: 120,
+          lessons: [
+            "Recruiting five people who really use the thing",
+            "Writing questions that do not lead the witness",
+            "Asking about the last time, not the general case",
+            "Silence, follow-ups, and the second why",
+            "Taking notes without leaving the conversation",
+            "A full practice interview, with critique"
+          ]
+        },
+        {
+          title: "Mapping opportunities",
+          lessonCount: 5,
+          minutes: 90,
+          lessons: [
+            "Turning raw notes into opportunities in one pass",
+            "Building an opportunity solution tree",
+            "Sizing an opportunity with the evidence you have",
+            "Choosing what to pursue and what to park",
+            "Keeping the map alive after the workshop ends"
+          ]
+        },
+        {
+          title: "Prototypes and tests",
+          lessonCount: 5,
+          minutes: 90,
+          lessons: [
+            "Prototyping only the riskiest assumption",
+            "Fidelity: paper, clickable, or half-built",
+            "Running a test that can actually prove you wrong",
+            "Reading results without wishful thinking",
+            "Killing an idea and writing down why"
+          ]
+        },
+        {
+          title: "The discovery brief",
+          lessonCount: 4,
+          minutes: 55,
+          lessons: [
+            "Structuring a brief for a stakeholder who skims",
+            "Evidence, confidence, and saying what you do not know",
+            "Presenting work that changes the roadmap",
+            "The templates, and how to adapt them"
+          ]
+        }
       ]
     },
     {
@@ -529,19 +1135,69 @@
         "One recent draft you are willing to cut in half."
       ],
       syllabus: [
-        { title: "Why work writing fails", lessons: 3, minutes: 45 },
-        { title: "The point-first method", lessons: 4, minutes: 65 },
-        { title: "Editing ruthlessly", lessons: 4, minutes: 65 },
-        { title: "Proposals and updates", lessons: 4, minutes: 65 },
-        { title: "The habit", lessons: 2, minutes: 30 }
+        {
+          title: "Why work writing fails",
+          lessonCount: 3,
+          minutes: 45,
+          lessons: [
+            "Your reader is busy, skimming, and slightly annoyed",
+            "Three real memos that failed, and why",
+            "Deciding whether to write the thing at all"
+          ]
+        },
+        {
+          title: "The point-first method",
+          lessonCount: 4,
+          minutes: 65,
+          lessons: [
+            "Leading with the point, and meaning it",
+            "The one-sentence summary you write last",
+            "Structuring for a reader who stops halfway",
+            "Headings and bullets, and when prose is better"
+          ]
+        },
+        {
+          title: "Editing ruthlessly",
+          lessonCount: 4,
+          minutes: 65,
+          lessons: [
+            "Cutting forty percent on the first pass",
+            "Weak verbs, hedges, and throat clearing",
+            "Reading a draft aloud to find the seams",
+            "A real memo, edited line by line on camera"
+          ]
+        },
+        {
+          title: "Proposals and updates",
+          lessonCount: 4,
+          minutes: 65,
+          lessons: [
+            "A proposal built to survive a skim",
+            "Weekly updates nobody dreads",
+            "Bad news, written early and plainly",
+            "Matching the tone to what is at stake"
+          ]
+        },
+        {
+          title: "The habit",
+          lessonCount: 2,
+          minutes: 30,
+          lessons: [
+            "A twenty-minute writing block that holds",
+            "Keeping a file of pieces you can reuse"
+          ]
+        }
       ]
     }
   ];
 
-  /* Fictional review pool. Pick three per course with pickReviews(code). */
+  /* Fictional review pool. Thirty-six entries, three per course, handed out
+     by course position in pickReviews(code) so that no two course pages ever
+     show the same quote. Keep the length a multiple of three when editing. */
   var REVIEWS = [
     {
       name: "Dana Whitfield",
+      role: "Operations analyst",
       date: "March 2026",
       rating: 5,
       body:
@@ -549,6 +1205,7 @@
     },
     {
       name: "Ravi Menon-Clarke",
+      role: "Frontend engineer",
       date: "February 2026",
       rating: 5,
       body:
@@ -556,6 +1213,7 @@
     },
     {
       name: "Ingrid Solheim",
+      role: "Data analyst",
       date: "February 2026",
       rating: 4,
       body:
@@ -563,6 +1221,7 @@
     },
     {
       name: "Kwame Ansah-Berg",
+      role: "Backend engineer",
       date: "January 2026",
       rating: 5,
       body:
@@ -570,6 +1229,7 @@
     },
     {
       name: "Noor Haddadi",
+      role: "Product manager",
       date: "January 2026",
       rating: 5,
       body:
@@ -577,10 +1237,251 @@
     },
     {
       name: "Peter Lindqvist-Roe",
+      role: "Engineering manager",
       date: "December 2025",
       rating: 4,
       body:
         "Clear, unhurried, and honest about what the material will not cover. I would take another."
+    },
+    {
+      name: "Sofia Marchetti",
+      role: "Platform engineer",
+      date: "March 2026",
+      rating: 5,
+      body:
+        "The first module answered a question I had been carrying around for two years. I stopped the video and wrote it down."
+    },
+    {
+      name: "Emeka Adeyinka",
+      role: "Design engineer",
+      date: "February 2026",
+      rating: 5,
+      body:
+        "Watching someone work through the messy version first is worth more to me than any finished example."
+    },
+    {
+      name: "Helene Dubois-Ward",
+      role: "Analytics lead",
+      date: "November 2025",
+      rating: 4,
+      body:
+        "I skipped the opening section because I thought I knew it. That was a mistake and I went back."
+    },
+    {
+      name: "Tobias Reinholt",
+      role: "Senior developer",
+      date: "April 2026",
+      rating: 5,
+      body:
+        "Every exercise has a worked solution, including the parts I got wrong for what turned out to be good reasons."
+    },
+    {
+      name: "Aisha Rahman-Coyle",
+      role: "Product designer",
+      date: "December 2025",
+      rating: 5,
+      body:
+        "It respects your time. Nothing is said three times to fill out a runtime."
+    },
+    {
+      name: "Marcus Oyelaran",
+      role: "Staff engineer",
+      date: "March 2026",
+      rating: 5,
+      body:
+        "I passed this to two people on my team and both of them finished it, which basically never happens."
+    },
+    {
+      name: "Yuki Tanaka-Brooks",
+      role: "UX researcher",
+      date: "October 2025",
+      rating: 4,
+      body:
+        "Good material, though the pace picks up sharply in the fourth section. Budget more time there than you expect to need."
+    },
+    {
+      name: "Bruno Castellanos",
+      role: "Site reliability engineer",
+      date: "February 2026",
+      rating: 5,
+      body:
+        "The worked examples are real. You can tell because the awkward parts are still in them."
+    },
+    {
+      name: "Freya Lindholm",
+      role: "Technical writer",
+      date: "January 2026",
+      rating: 5,
+      body:
+        "I bought it on a Sunday and had used two things from it by Wednesday. That is the whole review."
+    },
+    {
+      name: "Omar Bensalem",
+      role: "Data engineer",
+      date: "March 2026",
+      rating: 5,
+      body:
+        "It never talks down to you and it never assumes you already know. That balance is harder than it looks."
+    },
+    {
+      name: "Clara Nwachukwu-Reid",
+      role: "Interaction designer",
+      date: "November 2025",
+      rating: 4,
+      body:
+        "A couple of the later videos could be tighter, but the thinking underneath them is solid all the way through."
+    },
+    {
+      name: "Jasper Vandermolen",
+      role: "Software architect",
+      date: "April 2026",
+      rating: 5,
+      body:
+        "The section on trade-offs changed how I write proposals at work, which is not what I bought it for."
+    },
+    {
+      name: "Leila Farahani",
+      role: "Product analyst",
+      date: "December 2025",
+      rating: 5,
+      body:
+        "Clear enough that I watched at normal speed instead of skipping ahead, and I always skip ahead."
+    },
+    {
+      name: "Andres Quintanilla",
+      role: "Full stack developer",
+      date: "February 2026",
+      rating: 5,
+      body:
+        "I keep the exercise files open in a second tab and I am still going back to them a month later."
+    },
+    {
+      name: "Meredith Achebe-Ross",
+      role: "Engineering lead",
+      date: "September 2025",
+      rating: 4,
+      body:
+        "Honest about what it does not cover, which saved me from waiting for a chapter that was never coming."
+    },
+    {
+      name: "Sung-min Park",
+      role: "Mobile engineer",
+      date: "March 2026",
+      rating: 5,
+      body:
+        "Short lessons and no throat clearing. I finished the whole thing in a week of commutes."
+    },
+    {
+      name: "Valentina Rossi-Okoye",
+      role: "Design lead",
+      date: "January 2026",
+      rating: 5,
+      body:
+        "The instructor answers the question you were about to ask, roughly a minute after you think of it."
+    },
+    {
+      name: "Declan Murtagh",
+      role: "Infrastructure engineer",
+      date: "October 2025",
+      rating: 5,
+      body:
+        "I took notes for the first hour and then stopped, because the course notes were already better than mine."
+    },
+    {
+      name: "Priyanka Deshmukh-Hall",
+      role: "Business analyst",
+      date: "February 2026",
+      rating: 4,
+      body:
+        "Worth the money. I would have paid the same again for a second course from the same person."
+    },
+    {
+      name: "Nils Aabye",
+      role: "Backend developer",
+      date: "April 2026",
+      rating: 5,
+      body:
+        "It gave me the vocabulary for things I had been doing by feel. Now I can argue for them in a review."
+    },
+    {
+      name: "Rosalind Ekwueme",
+      role: "Product manager",
+      date: "December 2025",
+      rating: 5,
+      body:
+        "My team watched the third section together and we changed a decision that same afternoon."
+    },
+    {
+      name: "Gareth Pemberton-Ilesanmi",
+      role: "QA engineer",
+      date: "November 2025",
+      rating: 4,
+      body:
+        "Solid throughout. The audio dips a little in one lesson, and that is the only complaint I have."
+    },
+    {
+      name: "Amara Diallo-Stern",
+      role: "Data scientist",
+      date: "March 2026",
+      rating: 5,
+      body:
+        "Nothing here is hand-waved. When something is genuinely hard, the course says so and then slows down."
+    },
+    {
+      name: "Theo Van Rijn",
+      role: "Frontend developer",
+      date: "January 2026",
+      rating: 5,
+      body:
+        "I came for one specific technique and stayed for the reasoning that surrounded it."
+    },
+    {
+      name: "Sinead O'Halloran-Baptiste",
+      role: "Program manager",
+      date: "September 2025",
+      rating: 5,
+      body:
+        "The templates alone covered the price. I use two of them every single week now."
+    },
+    {
+      name: "Rafael Monteiro-Whitby",
+      role: "Principal engineer",
+      date: "February 2026",
+      rating: 4,
+      body:
+        "Pitched slightly below where I am, and I still came away with four pages of notes."
+    },
+    {
+      name: "Junko Halvorsen",
+      role: "Design systems lead",
+      date: "April 2026",
+      rating: 5,
+      body:
+        "It made me delete work rather than add more, which is the highest compliment I have got."
+    },
+    {
+      name: "Adebayo Krishnan",
+      role: "Solutions engineer",
+      date: "October 2025",
+      rating: 5,
+      body:
+        "The final project is a real thing you can show someone, not a toy that only works in the video."
+    },
+    {
+      name: "Marguerite Osei-Fenwick",
+      role: "Content strategist",
+      date: "December 2025",
+      rating: 5,
+      body:
+        "I have been doing this for eleven years and still found three habits worth fixing."
+    },
+    {
+      name: "Lars Ntumba-Reid",
+      role: "Systems engineer",
+      date: "March 2026",
+      rating: 4,
+      body:
+        "Rigorous and calm. It assumes you are an adult who can sit with a hard idea for ten minutes."
     }
   ];
 
@@ -768,9 +1669,18 @@
     );
   }
 
+  /* Every module carries `lessons` (an array of real lesson titles) and
+     `lessonCount` (the number those titles must match). moduleLessons is the
+     one place that reconciles them. */
+  function moduleLessons(mod) {
+    if (!mod) return 0;
+    if (typeof mod.lessonCount === "number") return mod.lessonCount;
+    return mod.lessons && mod.lessons.length ? mod.lessons.length : 0;
+  }
+
   function totalLessons(course) {
     var n = 0;
-    for (var m = 0; m < course.syllabus.length; m++) n += course.syllabus[m].lessons || 0;
+    for (var m = 0; m < course.syllabus.length; m++) n += moduleLessons(course.syllabus[m]);
     return n;
   }
 
@@ -784,11 +1694,25 @@
     );
   }
 
-  /* Deterministic three-review slice so a course always shows the same set. */
+  /* Deterministic three-review slice. Each course gets its own block of three
+     from the pool, keyed on its position in the catalog, so a page always
+     shows the same set and no two courses ever share a quote. Codes outside
+     the catalog fall back to a hash of the code. */
   function pickReviews(code) {
-    var h = 0;
-    for (var c = 0; c < code.length; c++) h = (h * 31 + code.charCodeAt(c)) >>> 0;
-    var start = h % REVIEWS.length;
+    var key = String(code || "").trim().toUpperCase();
+    var idx = -1;
+    for (var c = 0; c < COURSES.length; c++) {
+      if (COURSES[c].code === key) {
+        idx = c;
+        break;
+      }
+    }
+    if (idx < 0) {
+      var h = 0;
+      for (var p = 0; p < key.length; p++) h = (h * 31 + key.charCodeAt(p)) >>> 0;
+      idx = h % Math.max(1, Math.floor(REVIEWS.length / 3));
+    }
+    var start = (idx * 3) % REVIEWS.length;
     var out = [];
     for (var r = 0; r < 3; r++) out.push(REVIEWS[(start + r) % REVIEWS.length]);
     return out;
@@ -835,6 +1759,7 @@
     badgeMarkup: badgeMarkup,
     metaLine: metaLine,
     courseCard: courseCard,
+    moduleLessons: moduleLessons,
     totalLessons: totalLessons,
     curriculumSummary: curriculumSummary,
     pickReviews: pickReviews,

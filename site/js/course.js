@@ -127,21 +127,26 @@
      module instead of a division; the remainder lands on the last lesson. */
   var WEIGHTS = [1.18, 0.82, 1.06, 0.9, 1.12, 0.86, 1.0, 1.08];
 
+  function lessonTitle(mod, i, offset) {
+    var titles = mod.lessons;
+    if (titles && titles.length > i && titles[i]) return esc(titles[i]);
+    return "Lesson " + (offset + i + 1);
+  }
+
   function lessonRows(mod, offset) {
-    var n = mod.lessons || 0;
+    var n = data.moduleLessons(mod);
     var total = mod.minutes || 0;
     var used = 0;
     var out = "";
     for (var i = 0; i < n; i++) {
-      var mins =
-        i === n - 1 ? total - used : Math.max(4, Math.round((total / n) * WEIGHTS[i % 8]));
-      used += mins;
-      out +=
-        '<li class="acc__lesson"><span>Lesson ' +
-        (offset + i + 1) +
-        "</span><span>" +
-        (mins < 10 ? "0" + mins : mins) +
-        ":00</span></li>";
+      var row = '<li class="acc__lesson"><span>' + lessonTitle(mod, i, offset) + "</span>";
+      if (total) {
+        var mins =
+          i === n - 1 ? total - used : Math.max(4, Math.round((total / n) * WEIGHTS[i % 8]));
+        used += mins;
+        row += "<span>" + (mins < 10 ? "0" + mins : mins) + ":00</span>";
+      }
+      out += row + "</li>";
     }
     return "<ul>" + out + "</ul>";
   }
@@ -153,16 +158,12 @@
       var mod = course.syllabus[i];
       var open = i === 0;
       var id = "mod-" + (i + 1);
+      var count = data.moduleLessons(mod);
       var meta = mod.weekly
-        ? esc(mod.weekly)
-        : mod.lessons + " lessons · " + data.formatDuration(mod.minutes);
-      var body = mod.weekly
-        ? '<p class="acc__text">' +
-          esc(mod.weekly) +
-          ": one live session, then a review of the work you bring." +
-          "</p>"
-        : lessonRows(mod, counted);
-      counted += mod.lessons || 0;
+        ? esc(mod.weekly) + " · " + count + (count === 1 ? " session" : " sessions")
+        : count + " lessons · " + data.formatDuration(mod.minutes);
+      var body = lessonRows(mod, counted);
+      counted += count;
 
       out +=
         '<div class="acc__item' +
@@ -275,6 +276,7 @@
           "</p>" +
           '<p class="meta">' +
           esc(r.date) +
+          (r.role ? " · " + esc(r.role) : "") +
           "</p>" +
           '<p class="body-sm t-2">' +
           esc(r.body) +
