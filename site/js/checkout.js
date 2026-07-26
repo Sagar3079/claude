@@ -43,6 +43,10 @@
   var confirmed = false;
   var attempted = false;
 
+  /* UPI is the default here; Card is the second option. Nothing about either
+     leaves the page. */
+  var method = "upi";
+
   /* ---------------------------------------------------------------------
      State switching. Three mutually exclusive blocks, 150ms crossfade.
      --------------------------------------------------------------------- */
@@ -228,41 +232,117 @@
   }
 
   /* ---------------------------------------------------------------------
-     Validation. Static rules, no card is ever checked against anything.
-     Runs on submit, then on blur once a submit has been attempted.
+     Payment method. Two panels, one visible at a time, swapped by the chip
+     row. The hidden panel's rules are skipped so a blank card number never
+     blocks a UPI payment.
+     --------------------------------------------------------------------- */
+  function panelFor(name) {
+    return root.querySelector('[data-pay-fields="' + name + '"]');
+  }
+
+  function clearErrors(panel) {
+    if (!panel) return;
+    panel.querySelectorAll(".field.is-error").forEach(function (field) {
+      field.classList.remove("is-error");
+    });
+    panel.querySelectorAll("[aria-invalid]").forEach(function (input) {
+      input.removeAttribute("aria-invalid");
+    });
+  }
+
+  function setMethod(name, focusFirst) {
+    if (name !== "upi" && name !== "card") return;
+    method = name;
+
+    root.querySelectorAll("[data-pay-method-option]").forEach(function (chip) {
+      var on = chip.getAttribute("data-pay-method-option") === name;
+      chip.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+
+    ["upi", "card"].forEach(function (key) {
+      var panel = panelFor(key);
+      if (!panel) return;
+      var on = key === name;
+      panel.hidden = !on;
+      if (!on) clearErrors(panel);
+    });
+
+    if (focusFirst) {
+      var next = panelFor(name);
+      var input = next && next.querySelector(".field__input");
+      if (input) input.focus();
+    }
+  }
+
+  function initMethod() {
+    var row = root.querySelector("[data-pay-method]");
+    if (!row) return;
+    row.addEventListener("click", function (e) {
+      var chip = e.target.closest("[data-pay-method-option]");
+      if (!chip) return;
+      var name = chip.getAttribute("data-pay-method-option");
+      if (name === method) return;
+      setMethod(name, true);
+    });
+    setMethod(method, false);
+  }
+
+  /* ---------------------------------------------------------------------
+     Validation. Static shape checks only: no card and no UPI ID is checked
+     against anything. Runs on submit, then on blur once a submit has been
+     attempted.
      --------------------------------------------------------------------- */
   var RULES = [
     {
       id: "email",
+      method: null,
       test: function (v) {
         return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());
       }
     },
     {
+      /* Shape only: a handle, an @, and a provider suffix. */
+      id: "upi",
+      method: "upi",
+      test: function (v) {
+        return /^[a-zA-Z0-9](?:[a-zA-Z0-9._-]{1,48}[a-zA-Z0-9])?@[a-zA-Z][a-zA-Z0-9]{1,29}$/.test(
+          v.trim()
+        );
+      }
+    },
+    {
       id: "card",
+      method: "card",
       test: function (v) {
         return /^[0-9]{16}$/.test(v.replace(/[\s-]/g, ""));
       }
     },
     {
       id: "expiry",
+      method: "card",
       test: function (v) {
         return /^(0[1-9]|1[0-2])\/?[0-9]{2}$/.test(v.replace(/[\s]/g, ""));
       }
     },
     {
       id: "cvc",
+      method: "card",
       test: function (v) {
         return /^[0-9]{3}$/.test(v.trim());
       }
     },
     {
       id: "cardname",
+      method: "card",
       test: function (v) {
         return v.trim().length >= 2;
       }
     }
   ];
+
+  function activeRule(rule) {
+    return !rule.method || rule.method === method;
+  }
 
   function fieldOf(input) {
     return input.closest(".field");
@@ -278,6 +358,7 @@
   function validate() {
     var firstBad = null;
     for (var i = 0; i < RULES.length; i++) {
+      if (!activeRule(RULES[i])) continue;
       var input = document.getElementById(RULES[i].id);
       if (!input) continue;
       var ok = RULES[i].test(input.value);
@@ -292,7 +373,7 @@
       var input = document.getElementById(rule.id);
       if (!input) return;
       input.addEventListener("blur", function () {
-        if (attempted) mark(input, rule.test(input.value));
+        if (attempted && activeRule(rule)) mark(input, rule.test(input.value));
       });
     });
   }
@@ -315,7 +396,11 @@
     if (payButton) payButton.classList.remove("is-loading");
     if (orderEl) {
       orderEl.textContent =
-        "Order " + orderNumber() + ". A fictional receipt for a fictional purchase.";
+        "Order " +
+        orderNumber() +
+        ", paid by " +
+        (method === "upi" ? "UPI" : "card") +
+        ". A fictional receipt for a fictional purchase.";
     }
     if (titleEl) titleEl.textContent = "Order confirmed";
     if (ledeEl) ledeEl.hidden = true;
@@ -344,6 +429,7 @@
   /* --------------------------------------------------------------------- */
   function init() {
     renderAll(CART.readCart(), false);
+    initMethod();
     initValidation();
     initSubmit();
   }

@@ -33,7 +33,7 @@
       instructor: "Rohan Chandrasekar",
       instructorCred: "Compiler-team alum; maintains a typed-SQL library.",
       instructorBio:
-        "Rohan spent six years on a compiler team before moving to library work. He now maintains a typed-SQL client used by a few thousand projects, and he still reads every type error twice.",
+        "Rohan spent six years on the compiler team at a Chennai developer-tools company before moving to library work. He now maintains a typed-SQL client used by a few thousand projects, and he still reads every type error twice.",
       rating: 4.8,
       reviews: 2140,
       learners: 18420,
@@ -42,8 +42,8 @@
       lengthLong: "9.5h video",
       level: "Advanced",
       format: "Self-paced",
-      price: 79,
-      priceCents: 7900,
+      price: 2999,
+      priceCents: 299900,
       badge: null,
       updated: "Updated February 2026",
       desc:
@@ -135,10 +135,10 @@
       title: "Systems Under Load",
       category: "Engineering",
       slug: "engineering",
-      instructor: "Dario Ferrentino",
+      instructor: "Arjun Mehta",
       instructorCred: "Ex-infra lead, nine years on payment-scale queues.",
       instructorBio:
-        "Dario led infrastructure for a payments platform through three orders of magnitude of growth. He is unromantic about performance work: measure, then change one thing.",
+        "Arjun led infrastructure at a Bengaluru payments platform through three orders of magnitude of growth. He is unromantic about performance work: measure, then change one thing.",
       rating: 4.7,
       reviews: 1893,
       learners: 12077,
@@ -147,8 +147,8 @@
       lengthLong: "11.5h video",
       level: "Advanced",
       format: "Self-paced",
-      price: 89,
-      priceCents: 8900,
+      price: 3499,
+      priceCents: 349900,
       badge: null,
       updated: "Updated January 2026",
       desc:
@@ -208,7 +208,7 @@
           ]
         },
         {
-          title: "Case study: a checkout service at 40x load",
+          title: "Case study: a festival-sale checkout at 40x load",
           lessonCount: 4,
           minutes: 160,
           lessons: [
@@ -225,24 +225,24 @@
       title: "Build a Programming Language",
       category: "Engineering",
       slug: "engineering",
-      instructor: "Efe Demirci",
+      instructor: "Ishaan Bhattacharya",
       instructorCred: "Wrote the parsing course notes half this industry learned from.",
       instructorBio:
-        "Efe has taught parsing and compilation for a decade, mostly to people who were told it was too hard. The course notes have been passed around long enough to have their own folklore.",
+        "Ishaan has taught parsing and compilation for a decade, out of Kolkata and online, mostly to people who were told it was too hard. The course notes have been passed around long enough to have their own folklore.",
       rating: 4.9,
       reviews: 312,
       learners: 1480,
       hours: null,
       length: "8 weeks, 16 live sessions",
-      lengthLong: "8 weeks, 16 live sessions",
+      lengthLong: "8 weeks, 16 live sessions (Sat/Sun, 7:30 PM IST)",
       level: "Advanced",
       format: "Cohort",
-      price: 399,
-      priceCents: 39900,
+      price: 19999,
+      priceCents: 1999900,
       badge: null,
       updated: "Next run starts September 2026",
       desc:
-        "Build a small compiled language end to end, with weekly live code review of your implementation.",
+        "Build a small compiled language end to end, with weekly live code review of your implementation. Sessions run Sat/Sun, 7:30 PM IST.",
       bullets: [
         "Write a lexer and recursive-descent parser by hand",
         "Design an AST you won't regret",
@@ -252,7 +252,7 @@
       ],
       requirements: [
         "Fluency in one systems-flavoured language: Rust, Go, C, C++, or Java.",
-        "Six to eight hours a week for the run of the cohort.",
+        "Six to eight hours a week, including two live sessions: Sat/Sun, 7:30 PM IST.",
         "Willingness to have your code read aloud."
       ],
       syllabus: [
@@ -321,10 +321,10 @@
       title: "Interface Motion",
       category: "Design",
       slug: "design",
-      instructor: "Anneke Visser",
+      instructor: "Kavya Raghunathan",
       instructorCred: "Design engineer; shipped three widely used open-source interaction libraries.",
       instructorBio:
-        "Anneke builds interaction libraries and then argues with people about when to use them. Her first lesson in any course is about the animations you should not build.",
+        "Kavya builds interaction libraries and then argues with people about when to use them. Her first lesson in any course is about the animations you should not build.",
       rating: 4.8,
       reviews: 3204,
       learners: 27910,
@@ -333,8 +333,8 @@
       lengthLong: "8.5h video",
       level: "Intermediate",
       format: "Self-paced",
-      price: 69,
-      priceCents: 6900,
+      price: 2499,
+      priceCents: 249900,
       badge: "Bestseller",
       updated: "Updated March 2026",
       desc:
@@ -420,10 +420,10 @@
       title: "Designing Data-Dense Interfaces",
       category: "Design",
       slug: "design",
-      instructor: "Louisa Okereke",
+      instructor: "Alisha D'Souza",
       instructorCred: "Led design on two monitoring products.",
       instructorBio:
-        "Louisa has spent most of her career on screens that people stare at during incidents. She treats density as a decision, not an accident, and can defend every row height.",
+        "Alisha has spent most of her career on screens that people stare at during incidents. She treats density as a decision, not an accident, and can defend every row height.",
       rating: 4.7,
       reviews: 954,
       learners: 8340,
@@ -432,8 +432,8 @@
       lengthLong: "7.5h video",
       level: "Intermediate",
       format: "Self-paced",
-      price: 75,
-      priceCents: 7500,
+      price: 2299,
+      priceCents: 229900,
       badge: null,
       updated: "Updated December 2025",
       desc: "Tables, monitoring views, and editors that stay legible at 200 rows and 4 a.m.",
@@ -513,10 +513,10 @@
       title: "Typography from First Principles",
       category: "Design",
       slug: "design",
-      instructor: "Miriam Kessler-Ode",
+      instructor: "Meera Sundaram",
       instructorCred: "Book designer turned product designer; teaches type at two design schools.",
       instructorBio:
-        "Miriam set books for eleven years before her first interface. She teaches type the way she learned it, starting with the shapes of letters and ending with a spec a developer can build.",
+        "Meera set books for eleven years, then ran type at a Pune design studio, before her first interface. She teaches type the way she learned it, starting with the shapes of letters and ending with a spec a developer can build.",
       rating: 4.9,
       reviews: 4102,
       learners: 38650,
@@ -525,8 +525,8 @@
       lengthLong: "6h video",
       level: "Beginner",
       format: "Self-paced",
-      price: 55,
-      priceCents: 5500,
+      price: 1499,
+      priceCents: 149900,
       badge: "Bestseller",
       updated: "Updated March 2026",
       desc:
@@ -610,10 +610,10 @@
       title: "Machine Learning, Plainly",
       category: "Data & AI",
       slug: "data",
-      instructor: "Priya Raghunathan",
+      instructor: "Fatima Sheikh",
       instructorCred: "Applied ML lead; spent a decade explaining models to executives.",
       instructorBio:
-        "Priya leads an applied ML group and spends about half her week translating. She thinks most ML courses start with the wrong subject, which is math, instead of the right one, which is the problem.",
+        "Fatima leads an applied ML group in Hyderabad and spends about half her week translating. She thinks most ML courses start with the wrong subject, which is math, instead of the right one, which is the problem.",
       rating: 4.6,
       reviews: 2876,
       learners: 31200,
@@ -622,8 +622,8 @@
       lengthLong: "12h video",
       level: "Beginner",
       format: "Self-paced",
-      price: 65,
-      priceCents: 6500,
+      price: 1999,
+      priceCents: 199900,
       badge: null,
       updated: "Updated February 2026",
       desc:
@@ -721,10 +721,10 @@
       title: "SQL for People Who Think in Spreadsheets",
       category: "Data & AI",
       slug: "data",
-      instructor: "Tomás Iriarte",
+      instructor: "Nikhil Deshpande",
       instructorCred: "Analytics engineer; unteaches spreadsheet habits for a living.",
       instructorBio:
-        "Tomás works in analytics engineering and has rebuilt more spreadsheets as queries than he can count. He believes the fastest way into SQL is through what you already know.",
+        "Nikhil works in analytics engineering and has rebuilt more spreadsheets as queries than he can count. He believes the fastest way into SQL is through what you already know.",
       rating: 4.8,
       reviews: 5437,
       learners: 42380,
@@ -733,8 +733,8 @@
       lengthLong: "5.5h video",
       level: "Beginner",
       format: "Self-paced",
-      price: 45,
-      priceCents: 4500,
+      price: 999,
+      priceCents: 99900,
       badge: "Bestseller",
       updated: "Updated March 2026",
       desc: "Translate everything you already know about spreadsheets into confident, correct SQL.",
@@ -814,10 +814,10 @@
       title: "Building with Language Model APIs",
       category: "Data & AI",
       slug: "data",
-      instructor: "Ada Nwosu-Bell",
+      instructor: "Tenzin Dolma",
       instructorCred: "Built LLM features at three products you've used; writes the evals first.",
       instructorBio:
-        "Ada has shipped model-backed features in three products and cleaned up after a few more. Her rule is simple: if you cannot measure the feature, you are not building it yet.",
+        "Tenzin has shipped model-backed features in three products and cleaned up after a few more. Her rule is simple: if you cannot measure the feature, you are not building it yet.",
       rating: 4.7,
       reviews: 1642,
       learners: 14890,
@@ -826,8 +826,8 @@
       lengthLong: "9h video",
       level: "Intermediate",
       format: "Self-paced",
-      price: 85,
-      priceCents: 8500,
+      price: 3299,
+      priceCents: 329900,
       badge: "New",
       updated: "Updated April 2026",
       desc:
@@ -925,24 +925,24 @@
       title: "The Staff Engineer Brief",
       category: "Product & Career",
       slug: "career",
-      instructor: "Marta Kovanen",
-      instructorCred: "Former staff engineer at a 400-person logistics firm.",
+      instructor: "Harpreet Kaur Sandhu",
+      instructorCred: "Former staff engineer at a 400-person logistics firm in Gurugram.",
       instructorBio:
-        "Marta spent four years as the person everyone sent their RFC to. She teaches the writing and the process together, because one without the other just makes longer documents.",
+        "Harpreet spent four years as the person everyone sent their RFC to. She teaches the writing and the process together, because one without the other just makes longer documents.",
       rating: 4.9,
       reviews: 268,
       learners: 1120,
       hours: null,
       length: "6 weeks, 12 live sessions",
-      lengthLong: "6 weeks, 12 live sessions",
+      lengthLong: "6 weeks, 12 live sessions (Sat, 7:30 PM IST)",
       level: "Advanced",
       format: "Cohort",
-      price: 299,
-      priceCents: 29900,
+      price: 14999,
+      priceCents: 1499900,
       badge: null,
       updated: "Next run starts September 2026",
       desc:
-        "Technical writing, RFC strategy, and decision records for engineers moving from output to leverage.",
+        "Technical writing, RFC strategy, and decision records for engineers moving from output to leverage. Sessions run Sat, 7:30 PM IST.",
       bullets: [
         "Write RFCs that get decided, not just read",
         "Run a decision process that survives disagreement",
@@ -953,7 +953,7 @@
       requirements: [
         "Five or more years in engineering, or a senior title.",
         "A real decision at work that you can write up during the run.",
-        "Four hours a week, including one live session."
+        "Four hours a week, including one live session: Sat, 7:30 PM IST."
       ],
       syllabus: [
         {
@@ -1010,10 +1010,10 @@
       title: "Product Discovery in Practice",
       category: "Product & Career",
       slug: "career",
-      instructor: "Jonah Albescu",
+      instructor: "Joseph Fernandes",
       instructorCred: "Product lead; ran discovery for two zero-to-one products.",
       instructorBio:
-        "Jonah has launched two products from nothing and killed four more before they cost anyone a year. He teaches discovery as a set of habits, not a ceremony.",
+        "Joseph has launched two products from nothing and killed four more before they cost anyone a year. He teaches discovery as a set of habits, not a ceremony.",
       rating: 4.6,
       reviews: 1108,
       learners: 9760,
@@ -1022,8 +1022,8 @@
       lengthLong: "7h video",
       level: "Intermediate",
       format: "Self-paced",
-      price: 65,
-      priceCents: 6500,
+      price: 1999,
+      priceCents: 199900,
       badge: null,
       updated: "Updated November 2025",
       desc:
@@ -1106,10 +1106,10 @@
       title: "Writing That Gets Read at Work",
       category: "Product & Career",
       slug: "career",
-      instructor: "Hana Okafor-Lindqvist",
+      instructor: "Ananya Iyer",
       instructorCred: "Editor turned engineering manager; reads your memo so others will.",
       instructorBio:
-        "Hana edited nonfiction before she managed engineers, and the two jobs turned out to be closer than expected. She cuts drafts in front of the class, which is the whole point.",
+        "Ananya edited nonfiction before she managed engineers, and the two jobs turned out to be closer than expected. She cuts drafts in front of the class, which is the whole point.",
       rating: 4.8,
       reviews: 2301,
       learners: 21540,
@@ -1118,8 +1118,8 @@
       lengthLong: "4.5h video",
       level: "All levels",
       format: "Self-paced",
-      price: 49,
-      priceCents: 4900,
+      price: 1299,
+      priceCents: 129900,
       badge: null,
       updated: "Updated January 2026",
       desc: "Short course, big lever: memos, updates, and proposals people actually finish.",
@@ -1196,7 +1196,7 @@
      show the same quote. Keep the length a multiple of three when editing. */
   var REVIEWS = [
     {
-      name: "Dana Whitfield",
+      name: "Shalini Prabhu",
       role: "Operations analyst",
       date: "March 2026",
       rating: 5,
@@ -1204,7 +1204,7 @@
         "Paced exactly right. I did two lessons a night for a week and had something working by the weekend."
     },
     {
-      name: "Ravi Menon-Clarke",
+      name: "Ravi Menon",
       role: "Frontend engineer",
       date: "February 2026",
       rating: 5,
@@ -1212,7 +1212,7 @@
         "The syllabus was accurate down to the lesson. I knew what I was buying and that is what I got."
     },
     {
-      name: "Ingrid Solheim",
+      name: "Ipshita Barua",
       role: "Data analyst",
       date: "February 2026",
       rating: 4,
@@ -1220,7 +1220,7 @@
         "Dense in the best way. I rewound a few times in the middle section, which is a compliment."
     },
     {
-      name: "Kwame Ansah-Berg",
+      name: "Karthik Subramanian",
       role: "Backend engineer",
       date: "January 2026",
       rating: 5,
@@ -1228,7 +1228,7 @@
         "No filler. The exercises are the course, and the videos are the explanation around them."
     },
     {
-      name: "Noor Haddadi",
+      name: "Noor Fatima Ansari",
       role: "Product manager",
       date: "January 2026",
       rating: 5,
@@ -1236,7 +1236,7 @@
         "I have taken four courses on this subject. This is the first one I finished."
     },
     {
-      name: "Peter Lindqvist-Roe",
+      name: "Prakash Iyengar",
       role: "Engineering manager",
       date: "December 2025",
       rating: 4,
@@ -1244,7 +1244,7 @@
         "Clear, unhurried, and honest about what the material will not cover. I would take another."
     },
     {
-      name: "Sofia Marchetti",
+      name: "Sneha Kulkarni",
       role: "Platform engineer",
       date: "March 2026",
       rating: 5,
@@ -1252,7 +1252,7 @@
         "The first module answered a question I had been carrying around for two years. I stopped the video and wrote it down."
     },
     {
-      name: "Emeka Adeyinka",
+      name: "Abhinav Rathore",
       role: "Design engineer",
       date: "February 2026",
       rating: 5,
@@ -1260,7 +1260,7 @@
         "Watching someone work through the messy version first is worth more to me than any finished example."
     },
     {
-      name: "Helene Dubois-Ward",
+      name: "Divya Krishnamurthy",
       role: "Analytics lead",
       date: "November 2025",
       rating: 4,
@@ -1268,7 +1268,7 @@
         "I skipped the opening section because I thought I knew it. That was a mistake and I went back."
     },
     {
-      name: "Tobias Reinholt",
+      name: "Yash Bhandari",
       role: "Senior developer",
       date: "April 2026",
       rating: 5,
@@ -1276,7 +1276,7 @@
         "Every exercise has a worked solution, including the parts I got wrong for what turned out to be good reasons."
     },
     {
-      name: "Aisha Rahman-Coyle",
+      name: "Ayesha Siddiqui",
       role: "Product designer",
       date: "December 2025",
       rating: 5,
@@ -1284,7 +1284,7 @@
         "It respects your time. Nothing is said three times to fill out a runtime."
     },
     {
-      name: "Marcus Oyelaran",
+      name: "Manoj Pillai",
       role: "Staff engineer",
       date: "March 2026",
       rating: 5,
@@ -1292,7 +1292,7 @@
         "I passed this to two people on my team and both of them finished it, which basically never happens."
     },
     {
-      name: "Yuki Tanaka-Brooks",
+      name: "Lhamo Tsering",
       role: "UX researcher",
       date: "October 2025",
       rating: 4,
@@ -1300,7 +1300,7 @@
         "Good material, though the pace picks up sharply in the fourth section. Budget more time there than you expect to need."
     },
     {
-      name: "Bruno Castellanos",
+      name: "Sarthak Bose",
       role: "Site reliability engineer",
       date: "February 2026",
       rating: 5,
@@ -1308,7 +1308,7 @@
         "The worked examples are real. You can tell because the awkward parts are still in them."
     },
     {
-      name: "Freya Lindholm",
+      name: "Trisha Nambiar",
       role: "Technical writer",
       date: "January 2026",
       rating: 5,
@@ -1316,7 +1316,7 @@
         "I bought it on a Sunday and had used two things from it by Wednesday. That is the whole review."
     },
     {
-      name: "Omar Bensalem",
+      name: "Imran Qureshi",
       role: "Data engineer",
       date: "March 2026",
       rating: 5,
@@ -1324,7 +1324,7 @@
         "It never talks down to you and it never assumes you already know. That balance is harder than it looks."
     },
     {
-      name: "Clara Nwachukwu-Reid",
+      name: "Rukmini Gowda",
       role: "Interaction designer",
       date: "November 2025",
       rating: 4,
@@ -1332,7 +1332,7 @@
         "A couple of the later videos could be tighter, but the thinking underneath them is solid all the way through."
     },
     {
-      name: "Jasper Vandermolen",
+      name: "Aditya Ranganathan",
       role: "Software architect",
       date: "April 2026",
       rating: 5,
@@ -1340,7 +1340,7 @@
         "The section on trade-offs changed how I write proposals at work, which is not what I bought it for."
     },
     {
-      name: "Leila Farahani",
+      name: "Ekta Chaturvedi",
       role: "Product analyst",
       date: "December 2025",
       rating: 5,
@@ -1348,7 +1348,7 @@
         "Clear enough that I watched at normal speed instead of skipping ahead, and I always skip ahead."
     },
     {
-      name: "Andres Quintanilla",
+      name: "Neel Vaidya",
       role: "Full stack developer",
       date: "February 2026",
       rating: 5,
@@ -1356,7 +1356,7 @@
         "I keep the exercise files open in a second tab and I am still going back to them a month later."
     },
     {
-      name: "Meredith Achebe-Ross",
+      name: "Chitra Balakrishnan",
       role: "Engineering lead",
       date: "September 2025",
       rating: 4,
@@ -1364,7 +1364,7 @@
         "Honest about what it does not cover, which saved me from waiting for a chapter that was never coming."
     },
     {
-      name: "Sung-min Park",
+      name: "Gurpreet Singh Bedi",
       role: "Mobile engineer",
       date: "March 2026",
       rating: 5,
@@ -1372,7 +1372,7 @@
         "Short lessons and no throat clearing. I finished the whole thing in a week of commutes."
     },
     {
-      name: "Valentina Rossi-Okoye",
+      name: "Radhika Sanyal",
       role: "Design lead",
       date: "January 2026",
       rating: 5,
@@ -1380,7 +1380,7 @@
         "The instructor answers the question you were about to ask, roughly a minute after you think of it."
     },
     {
-      name: "Declan Murtagh",
+      name: "Vivek Anand Rao",
       role: "Infrastructure engineer",
       date: "October 2025",
       rating: 5,
@@ -1388,7 +1388,7 @@
         "I took notes for the first hour and then stopped, because the course notes were already better than mine."
     },
     {
-      name: "Priyanka Deshmukh-Hall",
+      name: "Anjali Deshmukh",
       role: "Business analyst",
       date: "February 2026",
       rating: 4,
@@ -1396,7 +1396,7 @@
         "Worth the money. I would have paid the same again for a second course from the same person."
     },
     {
-      name: "Nils Aabye",
+      name: "Farhan Baig",
       role: "Backend developer",
       date: "April 2026",
       rating: 5,
@@ -1404,7 +1404,7 @@
         "It gave me the vocabulary for things I had been doing by feel. Now I can argue for them in a review."
     },
     {
-      name: "Rosalind Ekwueme",
+      name: "Sumitra Naik",
       role: "Product manager",
       date: "December 2025",
       rating: 5,
@@ -1412,7 +1412,7 @@
         "My team watched the third section together and we changed a decision that same afternoon."
     },
     {
-      name: "Gareth Pemberton-Ilesanmi",
+      name: "Deepak Chauhan",
       role: "QA engineer",
       date: "November 2025",
       rating: 4,
@@ -1420,7 +1420,7 @@
         "Solid throughout. The audio dips a little in one lesson, and that is the only complaint I have."
     },
     {
-      name: "Amara Diallo-Stern",
+      name: "Preeti Mahadevan",
       role: "Data scientist",
       date: "March 2026",
       rating: 5,
@@ -1428,7 +1428,7 @@
         "Nothing here is hand-waved. When something is genuinely hard, the course says so and then slows down."
     },
     {
-      name: "Theo Van Rijn",
+      name: "Aniket Joshi",
       role: "Frontend developer",
       date: "January 2026",
       rating: 5,
@@ -1436,7 +1436,7 @@
         "I came for one specific technique and stayed for the reasoning that surrounded it."
     },
     {
-      name: "Sinead O'Halloran-Baptiste",
+      name: "Nandita Sharma",
       role: "Program manager",
       date: "September 2025",
       rating: 5,
@@ -1444,7 +1444,7 @@
         "The templates alone covered the price. I use two of them every single week now."
     },
     {
-      name: "Rafael Monteiro-Whitby",
+      name: "Rajeev Varghese",
       role: "Principal engineer",
       date: "February 2026",
       rating: 4,
@@ -1452,7 +1452,7 @@
         "Pitched slightly below where I am, and I still came away with four pages of notes."
     },
     {
-      name: "Junko Halvorsen",
+      name: "Swati Hegde",
       role: "Design systems lead",
       date: "April 2026",
       rating: 5,
@@ -1460,7 +1460,7 @@
         "It made me delete work rather than add more, which is the highest compliment I have got."
     },
     {
-      name: "Adebayo Krishnan",
+      name: "Zaid Merchant",
       role: "Solutions engineer",
       date: "October 2025",
       rating: 5,
@@ -1468,7 +1468,7 @@
         "The final project is a real thing you can show someone, not a toy that only works in the video."
     },
     {
-      name: "Marguerite Osei-Fenwick",
+      name: "Kalyani Rout",
       role: "Content strategist",
       date: "December 2025",
       rating: 5,
@@ -1476,7 +1476,7 @@
         "I have been doing this for eleven years and still found three habits worth fixing."
     },
     {
-      name: "Lars Ntumba-Reid",
+      name: "Bhaskar Reddy",
       role: "Systems engineer",
       date: "March 2026",
       rating: 4,
@@ -1514,18 +1514,62 @@
     return byCode(raw) || BY_CODE[DEFAULT_CODE];
   }
 
+  /* Rupees, grouped the Indian way: 1,499 / 19,999 / 1,24,999. Paise are
+     shown only when an amount actually carries them; every catalog price is
+     a whole rupee. */
+  function inr(value) {
+    var n = typeof value === "number" ? value : Number(value) || 0;
+    var frac = n % 1 === 0 ? 0 : 2;
+    try {
+      return (
+        "\u20B9" +
+        n.toLocaleString("en-IN", {
+          minimumFractionDigits: frac,
+          maximumFractionDigits: 2
+        })
+      );
+    } catch (e) {
+      return "\u20B9" + groupIN(n.toFixed(frac));
+    }
+  }
+
+  /* Fallback grouping for engines without the en-IN locale: last three
+     digits, then pairs. */
+  function groupIN(str) {
+    var parts = String(str).split(".");
+    var whole = parts[0];
+    var sign = "";
+    if (whole.charAt(0) === "-") {
+      sign = "-";
+      whole = whole.slice(1);
+    }
+    if (whole.length > 3) {
+      var tail = whole.slice(-3);
+      var head = whole.slice(0, -3).replace(/\B(?=(\d{2})+(?!\d))/g, ",");
+      whole = head + "," + tail;
+    }
+    return sign + whole + (parts[1] ? "." + parts[1] : "");
+  }
+
+  /* Card and buy-card prices. */
   function formatPrice(value) {
-    var n = typeof value === "number" ? value : Number(value) || 0;
-    return "$" + (n % 1 === 0 ? String(n) : n.toFixed(2));
+    return inr(value);
   }
 
+  /* Checkout summary rows and totals. */
   function formatMoney(value) {
-    var n = typeof value === "number" ? value : Number(value) || 0;
-    return "$" + n.toFixed(2);
+    return inr(value);
   }
 
+  /* Ratings, review counts and learner counts, grouped en-IN. */
   function formatCount(n) {
-    return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    var num = typeof n === "number" ? n : Number(n);
+    if (!isFinite(num)) return String(n);
+    try {
+      return num.toLocaleString("en-IN");
+    } catch (e) {
+      return groupIN(String(num));
+    }
   }
 
   function formatDuration(minutes) {

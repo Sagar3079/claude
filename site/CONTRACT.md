@@ -357,7 +357,7 @@ window.BINDWELL_DATA        // the helper object below
   title: "Interface Motion",
   category: "Design",                 // one of the 4 names
   slug: "design",                     // thumbnail + ?cat= key
-  instructor: "Anneke Visser",
+  instructor: "Kavya Raghunathan",
   instructorCred: "Design engineer; shipped three widely used ...",
   instructorBio: "Two to three sentences.",
   rating: 4.8,                        // number, one decimal
@@ -368,8 +368,8 @@ window.BINDWELL_DATA        // the helper object below
   lengthLong: "8.5h video",
   level: "Intermediate",              // Beginner | Intermediate | Advanced | All levels
   format: "Self-paced",               // Self-paced | Cohort
-  price: 69,                          // number
-  priceCents: 6900,
+  price: 2499,                        // number, whole rupees
+  priceCents: 249900,                 // paise
   badge: "Bestseller",                // "Bestseller" | "New" | null
   updated: "Updated March 2026",
   desc: "The one-liner (standfirst on the detail page).",
@@ -394,11 +394,11 @@ courseFromQuery()            // course object from ?c=, TL-301 fallback
 inCategory("Design")         // array of courses
 DEFAULT_CODE                 // "TL-301"
 
-formatPrice(69)              // "$69"
-formatMoney(69)              // "$69.00"     (checkout totals)
+formatPrice(2499)            // "₹2,499"
+formatMoney(2499)            // "₹2,499"   (checkout totals)
 formatCount(3204)            // "3,204"
 formatDuration(90)           // "1h 30m"
-initials("Anneke Visser")    // "AV"         (avatars)
+initials("Kavya Raghunathan") // "KR"        (avatars)
 escapeHtml(str)
 slugFor("Data & AI")         // "data"
 
@@ -413,7 +413,7 @@ courseCard(course)           // the entire course card <a> (see section 11)
 totalLessons(course)         // 26
 curriculumSummary(course)    // "5 sections · 26 lessons · 8.5h total"
 pickReviews("TL-204")        // deterministic 3 reviews from the pool
-subtotal(["TL-204","BW-224"])// 114  (number)
+subtotal(["TL-204","BW-224"])// 3498  (number)
 ```
 
 All markup helpers return HTML strings and escape their inputs.
@@ -543,14 +543,14 @@ The produced markup (for reference; the whole card is one link):
   <span class="card__body">
     <span class="card__badge"><span class="badge badge--bestseller">Bestseller</span></span>
     <span class="card__title">Interface Motion</span>
-    <span class="card__instructor meta">Anneke Visser</span>
+    <span class="card__instructor meta">Kavya Raghunathan</span>
     <span class="card__rating">
       <span class="card__score">4.8</span>
       <span class="stars stars--sm" ...> ... </span>
       <span class="meta">(3,204)</span>
     </span>
     <span class="card__meta meta">8.5h · Intermediate</span>
-    <span class="card__price price">$69</span>
+    <span class="card__price price">₹2,499</span>
   </span>
 </a>
 ```
@@ -580,7 +580,7 @@ keyframe animation on the site.
 
 ```html
 <button class="btn btn--primary btn--block" type="submit">
-  <span class="btn__label">Pay $124</span>
+  <span class="btn__label">Pay ₹3,498</span>
   <span class="btn__loading" aria-hidden="true"><span class="btn__spinner"></span>Working</span>
 </button>
 ```
@@ -678,7 +678,7 @@ attempt.
     <!-- thumbMarkup(course) here, or the 3D viewport for TL-301 / TL-410 -->
   </div>
   <div class="buy__body">
-    <div class="buy__price"><span class="price-lg">$69</span></div>
+    <div class="buy__price"><span class="price-lg">₹2,499</span></div>
     <button class="btn btn--primary btn--block" type="button" data-add-to-cart="TL-204">Add to cart</button>
     <p class="buy__note" data-buy-note>Added. It'll wait for you.</p>
     <a class="btn btn--secondary btn--block" href="pricing.html">Buy with the plan</a>
@@ -698,7 +698,7 @@ btn--block" href="checkout.html">Go to cart</a>` and add `.is-visible` to
 
 ```html
 <div class="buybar">
-  <span class="price">$69</span>
+  <span class="price">₹2,499</span>
   <button class="btn btn--primary btn--sm" type="button" data-add-to-cart="TL-204">Add to cart</button>
 </div>
 ```
@@ -711,11 +711,11 @@ btn--block" href="checkout.html">Go to cart</a>` and add `.is-visible` to
     <span class="thumb thumb--design thumb--line"> ... </span>
     <span class="line__main">
       <a class="line__title" href="course.html?c=TL-204">Interface Motion</a>
-      <span class="meta">Anneke Visser</span>
+      <span class="meta">Kavya Raghunathan</span>
       <span class="meta">8.5h · Intermediate</span>
     </span>
     <span class="line__side">
-      <span class="price">$69</span>
+      <span class="price">₹2,499</span>
       <button class="btn btn--ghost btn--danger btn--sm" type="button" data-remove-from-cart="TL-204">Remove</button>
     </span>
   </div>
@@ -730,12 +730,12 @@ Removal: add `.is-removing` (150ms opacity), then `.is-collapsed` on
 ```html
 <div class="panel sticky">
   <h3 class="h3">Order summary</h3>
-  <div class="summary-row"><span>Interface Motion</span><span>$69.00</span></div>
+  <div class="summary-row"><span>Interface Motion</span><span>₹2,499</span></div>
   <hr>
-  <div class="summary-row summary-row--muted"><span>Subtotal</span><span>$69.00</span></div>
-  <div class="summary-row summary-row--muted"><span>Tax</span><span>$0.00</span></div>
+  <div class="summary-row summary-row--muted"><span>Subtotal</span><span>₹2,499</span></div>
   <hr>
-  <div class="summary-row summary-row--total"><span>Total</span><span>$69.00</span></div>
+  <div class="summary-row summary-row--total"><span>Total</span><span>₹2,499</span></div>
+  <p class="meta mt-16">Prices include GST.</p>
 </div>
 ```
 
@@ -744,7 +744,7 @@ Removal: add `.is-removing` (150ms opacity), then `.is-collapsed` on
 ```html
 <div class="plan plan--featured">
   <h3 class="h3">Personal Plan</h3>
-  <div class="plan__price"><span class="price-lg">$18/mo</span><span class="meta">billed yearly at $180</span></div>
+  <div class="plan__price"><span class="price-lg">₹499/mo</span><span class="meta">billed yearly at ₹4,999</span></div>
   <ul class="check-list">
     <li class="check-list__item"><svg class="icon icon--sm" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l4 4 8-9"></path></svg>All 10 self-paced courses</li>
   </ul>
@@ -762,22 +762,22 @@ highlight a plan gets: no badge, no pill, no "most popular".
   <!-- optional stars--sm row -->
   <blockquote class="quote__body">&ldquo;Real typographic quotes only.&rdquo;</blockquote>
   <figcaption class="quote__attr">
-    <span class="avatar" aria-hidden="true">DW</span>
-    <span><span class="quote__name">Dana Whitfield</span><span class="quote__role">Operations analyst</span></span>
+    <span class="avatar" aria-hidden="true">SP</span>
+    <span><span class="quote__name">Shalini Prabhu</span><span class="quote__role">Operations analyst</span></span>
   </figcaption>
 </figure>
 
 <article class="review">
   <span class="stars stars--sm" ...> ... </span>
-  <p class="review__name">Ingrid Solheim</p>
+  <p class="review__name">Ipshita Barua</p>
   <p class="meta">February 2026</p>
   <p class="body-sm t-2">Two to three lines.</p>
 </article>
 
 <div class="instructor">
-  <span class="avatar avatar--lg" aria-hidden="true">AV</span>
+  <span class="avatar avatar--lg" aria-hidden="true">KR</span>
   <div class="instructor__body">
-    <h3 class="h3">Anneke Visser</h3>
+    <h3 class="h3">Kavya Raghunathan</h3>
     <p class="meta">Design engineer; shipped three widely used interaction libraries.</p>
     <p class="body-sm t-2">Bio paragraph.</p>
     <p class="meta">4.8 instructor rating · 2 courses · 46,000 learners</p>

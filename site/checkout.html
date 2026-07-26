@@ -14,6 +14,7 @@
 <script src="js/data.js" defer></script>
 <script src="js/main.js" defer></script>
 <script src="js/checkout.js" defer></script>
+<script src="js/motion.js" defer></script>
 </head>
 <body>
 
@@ -51,11 +52,11 @@
           <h2 class="h3">Order summary</h2>
           <div class="mt-16" data-summary-lines></div>
           <hr>
-          <div class="summary-row summary-row--muted"><span>Subtotal</span><span data-summary-subtotal>$0.00</span></div>
-          <div class="summary-row summary-row--muted"><span>Tax</span><span>$0.00</span></div>
+          <div class="summary-row summary-row--muted"><span>Subtotal</span><span data-summary-subtotal>&#8377;0</span></div>
           <hr>
-          <div class="summary-row summary-row--total"><span>Total</span><span data-summary-total>$0.00</span></div>
-          <p class="meta mt-16">Lifetime access, and a 14-day refund on every line.</p>
+          <div class="summary-row summary-row--total"><span>Total</span><span data-summary-total>&#8377;0</span></div>
+          <p class="meta mt-16">Prices include GST.</p>
+          <p class="meta mt-8">Lifetime access, and a 14-day refund on every line.</p>
         </aside>
 
         <form class="panel stack-24 co-pay" data-pay-form novalidate>
@@ -68,46 +69,62 @@
             <p class="field__error" id="email-error">Enter an email address so the receipt has somewhere to go.</p>
           </div>
 
-          <div class="field">
-            <label class="field__label" for="card">Card number</label>
-            <input class="field__input" id="card" name="card" type="text" inputmode="numeric" autocomplete="cc-number" placeholder="4242 4242 4242 4242" aria-describedby="card-help card-error">
-            <p class="field__help" id="card-help">Mock checkout. No card is charged.</p>
-            <p class="field__error" id="card-error">Enter a 16-digit card number.</p>
+          <div class="chip-row" role="group" aria-label="Payment method" data-pay-method>
+            <button class="chip" type="button" aria-pressed="true" data-pay-method-option="upi">UPI</button>
+            <button class="chip" type="button" aria-pressed="false" data-pay-method-option="card">Card</button>
           </div>
 
-          <div class="field-grid">
+          <div class="stack-24" data-pay-fields="upi">
             <div class="field">
-              <label class="field__label" for="expiry">Expiry</label>
-              <input class="field__input" id="expiry" name="expiry" type="text" inputmode="numeric" autocomplete="cc-exp" placeholder="09 / 29" aria-describedby="expiry-help expiry-error">
-              <p class="field__help" id="expiry-help">Month and year, as printed.</p>
-              <p class="field__error" id="expiry-error">Enter the expiry date as MM/YY.</p>
-            </div>
-
-            <div class="field">
-              <label class="field__label" for="cvc">CVC</label>
-              <input class="field__input" id="cvc" name="cvc" type="text" inputmode="numeric" autocomplete="cc-csc" placeholder="123" aria-describedby="cvc-help cvc-error">
-              <p class="field__help" id="cvc-help">Three digits, never stored.</p>
-              <p class="field__error" id="cvc-error">Enter the 3-digit code on the back of the card.</p>
+              <label class="field__label" for="upi">UPI ID</label>
+              <input class="field__input" id="upi" name="upi" type="text" inputmode="email" autocomplete="off" spellcheck="false" placeholder="yourname@bank" aria-describedby="upi-help upi-error">
+              <p class="field__help" id="upi-help">Mock checkout. No collect request is sent.</p>
+              <p class="field__error" id="upi-error">Enter a UPI ID in the form yourname@bank.</p>
             </div>
           </div>
 
-          <div class="field">
-            <label class="field__label" for="cardname">Name on card</label>
-            <input class="field__input" id="cardname" name="cardname" type="text" autocomplete="cc-name" placeholder="As printed on the card" aria-describedby="cardname-help cardname-error">
-            <p class="field__help" id="cardname-help">Exactly as your bank spells it.</p>
-            <p class="field__error" id="cardname-error">Enter the name printed on the card.</p>
+          <div class="stack-24" data-pay-fields="card" hidden>
+            <div class="field">
+              <label class="field__label" for="card">Card number</label>
+              <input class="field__input" id="card" name="card" type="text" inputmode="numeric" autocomplete="cc-number" placeholder="4242 4242 4242 4242" aria-describedby="card-help card-error">
+              <p class="field__help" id="card-help">Mock checkout. No card is charged.</p>
+              <p class="field__error" id="card-error">Enter a 16-digit card number.</p>
+            </div>
+
+            <div class="field-grid">
+              <div class="field">
+                <label class="field__label" for="expiry">Expiry</label>
+                <input class="field__input" id="expiry" name="expiry" type="text" inputmode="numeric" autocomplete="cc-exp" placeholder="09 / 29" aria-describedby="expiry-help expiry-error">
+                <p class="field__help" id="expiry-help">Month and year, as printed.</p>
+                <p class="field__error" id="expiry-error">Enter the expiry date as MM/YY.</p>
+              </div>
+
+              <div class="field">
+                <label class="field__label" for="cvc">CVC</label>
+                <input class="field__input" id="cvc" name="cvc" type="text" inputmode="numeric" autocomplete="cc-csc" placeholder="123" aria-describedby="cvc-help cvc-error">
+                <p class="field__help" id="cvc-help">Three digits, never stored.</p>
+                <p class="field__error" id="cvc-error">Enter the 3-digit code on the back of the card.</p>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="cardname">Name on card</label>
+              <input class="field__input" id="cardname" name="cardname" type="text" autocomplete="cc-name" placeholder="As printed on the card" aria-describedby="cardname-help cardname-error">
+              <p class="field__help" id="cardname-help">Exactly as your bank spells it.</p>
+              <p class="field__error" id="cardname-error">Enter the name printed on the card.</p>
+            </div>
           </div>
 
           <div class="field">
             <label class="field__label" for="country">Country</label>
             <select class="field__select" id="country" name="country">
-              <option>United States</option>
-              <option>Canada</option>
+              <option>India</option>
+              <option>Singapore</option>
+              <option>United Arab Emirates</option>
               <option>United Kingdom</option>
-              <option>Netherlands</option>
-              <option>Germany</option>
-              <option>Japan</option>
               <option>Australia</option>
+              <option>Canada</option>
+              <option>United States</option>
             </select>
             <p class="field__help" id="country-help">Used for the receipt only.</p>
           </div>
@@ -117,7 +134,7 @@
             <span class="btn__loading" aria-hidden="true"><span class="btn__spinner"></span>Working</span>
           </button>
 
-          <p class="meta">A demo checkout. No network request leaves this page and no card is charged.</p>
+          <p class="meta">A demo checkout. No network request leaves this page, and nothing is charged to a card or a UPI ID.</p>
         </form>
 
       </div>
