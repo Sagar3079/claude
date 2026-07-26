@@ -1,0 +1,1657 @@
+/* ==========================================================================
+   TOLERANCE - design system
+   Direction B: Technical / Terminal-Luxe
+   Load order: this file only. No build step, no imports.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. TOKENS
+   -------------------------------------------------------------------------- */
+
+:root {
+  /* Color */
+  --bg: #0A0A0A;
+  --surface: #121212;
+  --surface-2: #181818;
+  --line: #262626;
+  --line-strong: #3A3A3A;
+  --text-1: #EAEAEA;
+  --text-2: #9A9A9A;
+  --text-3: #5F5F5F;
+  --accent: #E61919;
+  --accent-text: #FF6B57;
+  --btn-primary-bg: #EAEAEA;
+  --btn-primary-text: #0A0A0A;
+  --btn-primary-bg-hover: #FFFFFF;
+
+  /* Type families */
+  --font-display: "Archivo", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo,
+    Consolas, "Liberation Mono", monospace;
+
+  /* Spacing scale - nothing off-scale */
+  --s-4: 4px;
+  --s-8: 8px;
+  --s-12: 12px;
+  --s-16: 16px;
+  --s-24: 24px;
+  --s-32: 32px;
+  --s-48: 48px;
+  --s-64: 64px;
+  --s-96: 96px;
+  --s-128: 128px;
+
+  /* Layout */
+  --frame-max: 1408px;
+  --pad-x: 32px;
+  --nav-h: 64px;
+  --section-y: 96px;
+  --measure: 65ch;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease: ease;
+  --ease-panel: cubic-bezier(0.32, 0.72, 0, 1);
+  --dur-fast: 150ms;
+  --dur-mid: 180ms;
+  --dur-reveal: 220ms;
+  --dur-open: 240ms;
+  --dur-hero: 250ms;
+}
+
+/* --------------------------------------------------------------------------
+   2. RESET / BASE
+   -------------------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text-1);
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+ul,
+ol,
+dl,
+dd {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--text-1);
+  color: var(--bg);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --------------------------------------------------------------------------
+   3. TYPOGRAPHY
+   -------------------------------------------------------------------------- */
+
+.display {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 7.5vw, 6.5rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.h1 {
+  font-family: var(--font-display);
+  font-size: 2.75rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+.h2 {
+  font-family: var(--font-display);
+  font-size: 1.875rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.h3 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.body {
+  font-size: 1rem;
+  line-height: 1.65;
+  max-width: var(--measure);
+}
+
+.body-sm {
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+
+.mono-data {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+}
+
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+.mono-btn {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+/* Color utilities */
+.t-1 { color: var(--text-1); }
+.t-2 { color: var(--text-2); }
+.t-3 { color: var(--text-3); }
+.t-accent { color: var(--accent-text); }
+
+/* Section eyebrow (mono label used above a headline). Budget: <= 1 per 3
+   sections per page. */
+.eyebrow {
+  display: block;
+  color: var(--text-2);
+  margin-bottom: var(--s-24);
+}
+
+/* Inline text link: text-1 with a 1px accent underline revealed on hover */
+.link {
+  position: relative;
+  display: inline-block;
+  color: var(--text-1);
+  text-decoration: none;
+}
+
+.link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--dur-fast) var(--ease);
+}
+
+.link:hover::after,
+.link:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* --------------------------------------------------------------------------
+   4. LAYOUT
+   -------------------------------------------------------------------------- */
+
+/* The drawn frame: the whole site sits inside it. */
+.frame {
+  max-width: var(--frame-max);
+  margin-inline: auto;
+  border-left: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+  min-height: 100vh;
+}
+
+.section {
+  padding: var(--section-y) var(--pad-x);
+}
+
+/* Section with no horizontal padding: for splits whose vertical hairline must
+   run the full frame width, and for full-bleed media. */
+.section--flush {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Structural hairline between stacked sections. */
+.section + .section,
+.section--ruled {
+  border-top: 1px solid var(--line);
+}
+
+.section__head {
+  margin-bottom: var(--s-48);
+}
+
+.section__head .body {
+  margin-top: var(--s-16);
+  color: var(--text-2);
+}
+
+/* A standalone hairline. Only ever between two pieces of real content. */
+.rule {
+  height: 1px;
+  background: var(--line);
+  border: 0;
+  margin: 0;
+}
+
+/* 12-column editorial grid (visible gaps, no dividers) */
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--s-24);
+}
+
+/* Hairline-divided splits: 1px gap on a --line parent, --bg children. */
+.split {
+  display: grid;
+  gap: 1px;
+  background: var(--line);
+}
+
+.split > * {
+  background: var(--bg);
+}
+
+.split--7-5 { grid-template-columns: 7fr 5fr; }
+.split--5-7 { grid-template-columns: 5fr 7fr; }
+.split--4-8 { grid-template-columns: 4fr 8fr; }
+.split--2-1 { grid-template-columns: 2fr 1fr; }
+.split--3 { grid-template-columns: repeat(3, 1fr); }
+.split--2 { grid-template-columns: repeat(2, 1fr); }
+
+/* Hero: top padding capped at 64px. */
+.section--hero {
+  padding-top: var(--s-64);
+}
+
+/* Padding helpers for split children / compartments */
+.pad { padding: var(--s-32) var(--pad-x); }
+.pad-x { padding-inline: var(--pad-x); }
+.pad-dense { padding: var(--s-24); }
+
+/* A --surface compartment with a hairline border. */
+.compartment {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: var(--s-32);
+}
+
+.compartment--dense {
+  padding: var(--s-24);
+}
+
+.sticky {
+  position: sticky;
+  top: calc(var(--nav-h) + 1px);
+}
+
+/* Column spans inside .grid-12 */
+.col-3 { grid-column: span 3; }
+.col-4 { grid-column: span 4; }
+.col-5 { grid-column: span 5; }
+.col-6 { grid-column: span 6; }
+.col-7 { grid-column: span 7; }
+.col-8 { grid-column: span 8; }
+.col-12 { grid-column: span 12; }
+
+/* Top-margin utilities, on-scale only */
+.mt-8 { margin-top: var(--s-8); }
+.mt-16 { margin-top: var(--s-16); }
+.mt-24 { margin-top: var(--s-24); }
+.mt-32 { margin-top: var(--s-32); }
+.mt-48 { margin-top: var(--s-48); }
+
+.stack > * + * { margin-top: var(--s-16); }
+.stack-24 > * + * { margin-top: var(--s-24); }
+.stack-32 > * + * { margin-top: var(--s-32); }
+
+/* Grayscale image treatment. Sitewide, one treatment. */
+.img-treat {
+  filter: grayscale(1) contrast(1.05);
+  transition: filter var(--dur-mid) var(--ease);
+}
+
+.img-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --------------------------------------------------------------------------
+   5. BUTTONS
+   -------------------------------------------------------------------------- */
+
+.btn {
+  display: inline-grid;
+  place-items: center;
+  height: 44px;
+  padding: 0 var(--s-24);
+  border: 1px solid transparent;
+  background: none;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease),
+    transform 100ms ease-out;
+}
+
+.btn--sm {
+  height: 36px;
+}
+
+.btn--block {
+  display: grid;
+  width: 100%;
+}
+
+/* Label / loading share one grid cell: the button is as wide as its widest
+   state, so swapping to the loading state never shifts width. */
+.btn__label,
+.btn__loading {
+  grid-area: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-8);
+  transition: opacity var(--dur-fast) var(--ease);
+}
+
+.btn__loading {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.btn.is-loading .btn__label {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.btn.is-loading .btn__loading {
+  opacity: 1;
+  visibility: visible;
+}
+
+.btn.is-loading {
+  pointer-events: none;
+}
+
+/* 4-frame mono glyph cycle: a 1ch window over the string "/-\|" */
+.btn__glyph {
+  display: inline-block;
+  width: 1ch;
+  overflow: hidden;
+  font-family: var(--font-mono);
+}
+
+.btn__glyph > span {
+  display: inline-block;
+  white-space: pre;
+  animation: tol-glyph 320ms steps(4) infinite;
+}
+
+@keyframes tol-glyph {
+  to { transform: translateX(-4ch); }
+}
+
+/* Primary (filled) */
+.btn--primary {
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+}
+
+.btn--primary:hover {
+  background: var(--btn-primary-bg-hover);
+}
+
+.btn--primary:active {
+  transform: translateY(1px);
+}
+
+.btn--primary[disabled],
+.btn--primary.is-disabled {
+  background: var(--line-strong);
+  color: var(--text-3);
+  pointer-events: none;
+}
+
+/* Secondary (outlined) */
+.btn--secondary {
+  border-color: var(--line-strong);
+  color: var(--text-1);
+}
+
+.btn--secondary:hover {
+  border-color: var(--text-1);
+}
+
+.btn--secondary:active {
+  transform: translateY(1px);
+}
+
+.btn--secondary[disabled],
+.btn--secondary.is-disabled {
+  border-color: var(--line);
+  color: var(--text-3);
+  pointer-events: none;
+}
+
+/* Accent: text-only, at most once per flow. Never a filled red button. */
+.btn--accent {
+  height: auto;
+  padding: 0;
+  color: var(--accent-text);
+  text-decoration: none;
+}
+
+.btn--accent:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.btn--accent[disabled],
+.btn--accent.is-disabled {
+  color: var(--text-3);
+  pointer-events: none;
+}
+
+/* Row of buttons */
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-16);
+}
+
+/* --------------------------------------------------------------------------
+   6. NAV
+   -------------------------------------------------------------------------- */
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: var(--s-32);
+  height: var(--nav-h);
+  padding: 0 var(--pad-x);
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--text-1);
+}
+
+.wordmark sup {
+  font-size: 0.5em;
+  vertical-align: super;
+  line-height: 0;
+}
+
+.nav__links {
+  display: flex;
+  align-items: center;
+  gap: var(--s-24);
+}
+
+.nav__link {
+  position: relative;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--text-2);
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.nav__link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--dur-fast) var(--ease);
+}
+
+.nav__link:hover,
+.nav__link[aria-current="page"] {
+  color: var(--text-1);
+}
+
+.nav__link:hover::after,
+.nav__link[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
+.nav__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--s-16);
+  margin-left: auto;
+}
+
+/* Cart indicator: hidden while the cart is empty, revealed by main.js */
+.nav__cart {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--text-2);
+  font-variant-numeric: tabular-nums;
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.nav__cart:hover {
+  color: var(--text-1);
+}
+
+.nav__cart[hidden] {
+  display: none;
+}
+
+.nav__signin {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--text-2);
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.nav__signin:hover {
+  color: var(--text-1);
+}
+
+/* Reduced nav (checkout): right-aligned mono status text, no links */
+.nav__status {
+  margin-left: auto;
+  color: var(--text-2);
+}
+
+.nav__toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-left: auto;
+  margin-right: -12px;
+  background: none;
+  border: 0;
+  color: var(--text-1);
+  cursor: pointer;
+}
+
+.nav__toggle .icon {
+  width: 24px;
+  height: 24px;
+}
+
+.nav__toggle .icon--close { display: none; }
+.nav__toggle[aria-expanded="true"] .icon--open { display: none; }
+.nav__toggle[aria-expanded="true"] .icon--close { display: block; }
+
+.nav__panel {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: var(--nav-h);
+  bottom: 0;
+  z-index: 45;
+  display: none;
+  padding: 0 var(--pad-x);
+  background: var(--bg);
+  border-top: 1px solid var(--line);
+  overflow-y: auto;
+  transform: translateY(-100%);
+  visibility: hidden;
+  transition: transform var(--dur-mid) var(--ease-panel),
+    visibility var(--dur-mid) var(--ease-panel);
+}
+
+.nav__panel.is-open {
+  transform: translateY(0);
+  visibility: visible;
+  transition-duration: var(--dur-open);
+}
+
+.nav__panel-link {
+  display: block;
+  padding: var(--s-24) 0;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-display);
+  font-size: 1.875rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  text-decoration: none;
+  color: var(--text-1);
+}
+
+.nav__panel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-16);
+  padding: var(--s-32) 0;
+}
+
+/* --------------------------------------------------------------------------
+   7. ICONS (inline SVG, Phosphor "regular" geometry)
+   -------------------------------------------------------------------------- */
+
+.icon {
+  display: block;
+  width: 16px;
+  height: 16px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 16;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* --------------------------------------------------------------------------
+   8. COURSE ROW
+   -------------------------------------------------------------------------- */
+
+/* Container for all clusters. Also the element a filter UI operates on. */
+.rows {
+  display: flex;
+  flex-direction: column;
+}
+
+/* A cluster groups rows; the hairline sits below the cluster, not each row. */
+.rows__cluster + .rows__cluster {
+  border-top: 1px solid var(--line);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--s-24);
+  align-items: start;
+  padding: var(--s-24);
+  margin-inline: calc(var(--s-24) * -1);
+  text-decoration: none;
+  color: inherit;
+  transition: background-color var(--dur-fast) var(--ease),
+    transform 100ms ease-out;
+}
+
+.row:hover {
+  background: var(--surface);
+}
+
+.row:active {
+  transform: translateY(1px);
+}
+
+.row__code {
+  grid-column: span 2;
+  color: var(--text-3);
+}
+
+.row__code span {
+  display: block;
+}
+
+.row__main {
+  grid-column: span 6;
+}
+
+.row__main > * {
+  display: block;
+}
+
+.row__desc {
+  margin-top: var(--s-8);
+  color: var(--text-2);
+  max-width: var(--measure);
+}
+
+.row__meta {
+  grid-column: span 2;
+  text-align: right;
+  color: var(--text-2);
+}
+
+.row__price {
+  grid-column: span 2;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--s-12);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.row__arrow {
+  transition: transform var(--dur-fast) ease-out;
+}
+
+.row:hover .row__arrow {
+  transform: translateX(4px);
+}
+
+/* Catalog filter fade (150ms opacity only, no layout spring) */
+.row.is-filtered-out {
+  display: none;
+}
+
+.row.is-fading {
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease);
+}
+
+/* --------------------------------------------------------------------------
+   9. COURSE CARD
+   -------------------------------------------------------------------------- */
+
+.card {
+  display: block;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color var(--dur-mid) var(--ease);
+}
+
+.card:hover {
+  border-color: var(--line-strong);
+}
+
+.card__media {
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+}
+
+.card:hover .img-treat {
+  filter: grayscale(0.4) contrast(1.05);
+}
+
+.card__body {
+  padding: var(--s-24);
+}
+
+.card__meta {
+  color: var(--text-3);
+  margin-bottom: var(--s-16);
+}
+
+.card__desc {
+  margin-top: var(--s-8);
+  color: var(--text-2);
+}
+
+.card__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-16);
+  margin-top: var(--s-24);
+  padding-top: var(--s-16);
+  border-top: 1px solid var(--line);
+}
+
+.card__foot .price {
+  font-size: 1rem;
+}
+
+.price {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.price--lg {
+  font-size: 1.875rem;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.price--struck {
+  color: var(--accent-text);
+  text-decoration: line-through;
+}
+
+/* --------------------------------------------------------------------------
+   10. ACCORDION (syllabus + FAQ)
+   -------------------------------------------------------------------------- */
+
+.acc {
+  border-top: 1px solid var(--line);
+}
+
+.acc__item {
+  border-bottom: 1px solid var(--line);
+}
+
+.acc__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-24);
+  width: 100%;
+  padding: 20px 0;
+  background: none;
+  border: 0;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text-1);
+}
+
+.acc__code {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-3);
+  margin-right: var(--s-16);
+}
+
+.acc__icon {
+  transition: transform 200ms var(--ease-out);
+}
+
+.acc__trigger[aria-expanded="true"] .acc__icon {
+  transform: rotate(45deg);
+}
+
+.acc__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--dur-mid) var(--ease-out);
+}
+
+.acc__item.is-open .acc__panel {
+  grid-template-rows: 1fr;
+  transition-duration: var(--dur-open);
+}
+
+.acc__clip {
+  overflow: hidden;
+}
+
+.acc__inner {
+  padding-bottom: 20px;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--text-2);
+  max-width: var(--measure);
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease);
+}
+
+.acc__item.is-open .acc__inner {
+  opacity: 1;
+  transition-delay: 60ms;
+}
+
+/* Keyboard toggles are unanimated. */
+.acc__item.no-anim,
+.acc__item.no-anim * {
+  transition: none !important;
+}
+
+.acc__lesson {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-24);
+  padding: var(--s-8) 0;
+}
+
+.acc__lesson .price,
+.acc__lesson .mono-data {
+  color: var(--text-3);
+}
+
+/* --------------------------------------------------------------------------
+   11. TESTIMONIAL
+   -------------------------------------------------------------------------- */
+
+/* Base: keeps the narrow quote optically aligned beside the wide one. */
+.quote {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.quote--wide {
+  border-left: 2px solid var(--accent);
+  padding-left: var(--s-32);
+}
+
+.quote--narrow {
+  border-top: 1px solid var(--line);
+  padding-top: var(--s-32);
+}
+
+.quote__body {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: var(--text-1);
+}
+
+.quote--wide .quote__body { font-size: 1.25rem; }
+.quote--narrow .quote__body { font-size: 1rem; }
+
+.quote__attr {
+  margin-top: var(--s-24);
+  color: var(--text-3);
+}
+
+.quote__attr strong {
+  display: block;
+  font-weight: 500;
+  color: var(--text-1);
+}
+
+/* --------------------------------------------------------------------------
+   12. FORM
+   -------------------------------------------------------------------------- */
+
+.field {
+  display: block;
+}
+
+.field + .field,
+.field-grid + .field,
+.field + .field-grid {
+  margin-top: var(--s-24);
+}
+
+.field__label {
+  display: block;
+  margin-bottom: var(--s-8);
+  color: var(--text-2);
+}
+
+.field__input,
+.field__select {
+  display: block;
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--text-1);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+  transition: border-color var(--dur-fast) var(--ease);
+}
+
+.field__input::placeholder {
+  color: var(--text-3);
+}
+
+.field__input:hover,
+.field__select:hover {
+  border-color: var(--line-strong);
+}
+
+.field__input:focus-visible,
+.field__select:focus-visible {
+  border-color: var(--line-strong);
+  outline: 1px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.field__input[disabled],
+.field__select[disabled] {
+  color: var(--text-3);
+  border-color: var(--line);
+}
+
+.field__help {
+  margin-top: var(--s-8);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--text-3);
+}
+
+.field__error {
+  display: none;
+  margin-top: var(--s-8);
+  color: var(--accent-text);
+}
+
+.field.is-error .field__input,
+.field.is-error .field__select {
+  border-color: var(--accent);
+}
+
+.field.is-error .field__error {
+  display: block;
+}
+
+.field-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-16);
+}
+
+/* --------------------------------------------------------------------------
+   13. PLAN CARD
+   -------------------------------------------------------------------------- */
+
+.plan {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: var(--s-32);
+}
+
+/* The only highlight an emphasised plan gets. No badges, no pills. */
+.plan--featured {
+  border-top: 2px solid var(--accent);
+}
+
+.plan__name {
+  color: var(--text-2);
+}
+
+.plan__price {
+  margin-top: var(--s-16);
+  font-family: var(--font-mono);
+  font-size: 1.875rem;
+  font-weight: 700;
+  line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-1);
+}
+
+.plan__list {
+  margin-top: var(--s-24);
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+.plan__list li + li {
+  margin-top: var(--s-12);
+}
+
+.plan__cta {
+  margin-top: var(--s-32);
+}
+
+/* --------------------------------------------------------------------------
+   14. SUPPORTING PARTS (catalog toggles, spec cells, media, summary, status)
+   -------------------------------------------------------------------------- */
+
+/* Filter toggle group */
+.toggles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  width: fit-content;
+}
+
+.toggle {
+  padding: var(--s-12) var(--s-16);
+  background: var(--bg);
+  border: 0;
+  color: var(--text-2);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease);
+}
+
+.toggle:hover {
+  background: var(--surface-2);
+  color: var(--text-1);
+}
+
+.toggle[aria-pressed="true"] {
+  background: var(--text-1);
+  color: var(--bg);
+}
+
+/* Spec sheet cell */
+.spec-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s-16);
+}
+
+.spec-cell {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: var(--s-24);
+}
+
+.spec-cell__label {
+  color: var(--text-2);
+}
+
+.spec-cell__value {
+  margin-top: var(--s-12);
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-1);
+}
+
+.spec-cell__note {
+  margin-top: var(--s-8);
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+/* Media block with a square play control (sample lesson) */
+.media {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+
+.play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+  border: 0;
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease);
+}
+
+.play:hover {
+  background: var(--btn-primary-bg-hover);
+}
+
+.play:active {
+  transform: translate(-50%, calc(-50% + 1px));
+}
+
+.play[disabled] {
+  background: var(--line-strong);
+  color: var(--text-3);
+  pointer-events: none;
+}
+
+.play .icon {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+  stroke: none;
+}
+
+/* Order summary rows (checkout) */
+.summary-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-16);
+  padding: var(--s-8) 0;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-2);
+}
+
+.summary-row--total {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-1);
+}
+
+/* The one semantic live indicator on the site (catalog cohort note). */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-8);
+  color: var(--text-2);
+}
+
+.status__dot {
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  flex: none;
+}
+
+/* Instructor / people cells */
+.people {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1px;
+  background: var(--line);
+}
+
+.people > * {
+  background: var(--bg);
+}
+
+.person {
+  display: block;
+  padding: var(--s-24);
+  text-decoration: none;
+  color: inherit;
+  transition: background-color var(--dur-fast) var(--ease);
+}
+
+.person:hover {
+  background: var(--surface);
+}
+
+.person:hover .img-treat {
+  filter: grayscale(0.4) contrast(1.05);
+}
+
+.person--lg { grid-column: span 6; }
+.person--sm { grid-column: span 3; }
+
+.person__media {
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  margin-bottom: var(--s-16);
+}
+
+.person--sm .person__media {
+  aspect-ratio: 1 / 1;
+}
+
+.person__cred {
+  margin-top: var(--s-4);
+  color: var(--text-2);
+}
+
+/* --------------------------------------------------------------------------
+   15. FOOTER
+   -------------------------------------------------------------------------- */
+
+.footer {
+  border-top: 1px solid var(--line);
+  padding: var(--s-64) var(--pad-x);
+}
+
+.footer__grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--s-24);
+}
+
+.footer__brand { grid-column: span 4; }
+.footer__col { grid-column: span 2; }
+
+.footer__tag {
+  margin-top: var(--s-16);
+  color: var(--text-2);
+}
+
+.footer__legal {
+  margin-top: var(--s-8);
+  color: var(--text-3);
+}
+
+.footer__title {
+  display: block;
+  margin-bottom: var(--s-16);
+  color: var(--text-2);
+}
+
+.footer__list li + li {
+  margin-top: var(--s-12);
+}
+
+.footer__link {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  text-decoration: none;
+  color: var(--text-2);
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.footer__link:hover {
+  color: var(--text-1);
+}
+
+/* Reduced footer (checkout): single hairline row */
+.footer--reduced {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-16);
+  padding: var(--s-24) var(--pad-x);
+}
+
+/* --------------------------------------------------------------------------
+   16. MOTION
+   -------------------------------------------------------------------------- */
+
+/* Scroll reveal: section headline + first content block only. */
+.has-js .reveal {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity var(--dur-reveal) var(--ease-out),
+    transform var(--dur-reveal) var(--ease-out);
+}
+
+.has-js .reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Hero load-in: staggered across at most 5 elements. */
+.has-js .hero-item {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity var(--dur-hero) var(--ease-out),
+    transform var(--dur-hero) var(--ease-out);
+}
+
+.has-js .is-loaded .hero-item {
+  opacity: 1;
+  transform: none;
+}
+
+.has-js .is-loaded .hero-item:nth-child(2) { transition-delay: 50ms; }
+.has-js .is-loaded .hero-item:nth-child(3) { transition-delay: 100ms; }
+.has-js .is-loaded .hero-item:nth-child(4) { transition-delay: 150ms; }
+.has-js .is-loaded .hero-item:nth-child(5) { transition-delay: 200ms; }
+
+/* The featured card is the 5th element of the hero group but the 1st child of
+   its own column, so its delay is set explicitly. */
+.has-js .is-loaded .hero-item--last { transition-delay: 200ms; }
+
+/* --------------------------------------------------------------------------
+   17. RESPONSIVE
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1080px) {
+  :root {
+    --pad-x: 24px;
+    --section-y: 64px;
+  }
+
+  .split--7-5,
+  .split--5-7,
+  .split--4-8,
+  .split--2-1,
+  .split--3,
+  .split--2 {
+    grid-template-columns: 1fr;
+  }
+
+  .person--lg,
+  .person--sm {
+    grid-column: span 6;
+  }
+
+  .footer__brand { grid-column: span 12; }
+  .footer__col { grid-column: span 3; }
+
+  .sticky {
+    position: static;
+  }
+}
+
+@media (max-width: 720px) {
+  :root {
+    --pad-x: 16px;
+    --section-y: 56px;
+  }
+
+  .h1 { font-size: 2.25rem; }
+  .h2 { font-size: 1.5rem; }
+
+  .nav__links,
+  .nav__actions {
+    display: none;
+  }
+
+  .nav__toggle {
+    display: flex;
+  }
+
+  .nav__panel {
+    display: block;
+  }
+
+  /* Course row stacks: code line, title, description, meta + price line */
+  .row {
+    grid-template-columns: 1fr;
+    gap: var(--s-8);
+    padding: var(--s-16);
+    margin-inline: calc(var(--s-16) * -1);
+  }
+
+  .row__code,
+  .row__main,
+  .row__meta,
+  .row__price {
+    grid-column: span 1;
+  }
+
+  .row__code span {
+    display: inline;
+  }
+
+  .row__code span + span::before {
+    content: " / ";
+  }
+
+  .row__meta {
+    text-align: left;
+  }
+
+  .row__price {
+    justify-content: space-between;
+    margin-top: var(--s-8);
+  }
+
+  .grid-12 > * {
+    grid-column: span 12 !important;
+  }
+
+  .spec-grid,
+  .field-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .people {
+    grid-template-columns: 1fr;
+  }
+
+  .person--lg,
+  .person--sm {
+    grid-column: span 1;
+  }
+
+  .footer__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .footer__brand,
+  .footer__col {
+    grid-column: span 1;
+  }
+
+  .quote--wide {
+    padding-left: var(--s-24);
+  }
+
+  .btn--block-mobile {
+    display: grid;
+    width: 100%;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   18. REDUCED MOTION
+   Removes all transform motion; opacity/color kept at 150ms.
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: var(--dur-fast) !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
+
+  .has-js .reveal,
+  .has-js .hero-item,
+  .btn:active,
+  .row:active,
+  .play:active {
+    transform: none !important;
+  }
+
+  .row:hover .row__arrow,
+  .acc__icon,
+  .link::after,
+  .nav__link::after {
+    transition: none !important;
+  }
+
+  .row:hover .row__arrow {
+    transform: none !important;
+  }
+
+  .play:active {
+    transform: translate(-50%, -50%) !important;
+  }
+
+  .nav__panel {
+    transform: none !important;
+    opacity: 0;
+    transition: opacity var(--dur-fast) var(--ease),
+      visibility var(--dur-fast) var(--ease) !important;
+  }
+
+  .nav__panel.is-open {
+    opacity: 1;
+  }
+}

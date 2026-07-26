@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-label="Course production pipeline diagram">
+<rect width="1200" height="900" fill="#121212"/>
+<g stroke="#262626" stroke-width="1"><line x1="80" y1="450" x2="1120" y2="450"/></g>
+<g fill="none" stroke="#3A3A3A" stroke-width="1">
+<rect x="80" y="390" width="200" height="120"/><rect x="390" y="390" width="200" height="120"/><rect x="700" y="390" width="200" height="120"/><rect x="1000" y="390" width="120" height="120"/>
+</g>
+<g font-family="JetBrains Mono, ui-monospace, monospace" font-size="20" letter-spacing="2" fill="#9A9A9A">
+<text x="100" y="458">OUTLINE</text><text x="410" y="458">REVIEW x2</text><text x="720" y="458">RECORD</text><text x="1014" y="458">SHIP</text>
+</g>
+<g font-family="JetBrains Mono, ui-monospace, monospace" font-size="16" letter-spacing="2" fill="#5F5F5F">
+<text x="80" y="80">PRODUCTION PIPELINE</text>
+<text x="1120" y="80" text-anchor="end">FIG. 02</text>
+<text x="80" y="850">REJECTED OUTLINES RETURN TO STAGE 01</text>
+</g>
+</svg>
